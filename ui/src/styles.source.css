@@ -1,0 +1,70 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
+@import "tailwindcss";
+
+@source "./app/**/*.ts";
+
+@theme {
+  --color-brand-glow: #00f2fe;
+}
+
+@layer base {
+  body { font-family: 'Inter', system-ui, sans-serif; }
+}
+
+@layer utilities {
+  @keyframes fade-in-up {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .animate-fade-in-up {
+    animation: fade-in-up 0.35s ease-out backwards;
+  }
+
+  @keyframes pop {
+    0% { transform: scale(1); }
+    40% { transform: scale(1.08); }
+    100% { transform: scale(1); }
+  }
+  .animate-pop {
+    animation: pop 0.25s ease-out;
+  }
+
+  /* Staggered card entrance: nth-child delays for grids, capped at 10 */
+  .stagger > *:nth-child(1) { animation-delay: 0ms; }
+  .stagger > *:nth-child(2) { animation-delay: 40ms; }
+  .stagger > *:nth-child(3) { animation-delay: 80ms; }
+  .stagger > *:nth-child(4) { animation-delay: 120ms; }
+  .stagger > *:nth-child(5) { animation-delay: 160ms; }
+  .stagger > *:nth-child(6) { animation-delay: 200ms; }
+  .stagger > *:nth-child(7) { animation-delay: 240ms; }
+  .stagger > *:nth-child(8) { animation-delay: 280ms; }
+  .stagger > *:nth-child(9) { animation-delay: 320ms; }
+  .stagger > *:nth-child(n+10) { animation-delay: 360ms; }
+
+  /* Duolingo-style "pressed button" card: solid bottom edge that looks 3D,
+     compresses on click instead of just changing color. */
+  .btn-pressable {
+    border-bottom-width: 4px;
+    transition: transform 0.1s ease, border-bottom-width 0.1s ease, box-shadow 0.15s ease;
+  }
+  .btn-pressable:active {
+    transform: translateY(2px);
+    border-bottom-width: 2px;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+  .custom-scrollbar::-webkit-scrollbar-track { background: rgba(15, 23, 42, 0.6); }
+  .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(56, 189, 248, 0.3); border-radius: 9999px; }
+  .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: rgba(56, 189, 248, 0.6); }
+
+  /* Exact values from the reference design (not a Tailwind-opacity approximation). */
+  .glass-panel {
+    background: rgba(15, 23, 42, 0.75);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+  }
+  .glow-border:hover {
+    box-shadow: 0 0 20px -3px rgba(14, 165, 233, 0.35);
+    border-color: rgba(56, 189, 248, 0.5);
+  }
+}

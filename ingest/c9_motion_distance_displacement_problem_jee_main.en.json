@@ -1,0 +1,90 @@
+{
+  "item": {
+    "subject": "physics",
+    "class": 9,
+    "chapter": "Motion",
+    "subtopic": "Distance and displacement",
+    "content_type": "problem",
+    "difficulty": "jee_main"
+  },
+  "content": {
+    "content_type": "problem",
+    "title": "Hexagon Motion Problem: Distance vs Displacement",
+    "problem_statement": "A particle moves along the sides of a regular hexagon of side length two metres, starting from one vertex, and stops after completing four sides. Find the total distance travelled and the magnitude of its displacement.",
+    "steps": [
+      {
+        "narration": "Each time the particle finishes one side of the hexagon and turns onto the next, it turns through sixty degrees, since a regular hexagon has six equal turns that add up to a full circle.",
+        "display_text": "Each turn of a regular hexagon is 60 degrees",
+        "latex": "",
+        "visual": {
+          "type": "vector_path",
+          "vectors": [
+            {"dx": 2, "dy": 0, "label": "side 1", "color": "BLUE"},
+            {"dx": 1, "dy": 1.732, "label": "side 2", "color": "BLUE"},
+            {"dx": -1, "dy": 1.732, "label": "side 3", "color": "BLUE"},
+            {"dx": -2, "dy": 0, "label": "side 4", "color": "BLUE"}
+          ],
+          "show_resultant": false
+        }
+      },
+      {
+        "narration": "Total distance is simple, it's just four sides, each two metres long, so four times two, which is eight metres.",
+        "display_text": "Total distance",
+        "latex": "d = 4 \\times 2 = 8\\ \\text{m}",
+        "visual": {
+          "type": "vector_path",
+          "vectors": [
+            {"dx": 2, "dy": 0, "label": "side 1", "color": "BLUE"},
+            {"dx": 1, "dy": 1.732, "label": "side 2", "color": "BLUE"},
+            {"dx": -1, "dy": 1.732, "label": "side 3", "color": "BLUE"},
+            {"dx": -2, "dy": 0, "label": "side 4", "color": "BLUE"}
+          ],
+          "show_resultant": false
+        }
+      },
+      {
+        "narration": "For displacement, we need the straight line from the start to where the particle ends up. Adding up the east-west parts of all four sides, they cancel out exactly to zero. Adding up the north-south parts, they combine to two root three metres.",
+        "display_text": "Add up the components",
+        "latex": "s = 2\\sqrt{3}\\ \\text{m}",
+        "visual": {
+          "type": "vector_path",
+          "vectors": [
+            {"dx": 2, "dy": 0, "label": "side 1", "color": "BLUE"},
+            {"dx": 1, "dy": 1.732, "label": "side 2", "color": "BLUE"},
+            {"dx": -1, "dy": 1.732, "label": "side 3", "color": "BLUE"},
+            {"dx": -2, "dy": 0, "label": "side 4", "color": "BLUE"}
+          ],
+          "show_resultant": true,
+          "resultant_label": "Displacement = 2√3 m"
+        }
+      },
+      {
+        "narration": "Notice something elegant here, the displacement points straight up, exactly perpendicular to the very first side the particle walked along. This kind of symmetry shows up often in regular polygon problems.",
+        "display_text": "Displacement ends up perpendicular to the first side",
+        "latex": ""
+      }
+    ],
+    "final_answer": "The total distance travelled is eight metres, and the displacement works out to two root three metres, about three point four six metres, directed perpendicular to the first side.",
+    "final_answer_latex": "d = 8\\ \\text{m}, \\quad s = 2\\sqrt{3}\\ \\text{m} \\approx 3.46\\ \\text{m}"
+  },
+  "metadata": {
+    "youtube_title": "Hexagon Distance & Displacement Problem | JEE Main Physics",
+    "description": "A JEE Main style distance and displacement problem: a particle walks along 4 sides of a regular hexagon. We break down why the total distance is a simple sum, while the displacement needs vector components and a bit of trigonometry, arriving at the elegant result 2√3 m, perpendicular to the first side. Great practice for Class 9 Physics Motion fundamentals and JEE Main vector problems. Subscribe for a full chapter-by-chapter walkthrough of Class 9-12 Physics and Math!\n\n#Class9Physics #Motion #JEEMainPhysics #DistanceAndDisplacement #PhysicsProblem",
+    "tags": [
+      "distance and displacement jee main",
+      "hexagon physics problem",
+      "class 9 physics",
+      "jee main vectors",
+      "motion class 9",
+      "vector addition problem",
+      "physics numerical jee",
+      "displacement problem",
+      "jee main physics practice",
+      "regular polygon physics",
+      "ncert physics",
+      "physics explained",
+      "jee main physics",
+      "vector components"
+    ]
+  }
+}

@@ -1,0 +1,91 @@
+{
+  "item": {
+    "subject": "physics",
+    "class": 9,
+    "chapter": "Motion",
+    "subtopic": "Distance and displacement",
+    "content_type": "explainer",
+    "difficulty": null
+  },
+  "content": {
+    "content_type": "explainer",
+    "title": "Distance vs Displacement Explained",
+    "intro": "When something moves, how do we measure how much it moved? Turns out there are two different answers, distance and displacement, and mixing them up is one of the most common mistakes in physics.",
+    "steps": [
+      {
+        "narration": "Distance is the total length of the actual path an object travels, no matter which direction it turns along the way.",
+        "display_text": "Distance = total path length",
+        "latex": ""
+      },
+      {
+        "narration": "Displacement, on the other hand, is the shortest straight line distance from the starting point to the final point, along with the direction.",
+        "display_text": "Displacement = shortest straight path + direction",
+        "latex": ""
+      },
+      {
+        "narration": "Distance is a scalar quantity, it only has a magnitude, like five kilometres. Displacement is a vector quantity, it has both magnitude and direction, like three kilometres towards the east.",
+        "display_text": "Distance: scalar. Displacement: vector",
+        "latex": ""
+      },
+      {
+        "narration": "Let's say you walk four metres east and then three metres north. The total distance you walked is simply four plus three, which is seven metres.",
+        "display_text": "Distance walked",
+        "latex": "d = 4 + 3 = 7\\ \\text{m}",
+        "visual": {
+          "type": "vector_path",
+          "vectors": [
+            {"dx": 4, "dy": 0, "label": "4 m east", "color": "BLUE"},
+            {"dx": 0, "dy": 3, "label": "3 m north", "color": "BLUE"}
+          ],
+          "show_resultant": false
+        }
+      },
+      {
+        "narration": "But your displacement is the straight line from where you started to where you ended up. Using the Pythagorean theorem, that works out to the square root of four squared plus three squared, which is five metres.",
+        "display_text": "Displacement (Pythagoras' theorem)",
+        "latex": "s = \\sqrt{4^2 + 3^2} = 5\\ \\text{m}",
+        "visual": {
+          "type": "vector_path",
+          "vectors": [
+            {"dx": 4, "dy": 0, "label": "4 m east", "color": "BLUE"},
+            {"dx": 0, "dy": 3, "label": "3 m north", "color": "BLUE"}
+          ],
+          "show_resultant": true,
+          "resultant_label": "Displacement = 5 m"
+        }
+      },
+      {
+        "narration": "Notice displacement, five metres, is smaller than distance, seven metres. In fact, displacement can never be greater than distance. At best, when you move in a straight line without turning back, the two become equal.",
+        "display_text": "Displacement is always less than or equal to distance",
+        "latex": "|\\vec{s}| \\le d"
+      },
+      {
+        "narration": "If you walk somewhere and then come all the way back to where you started, like a full lap on a circular track, your distance is the full length of the path, but your displacement is zero, because you ended up exactly where you began.",
+        "display_text": "Full round trip: displacement = 0",
+        "latex": ""
+      }
+    ],
+    "summary": "Remember it this way, distance is how much ground you actually covered, while displacement is how far you ended up from where you started, in a straight line. Distance is always greater than or equal to displacement.",
+    "summary_latex": "|\\vec{s}| \\le d"
+  },
+  "metadata": {
+    "youtube_title": "Distance vs Displacement Explained | Class 9 Physics - Motion",
+    "description": "Confused between distance and displacement? In this video we break down the difference between these two fundamental physics concepts from the Class 9 Motion chapter, with clear examples using the Pythagorean theorem. Perfect for school exams and for building strong fundamentals ahead of JEE/NEET physics. Subscribe for a full chapter-by-chapter walkthrough of Class 9-12 Physics and Math!\n\n#Class9Physics #Motion #DistanceAndDisplacement #PhysicsExplained #JEEPhysics #NEETPhysics",
+    "tags": [
+      "distance and displacement",
+      "class 9 physics",
+      "motion class 9",
+      "physics for class 9",
+      "ncert physics",
+      "scalar and vector quantities",
+      "distance vs displacement",
+      "jee physics basics",
+      "neet physics",
+      "physics explained",
+      "motion in a straight line",
+      "class 9 motion chapter",
+      "basic physics concepts",
+      "physics for beginners"
+    ]
+  }
+}

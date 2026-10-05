@@ -1,0 +1,78 @@
+{
+  "item": {
+    "subject": "physics",
+    "class": 9,
+    "chapter": "Motion",
+    "subtopic": "Distance and displacement",
+    "content_type": "problem",
+    "difficulty": "foundation"
+  },
+  "content": {
+    "content_type": "problem",
+    "title": "Distance and Displacement Problem - Class 9 Physics",
+    "problem_statement": "A boy walks 5 metres to the east, then 3 metres to the north, and finally 5 metres back to the west, retracing the same line he walked east on. Find the total distance he travels and his net displacement from the starting point.",
+    "steps": [
+      {
+        "narration": "The boy's journey has three parts: five metres east, then three metres north, then five metres west. Let's plot this path on a coordinate grid.",
+        "display_text": "Three-part journey: 5 m east, 3 m north, 5 m west",
+        "latex": "",
+        "visual": {
+          "type": "vector_path",
+          "vectors": [
+            {"dx": 5, "dy": 0, "label": "5 m east", "color": "BLUE"},
+            {"dx": 0, "dy": 3, "label": "3 m north", "color": "BLUE"},
+            {"dx": -5, "dy": 0, "label": "5 m west", "color": "ORANGE"}
+          ],
+          "show_resultant": false
+        }
+      },
+      {
+        "narration": "Total distance is just the sum of all the path lengths he actually walked, regardless of direction. Five plus three plus five, which is thirteen metres.",
+        "display_text": "Total distance travelled",
+        "latex": "d = 5 + 3 + 5 = 13\\ \\text{m}"
+      },
+      {
+        "narration": "Now for displacement. Notice the five metres east and the five metres west cancel out exactly, since he backtracks along the same line. The straight line distance from his starting point to where he ends up is just three metres to the north.",
+        "display_text": "East and west parts cancel out",
+        "latex": "s = 3\\ \\text{m north}",
+        "visual": {
+          "type": "vector_path",
+          "vectors": [
+            {"dx": 5, "dy": 0, "label": "5 m east", "color": "BLUE"},
+            {"dx": 0, "dy": 3, "label": "3 m north", "color": "BLUE"},
+            {"dx": -5, "dy": 0, "label": "5 m west", "color": "ORANGE"}
+          ],
+          "show_resultant": true,
+          "resultant_label": "Displacement = 3 m North"
+        }
+      },
+      {
+        "narration": "This is a great example of why displacement can be much smaller than distance. Even though he walked a total of thirteen metres, he only ended up three metres away from where he started.",
+        "display_text": "Displacement can be much smaller than distance",
+        "latex": ""
+      }
+    ],
+    "final_answer": "The total distance travelled is thirteen metres, while the displacement is just three metres towards the north.",
+    "final_answer_latex": "d = 13\\ \\text{m}, \\quad s = 3\\ \\text{m (north)}"
+  },
+  "metadata": {
+    "youtube_title": "Distance & Displacement Numerical Problem | Class 9 Physics",
+    "description": "A step-by-step worked example on distance and displacement from the Class 9 Physics Motion chapter. We walk through a boy's journey east, north, and back west, and show why his total distance (13 m) is very different from his displacement (3 m north) — including how equal and opposite movements cancel out. Great foundation-level practice before moving on to tougher JEE/NEET style vector problems. Subscribe for a full chapter-by-chapter walkthrough of Class 9-12 Physics and Math!\n\n#Class9Physics #Motion #DistanceAndDisplacement #PhysicsNumerical #NCERTPhysics",
+    "tags": [
+      "distance and displacement problem",
+      "class 9 physics numerical",
+      "motion class 9",
+      "physics for class 9",
+      "ncert physics",
+      "distance vs displacement example",
+      "physics word problem",
+      "jee physics basics",
+      "neet physics",
+      "physics explained",
+      "motion in a straight line",
+      "class 9 motion numerical",
+      "vector cancellation physics",
+      "physics for beginners"
+    ]
+  }
+}

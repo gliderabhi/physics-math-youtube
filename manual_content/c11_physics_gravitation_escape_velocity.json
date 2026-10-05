@@ -1,0 +1,85 @@
+{
+  "item": {
+    "subject": "physics",
+    "class": 11,
+    "chapter": "Gravitation",
+    "subtopic": "Escape velocity",
+    "content_type": "explainer",
+    "difficulty": null
+  },
+  "content": {
+    "content_type": "explainer",
+    "title": "Escape Velocity: Three Launches",
+    "intro": "What does it actually look like to escape a planet's gravity? Let's launch some objects from Earth, and this time, let's actually track their energy the whole way, not just watch them fly.",
+    "opening_visual": {"type": "orbit_launch", "no_trajectory": true},
+    "closing_visual": {"type": "orbit_launch", "no_trajectory": true},
+    "steps": [
+      {
+        "narration": "First, let's launch something straight up, slower than escape velocity. Below, the white curve is its motion energy, and the purple curve is gravity's pull. Watch the white curve dip down to meet the purple one, right at the top of the flight, then it falls back and the white curve climbs again.",
+        "display_text": "White = motion energy, Purple = gravity's pull",
+        "latex": "",
+        "visual": {"type": "orbit_launch", "angle_deg": 0, "speed_factor": 0.5, "color": "BLUE"}
+      },
+      {
+        "narration": "Now watch the blue line that's left behind, that's the sum of motion energy and gravity's pull added together, the total energy. Notice it's perfectly flat, energy is never created or destroyed, only ever moved between motion and gravity. And notice it sits below zero.",
+        "display_text": "Motion energy + gravity's pull = total energy, and it stays flat",
+        "latex": "",
+        "visual": {"type": "orbit_launch", "no_trajectory": true}
+      },
+      {
+        "narration": "Let's try again at an angle, a bit faster this time, but still below escape velocity. Same story, the white and purple curves cross, and the new orange total line is flat again, still below zero, just a little higher than before.",
+        "display_text": "Angled launch: total energy still flat, still below zero",
+        "latex": "",
+        "visual": {"type": "orbit_launch", "angle_deg": 50, "speed_factor": 0.78, "color": "ORANGE"}
+      },
+      {
+        "narration": "Finally, the same angle, but now right around escape velocity. Watch the white motion-energy curve this time, it drops, but it never meets the purple curve. And look at the new green total line, it's sitting right at zero.",
+        "display_text": "At escape velocity, total energy sits right at zero",
+        "latex": "",
+        "visual": {"type": "orbit_launch", "angle_deg": 50, "speed_factor": 1.15, "color": "GREEN"}
+      },
+      {
+        "narration": "Look at all three total energy lines together now. Blue and orange are stuck below zero, that debt to gravity is exactly why those two objects were forced to fall back. The green line sits at zero, no debt left, so gravity never gets the chance to pull it back.",
+        "display_text": "Total energy below zero: falls back. Total energy at zero: escapes.",
+        "latex": "",
+        "visual": {"type": "orbit_launch", "no_trajectory": true}
+      },
+      {
+        "narration": "That's the whole idea behind the formula. Escape velocity is simply the speed where the total energy, motion energy plus gravity's pull, adds up to exactly zero.",
+        "display_text": "Escape velocity: total energy adds up to exactly zero",
+        "latex": "\\tfrac{1}{2}mv_e^2 - \\dfrac{GMm}{R} = 0",
+        "visual": {"type": "orbit_launch", "no_trajectory": true}
+      },
+      {
+        "narration": "Rearranging this equation, the object's own mass cancels out completely from both sides. What's left is the escape velocity formula, depending only on the planet's mass and radius, never on what you're launching.",
+        "display_text": "The object's mass cancels out completely",
+        "latex": "v_e = \\sqrt{\\dfrac{2GM}{R}}",
+        "visual": {"type": "orbit_launch", "no_trajectory": true}
+      }
+    ],
+    "summary": "For Earth, that critical speed works out to about eleven point two kilometres per second, no matter which direction you launch in.",
+    "summary_latex": "v_e \\approx 11.2\\ \\text{km/s}"
+  },
+  "metadata": {
+    "youtube_title": "Escape Velocity: Why It's the Sum of Energies (Visual Derivation) | Class 11 Physics",
+    "description": "What really happens when you launch something from Earth below, at, or above escape velocity? In this video we visually simulate three launches while plotting motion energy (kinetic) and gravity's pull (potential) in real time, show that their sum (total energy) always stays flat, and use that single idea, total energy reaching zero, to derive the escape velocity formula from scratch. A visual, intuitive, fully-derived take on escape velocity for Class 11 Physics Gravitation and JEE/NEET prep. Subscribe for a full chapter-by-chapter walkthrough of Class 9-12 Physics and Math!\n\n#Class11Physics #Gravitation #EscapeVelocity #JEEPhysics #NEETPhysics #PhysicsExplained",
+    "tags": [
+      "escape velocity",
+      "escape velocity derivation",
+      "escape velocity explained visually",
+      "class 11 physics",
+      "gravitation class 11",
+      "kinetic and potential energy",
+      "conservation of energy physics",
+      "jee physics gravitation",
+      "neet physics gravitation",
+      "orbital mechanics basics",
+      "physics simulation",
+      "gravitation jee mains",
+      "escape velocity of earth",
+      "class 11 gravitation chapter",
+      "physics visualized",
+      "jee advanced physics"
+    ]
+  }
+}

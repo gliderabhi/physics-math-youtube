@@ -1,0 +1,46 @@
+<div class="min-h-screen flex items-center justify-center bg-slate-950 bg-cover bg-center px-4"
+     style="background-image: linear-gradient(rgba(2, 6, 23, 0.82), rgba(2, 6, 23, 0.82)), url('/banner.png');">
+  <div class="w-full max-w-sm rounded-2xl glass-panel shadow-2xl shadow-black/40 p-8">
+    <div class="relative mx-auto mb-4 flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-tr from-sky-500 via-indigo-500 to-amber-500 p-[2px] shadow-lg shadow-sky-500/20">
+      <div class="w-full h-full bg-slate-950 rounded-[14px] flex items-center justify-center">
+        <span class="font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-sky-400 to-amber-400 text-2xl">&Sigma;</span>
+      </div>
+    </div>
+    <h1 class="text-2xl font-extrabold text-white mb-1 text-center tracking-tight">Illustrated Equations</h1>
+    <p class="text-sm text-slate-400 mb-6 text-center">Use your sevis.store account to browse the chapters.</p>
+
+    <form (ngSubmit)="onSubmit()" #loginForm="ngForm" class="space-y-5">
+      <div class="space-y-1.5">
+        <label class="block text-sm font-semibold text-slate-300" for="email">Email Address</label>
+        <input id="email" type="email" name="email" [(ngModel)]="email" required autocomplete="username"
+               placeholder="you@example.com"
+               class="w-full rounded-lg border border-slate-700 bg-slate-950/60 px-3.5 py-2.5 text-sm text-slate-100 placeholder:text-slate-600 outline-none focus:border-sky-500 focus:ring-2 focus:ring-sky-500/20 transition-shadow" />
+      </div>
+      <div class="space-y-1.5">
+        <label class="block text-sm font-semibold text-slate-300" for="password">Password</label>
+        <input id="password" type="password" name="password" [(ngModel)]="password" required autocomplete="current-password"
+               placeholder="••••••••"
+               class="w-full rounded-lg border border-slate-700 bg-slate-950/60 px-3.5 py-2.5 text-sm text-slate-100 placeholder:text-slate-600 outline-none focus:border-sky-500 focus:ring-2 focus:ring-sky-500/20 transition-shadow" />
+      </div>
+
+      @if (error()) {
+        <div class="rounded-lg border border-red-500/30 bg-red-500/10 px-3.5 py-2.5 text-sm text-red-300">{{ error() }}</div>
+      }
+
+      <button type="submit" [disabled]="loading()"
+              class="mt-1 w-full rounded-lg bg-gradient-to-r from-sky-500 to-indigo-500 py-3 text-[15px] font-semibold text-white tracking-wide shadow-lg shadow-sky-500/20 disabled:opacity-60 hover:brightness-110 transition-all">
+        {{ loading() ? 'Signing in…' : 'Sign In' }}
+      </button>
+
+      <div class="flex items-center gap-3 pt-1">
+        <div class="h-px flex-1 bg-slate-800"></div>
+        <span class="whitespace-nowrap text-xs text-slate-500">or continue with</span>
+        <div class="h-px flex-1 bg-slate-800"></div>
+      </div>
+
+      <div class="flex justify-center">
+        <div id="google-signin-btn"></div>
+      </div>
+    </form>
+  </div>
+</div>

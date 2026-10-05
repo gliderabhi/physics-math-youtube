@@ -1,0 +1,13 @@
+anthropic
+edge-tts
+manim
+pillow
+pydub
+audioop-lts; python_version >= "3.13"
+google-api-python-client
+google-auth-httplib2
+google-auth-oauthlib
+pymysql
+fastapi
+uvicorn[standard]
+pymupdf

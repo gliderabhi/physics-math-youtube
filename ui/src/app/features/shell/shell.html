@@ -1,0 +1,151 @@
+<div class="min-h-screen bg-slate-950 text-slate-100">
+  @if (langMenuOpen() || userMenuOpen()) {
+    <div class="fixed inset-0 z-30" (click)="closeMenus()"></div>
+  }
+
+  <header class="sticky top-0 z-40 border-b border-slate-800/80 bg-slate-950/90 backdrop-blur-md">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16 gap-3">
+        <!-- Brand & Logo -->
+        <a routerLink="/" class="flex items-center gap-3 shrink-0">
+          <div class="relative flex items-center justify-center w-10 h-10 rounded-xl bg-gradient-to-tr from-sky-500 via-indigo-500 to-amber-500 p-[1.5px] shadow-lg shadow-sky-500/20">
+            <div class="w-full h-full bg-slate-950 rounded-[10px] flex items-center justify-center">
+              <span class="font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-sky-400 to-amber-400 text-lg">&Sigma;</span>
+            </div>
+          </div>
+          <div class="hidden sm:block">
+            <div class="font-extrabold text-lg tracking-tight text-white leading-none">Illustrated Equations</div>
+            <p class="text-[10px] font-medium tracking-wider text-sky-400 uppercase mt-0.5">Visual Physics &amp; Math</p>
+          </div>
+        </a>
+
+        <!-- Search -->
+        <div class="hidden md:flex flex-1 max-w-sm">
+          <label class="relative w-full">
+            <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500 text-xs"></i>
+            <input #searchInput type="text" placeholder="Search chapters…"
+                   (keydown.enter)="search(searchInput.value)"
+                   class="w-full rounded-full bg-slate-900 border border-slate-800 text-sm text-slate-200 placeholder:text-slate-500
+                          pl-9 pr-3 py-2 outline-none focus:ring-2 focus:ring-sky-500/40 transition-shadow" />
+          </label>
+        </div>
+
+        <!-- Actions -->
+        <div class="flex items-center gap-2 sm:gap-3 shrink-0">
+          @if (isAdmin()) {
+            <a routerLink="/admin/review" title="Review Queue"
+               class="w-9 h-9 rounded-full bg-slate-900 border border-slate-800 text-slate-400 hover:text-amber-400 hover:border-amber-500/40 flex items-center justify-center transition-colors">
+              <i class="fa-solid fa-clipboard-check"></i>
+            </a>
+          }
+          @if (lang.languages().length > 1) {
+            <div class="relative z-40">
+              <button (click)="toggleLangMenu()"
+                      class="flex items-center gap-1.5 rounded-full bg-slate-900 border border-slate-800 text-xs sm:text-sm font-semibold text-slate-200
+                             pl-3 pr-2.5 py-1.5 sm:py-2 outline-none hover:border-sky-500/40 transition-colors">
+                <i class="fa-solid fa-globe text-sky-400"></i>
+                <span class="hidden sm:inline">{{ currentLanguageName() }}</span>
+                <i class="fa-solid fa-chevron-down text-[10px] text-slate-500"></i>
+              </button>
+              @if (langMenuOpen()) {
+                <div class="absolute right-0 mt-2 w-40 rounded-xl bg-slate-900 border border-slate-800 shadow-2xl shadow-black/40 overflow-hidden py-1">
+                  @for (l of lang.languages(); track l.code) {
+                    <button (click)="selectLanguage(l.code)"
+                            class="w-full text-left px-3.5 py-2 text-sm font-medium transition-colors flex items-center justify-between
+                                   {{ l.code === lang.current() ? 'text-sky-400 bg-sky-500/10' : 'text-slate-300 hover:bg-slate-800' }}">
+                      {{ l.name }}
+                      @if (l.code === lang.current()) {
+                        <i class="fa-solid fa-check text-xs"></i>
+                      }
+                    </button>
+                  }
+                </div>
+              }
+            </div>
+          }
+
+          @if (auth.user(); as u) {
+            <div class="relative z-40">
+              <button (click)="toggleUserMenu()"
+                      class="w-9 h-9 rounded-full bg-gradient-to-tr from-sky-400 to-indigo-500 flex items-center justify-center
+                             text-white text-xs font-bold ring-2 ring-sky-500/30 hover:ring-sky-400/60 transition-all">
+                {{ initial() }}
+              </button>
+              @if (userMenuOpen()) {
+                <div class="absolute right-0 mt-2 w-48 rounded-xl bg-slate-900 border border-slate-800 shadow-2xl shadow-black/40 overflow-hidden">
+                  <div class="px-3.5 py-3 border-b border-slate-800">
+                    <p class="text-sm font-semibold text-white truncate">{{ u.name }}</p>
+                    <p class="text-xs text-slate-500 truncate mt-0.5">{{ u.email }}</p>
+                  </div>
+                  <button (click)="logout()"
+                          class="w-full text-left px-3.5 py-2.5 text-sm font-medium text-slate-300 hover:bg-slate-800 hover:text-white transition-colors flex items-center gap-2">
+                    <i class="fa-solid fa-right-from-bracket text-slate-500"></i> Log out
+                  </button>
+                </div>
+              }
+            </div>
+          }
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex flex-col md:flex-row gap-6">
+    <aside class="hidden md:block w-96 shrink-0">
+      <nav class="w-96 sticky top-22 max-h-[calc(100vh-6rem)] overflow-y-auto overflow-x-hidden custom-scrollbar glass-panel rounded-2xl p-3 space-y-1">
+        @for (group of subjectGroups(); track group.subject) {
+          <div class="min-w-0">
+            <button (click)="toggleSubject(group.subject)"
+                    class="w-full flex items-center gap-2 px-2.5 py-2 rounded-lg text-sm font-bold text-white hover:bg-slate-900/80 transition-colors">
+              <i class="fa-solid {{ subjectIcon(group.subject) }} text-sky-400 w-3 shrink-0"></i>
+              <span class="flex-1 min-w-0 text-left truncate">{{ subjectName(group.subject) }}</span>
+              <i class="fa-solid fa-chevron-down text-[10px] text-slate-600 transition-transform shrink-0" [class.rotate-180]="isSubjectOpen(group.subject)"></i>
+            </button>
+
+            @if (isSubjectOpen(group.subject)) {
+              <div class="ml-2 pl-2 border-l border-slate-800 space-y-0.5 mt-0.5 mb-1 min-w-0">
+                @for (ch of group.chapters; track ch.class + ch.chapter) {
+                  <div class="min-w-0">
+                    <div class="flex items-center gap-0.5 min-w-0">
+                      <a [routerLink]="['/chapter']" [queryParams]="{ subject: ch.subject, class: ch.class, chapter: ch.chapter }"
+                         (click)="toggleChapter(ch)"
+                         class="flex-1 min-w-0 flex items-center gap-2 px-2.5 py-1.5 rounded-lg text-sm font-semibold text-slate-200 hover:bg-slate-900/80 hover:text-white truncate transition-colors">
+                        <span class="truncate">{{ ch.chapter }}</span>
+                      </a>
+                      <button (click)="toggleChapter(ch)"
+                              class="w-6 h-6 shrink-0 flex items-center justify-center text-slate-600 hover:text-white transition-colors">
+                        <i class="fa-solid fa-chevron-down text-[10px] transition-transform" [class.rotate-180]="isChapterOpen(ch)"></i>
+                      </button>
+                    </div>
+                    @if (isChapterOpen(ch)) {
+                      @let subtopics = subtopicsFor(ch);
+                      <div class="ml-2 pl-2 border-l border-slate-800 space-y-0.5 mb-1 min-w-0">
+                        @if (subtopics === 'loading') {
+                          <p class="px-2.5 py-1 text-xs text-slate-500 truncate">Loading&hellip;</p>
+                        } @else if (subtopics && subtopics.length) {
+                          @for (st of subtopics; track st.subtopic) {
+                            <a [routerLink]="['/player']"
+                               [queryParams]="{ subject: ch.subject, class: ch.class, chapter: ch.chapter, subtopic: st.subtopic, contentType: 'explainer', difficulty: '' }"
+                               class="block px-2.5 py-1.5 rounded-lg text-xs text-slate-400 hover:bg-slate-900/80 hover:text-slate-100 truncate transition-colors">
+                              {{ st.subtopic }}
+                            </a>
+                          }
+                        } @else if (subtopics) {
+                          <p class="px-2.5 py-1 text-xs text-slate-500">No topics yet</p>
+                        }
+                      </div>
+                    }
+                  </div>
+                }
+              </div>
+            }
+          </div>
+        }
+      </nav>
+    </aside>
+
+    <main class="flex-1 min-w-0">
+      <router-outlet />
+    </main>
+  </div>
+</div>

@@ -1,0 +1,20 @@
+{
+  "item": {
+    "subject": "physics",
+    "class": 9,
+    "chapter": "Motion",
+    "subtopic": "Distance and displacement",
+    "content_type": "problem",
+    "difficulty": "jee_main"
+  },
+  "narration": {
+    "opening": "एक particle एक regular hexagon की sides पर move करता है, जिसकी side length दो मीटर है, एक vertex से शुरू करके, और चार sides पूरी करने के बाद रुक जाता है। Total distance travelled और उसके displacement की magnitude निकालिए।",
+    "steps": [
+      "जब particle hexagon की एक side पूरी करके अगली पर मुड़ता है, तो वो साठ डिग्री का turn लेता है, क्योंकि एक regular hexagon के छह बराबर turns मिलकर पूरा तीन सौ साठ डिग्री का circle बनाते हैं।",
+      "Total distance बहुत simple है, बस चार sides हैं, हर एक दो मीटर की, तो चार गुना दो, यानी आठ मीटर।",
+      "Displacement के लिए, हमें start point से end point तक की straight line चाहिए। सभी चार sides के east-west हिस्सों को जोड़ने पर, वो बिल्कुल cancel होकर zero हो जाते हैं। North-south हिस्सों को जोड़ने पर, वो मिलकर दो root three मीटर बनते हैं।",
+      "यहाँ एक खूबसूरत बात notice कीजिए, displacement बिल्कुल ऊपर की तरफ point करता है, ठीक पहली side के perpendicular। Regular polygon वाले problems में ये symmetry अक्सर दिखती है।"
+    ],
+    "closing": "Total distance travelled आठ मीटर है, और displacement निकलता है दो root three मीटर, यानी लगभग तीन point चार छह मीटर, पहली side के perpendicular direction में।"
+  }
+}

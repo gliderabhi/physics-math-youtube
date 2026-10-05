@@ -1,0 +1,62 @@
+{
+  "item": {
+    "subject": "physics",
+    "class": 9,
+    "chapter": "Motion",
+    "subtopic": "Distance and displacement",
+    "content_type": "problem",
+    "difficulty": "jee_advanced_neet"
+  },
+  "content": {
+    "content_type": "problem",
+    "title": "Circular Track Problem: Distance vs Displacement",
+    "problem_statement": "An athlete runs along a circular track of radius seven metres. Find the distance travelled and the magnitude of displacement when the athlete completes (a) half a revolution, and (b) one full revolution. Take pi as twenty-two over seven.",
+    "steps": [
+      {
+        "narration": "For half a revolution, the athlete runs along exactly half the circle. The distance covered is half the circumference, pi times the radius, which with pi as twenty-two over seven and radius seven metres works out to exactly twenty-two metres.",
+        "display_text": "Half revolution: distance",
+        "latex": "d = \\pi R = \\tfrac{22}{7}\\times 7 = 22\\ \\text{m}",
+        "visual": {"type": "circular_path", "radius": 2.0, "fraction": 0.5, "start_angle_deg": 90, "color": "BLUE", "show_resultant": false}
+      },
+      {
+        "narration": "But the displacement after half a revolution is just the straight line across the circle, the diameter. That's twice the radius, so two times seven, which is fourteen metres.",
+        "display_text": "Half revolution: displacement = diameter",
+        "latex": "s = 2R = 14\\ \\text{m}",
+        "visual": {"type": "circular_path", "radius": 2.0, "fraction": 0.5, "start_angle_deg": 90, "color": "BLUE", "show_resultant": true, "resultant_label": "Displacement = 2R = 14 m"}
+      },
+      {
+        "narration": "Now for a full revolution, the athlete runs all the way around the circle once. The distance is the full circumference, two pi R, which comes out to forty-four metres.",
+        "display_text": "Full revolution: distance",
+        "latex": "d = 2\\pi R = 44\\ \\text{m}",
+        "visual": {"type": "circular_path", "radius": 2.0, "fraction": 1.0, "start_angle_deg": 90, "color": "GREEN", "show_resultant": false}
+      },
+      {
+        "narration": "But notice, after one full revolution, the athlete is back exactly where they started. So even though the distance covered is a huge forty-four metres, the displacement is zero.",
+        "display_text": "Full revolution: back to the start",
+        "latex": "s = 0",
+        "visual": {"type": "circular_path", "radius": 2.0, "fraction": 1.0, "start_angle_deg": 90, "color": "GREEN", "show_resultant": true, "resultant_label": "Displacement = 0"}
+      }
+    ],
+    "final_answer": "For half a revolution, the distance is twenty-two metres and the displacement is fourteen metres. For a full revolution, the distance is forty-four metres, but the displacement is zero.",
+    "final_answer_latex": "\\text{Half: } d=22\\text{ m}, s=14\\text{ m} \\quad \\text{Full: } d=44\\text{ m}, s=0"
+  },
+  "metadata": {
+    "youtube_title": "Circular Track Problem: Distance vs Displacement | JEE/NEET Physics",
+    "description": "One of the most important distance vs displacement problems: an athlete running on a circular track. We find distance and displacement for both half a revolution and a full revolution, showing exactly why displacement can be zero even after running a long distance. A must-know result for Class 9 Physics Motion and a frequent JEE/NEET concept check. Subscribe for a full chapter-by-chapter walkthrough of Class 9-12 Physics and Math!\n\n#Class9Physics #Motion #JEEPhysics #NEETPhysics #DistanceAndDisplacement",
+    "tags": [
+      "distance and displacement circular motion",
+      "circular track problem physics",
+      "class 9 physics",
+      "jee physics circular motion",
+      "neet physics",
+      "motion class 9",
+      "displacement zero problem",
+      "physics numerical jee neet",
+      "ncert physics",
+      "physics explained",
+      "circular motion basics",
+      "jee advanced physics",
+      "neet physics practice"
+    ]
+  }
+}

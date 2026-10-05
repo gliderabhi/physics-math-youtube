@@ -1,0 +1,5 @@
+/node_modules
+/.angular/cache
+/dist
+/out-tsc
+.DS_Store

@@ -1,0 +1,86 @@
+@if (loading()) {
+  <div class="flex items-center justify-center py-20 text-slate-500">
+    <span class="animate-pulse">Loading…</span>
+  </div>
+} @else if (detail()) {
+  <div class="space-y-6">
+      <div class="relative overflow-hidden rounded-3xl bg-gradient-to-r from-slate-900 via-sky-950 to-indigo-950 p-6 md:p-8 border border-sky-500/20 shadow-2xl">
+        <div class="absolute -right-10 -bottom-10 w-64 h-64 bg-sky-500/10 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="absolute -left-10 -top-10 w-64 h-64 bg-amber-500/10 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="relative z-10">
+          <span class="px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-sky-500/20 text-sky-300 border border-sky-500/30 capitalize">
+            Class {{ class_() }} &middot; {{ subject() }}
+          </span>
+          <h1 class="text-2xl sm:text-3xl font-extrabold text-white tracking-tight mt-3">{{ chapter() }}</h1>
+          <p class="text-slate-300 text-sm mt-1.5">
+            {{ visibleSubtopics().length }} topic{{ visibleSubtopics().length === 1 ? '' : 's' }} in this chapter
+          </p>
+        </div>
+      </div>
+
+      @for (group of visibleSubtopics(); track group.subtopic) {
+        <section class="space-y-4">
+          <div class="flex items-center gap-3 border-b border-white/[0.08] pb-3">
+            <div class="w-8 h-8 rounded-xl bg-sky-500/20 border border-sky-500/40 text-sky-400 flex items-center justify-center font-bold text-sm shrink-0">
+              {{ $index < 9 ? '0' : '' }}{{ $index + 1 }}
+            </div>
+            <h2 class="text-lg font-bold text-white tracking-tight">{{ group.subtopic }}</h2>
+          </div>
+
+          @if (group.explainer; as item) {
+            <a [routerLink]="['/player']"
+               [queryParams]="{ subject: subject(), class: class_(), chapter: chapter(), subtopic: group.subtopic, contentType: item.content_type, difficulty: '' }"
+               class="group glass-panel rounded-2xl p-4 md:p-5 transition-all duration-300 flex flex-col lg:flex-row items-center gap-5 glow-border">
+              <div class="relative w-full lg:w-72 aspect-video rounded-xl overflow-hidden bg-gradient-to-tr from-slate-950 via-slate-900 to-sky-950 border border-slate-800 shrink-0 flex items-center justify-center">
+                @if (explainerThumbnail(item); as thumb) {
+                  <img [src]="thumb" alt="" class="absolute inset-0 w-full h-full object-cover" />
+                } @else {
+                  <span class="font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-sky-400 to-amber-400 text-3xl">&Sigma;f</span>
+                }
+                <div class="absolute inset-0 bg-slate-950/0 group-hover:bg-slate-950/20 transition-all"></div>
+              </div>
+              <div class="flex-1 space-y-2 min-w-0 w-full">
+                <span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase inline-block bg-sky-500/20 text-sky-300">Visual Concept Explainer</span>
+                <h3 class="text-base font-bold text-white group-hover:text-sky-400 transition-colors">{{ item.title ?? group.subtopic }}</h3>
+                @if (isAdmin() && !isAvailable(item)) {
+                  <button (click)="$event.stopPropagation(); generate(item, group.subtopic)" [disabled]="isGenerating(item, group.subtopic)"
+                          class="px-3 py-1.5 rounded-full bg-slate-800 hover:bg-amber-600 disabled:opacity-50 disabled:cursor-not-allowed text-slate-300 hover:text-white text-xs font-semibold transition-colors">
+                    {{ isGenerating(item, group.subtopic) ? 'Generating…' : 'Generate video' }}
+                  </button>
+                }
+              </div>
+            </a>
+          }
+
+          @if (group.problems.length) {
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+              @for (item of group.problems; track trackItem(item)) {
+                <a [routerLink]="['/player']"
+                   [queryParams]="{ subject: subject(), class: class_(), chapter: chapter(), subtopic: group.subtopic, contentType: item.content_type, difficulty: item.difficulty ?? '' }"
+                   class="glass-panel p-3.5 rounded-xl border transition-all group {{ isAvailable(item) ? difficultyColor(item.difficulty) : 'border-dashed border-slate-700/60 opacity-80' }}">
+                  <div class="flex items-center justify-between mb-2">
+                    <span class="text-xs font-bold flex items-center gap-1.5 {{ isAvailable(item) ? '' : 'text-slate-500' }}">
+                      <i class="fa-solid {{ difficultyIcon(item.difficulty) }}"></i> {{ difficultyLabel(item.difficulty) }}
+                    </span>
+                  </div>
+                  @if (isAvailable(item)) {
+                    <span class="text-[11px] font-medium opacity-80 group-hover:opacity-100">Solve now &rarr;</span>
+                  } @else {
+                    <span class="text-[11px] font-medium text-slate-500">
+                      {{ item.exists ? 'Not in this language' : 'Not generated yet' }}
+                    </span>
+                    @if (isAdmin()) {
+                      <button (click)="$event.stopPropagation(); generate(item, group.subtopic)" [disabled]="isGenerating(item, group.subtopic)"
+                              class="mt-2 w-full px-2 py-1 rounded-full bg-amber-600 hover:bg-amber-500 disabled:opacity-50 disabled:cursor-not-allowed text-white text-[10px] font-semibold transition-colors">
+                        {{ isGenerating(item, group.subtopic) ? 'Generating…' : 'Generate' }}
+                      </button>
+                    }
+                  }
+                </a>
+              }
+            </div>
+          }
+        </section>
+      }
+  </div>
+}

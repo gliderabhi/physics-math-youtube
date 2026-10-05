@@ -1,0 +1,23 @@
+{
+  "item": {
+    "subject": "physics",
+    "class": 9,
+    "chapter": "Motion",
+    "subtopic": "Distance and displacement",
+    "content_type": "explainer",
+    "difficulty": null
+  },
+  "narration": {
+    "opening": "जब कोई चीज़ move करती है, तो हम कैसे measure करें कि वो कितना move हुई? असल में इसके दो अलग जवाब हैं, distance और displacement, और इन दोनों को confuse करना physics की सबसे common mistakes में से एक है।",
+    "steps": [
+      "Distance का मतलब है कि object ने अपने path पर actually कितनी total length cover की, चाहे वो बीच में कितनी भी बार direction क्यों न बदले।",
+      "Displacement दूसरी तरफ, starting point से final point तक की सबसे छोटी straight line distance होती है, साथ में उसकी direction भी।",
+      "Distance एक scalar quantity है, उसकी सिर्फ magnitude होती है, जैसे पांच किलोमीटर। Displacement एक vector quantity है, उसकी magnitude के साथ-साथ direction भी होती है, जैसे तीन किलोमीटर east की तरफ।",
+      "मान लीजिए आप चार मीटर east चलते हैं, फिर तीन मीटर north। आपने जितनी total distance चली, वो है चार plus तीन, यानी सात मीटर।",
+      "लेकिन आपका displacement वो straight line है जो starting point से आपकी final position तक जाती है। Pythagoras theorem use करके, ये निकलता है चार का square plus तीन का square का square root, यानी पांच मीटर।",
+      "ध्यान दीजिए displacement, पांच मीटर, distance से कम है, जो सात मीटर था। असल में, displacement कभी भी distance से ज़्यादा नहीं हो सकता। Best case में, जब आप बिना मुड़े एक straight line में चलते हैं, तब दोनों बराबर हो जाते हैं।",
+      "अगर आप कहीं जाकर वापस अपनी starting position पर आ जाएं, जैसे किसी circular track का पूरा चक्कर, तो आपकी distance पूरे path की length होगी, लेकिन आपका displacement zero होगा, क्योंकि आप बिल्कुल वहीं पहुंच गए जहां से शुरू किया था।"
+    ],
+    "closing": "इसे ऐसे याद रखिए, distance ये बताती है कि आपने actually कितना ज़मीन cover किया, जबकि displacement ये बताता है कि आप अपनी starting position से straight line में कितनी दूर हैं। Distance हमेशा displacement से ज़्यादा या बराबर होती है।"
+  }
+}

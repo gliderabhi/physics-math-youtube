@@ -1,0 +1,53 @@
+@if (loading()) {
+  <div class="flex items-center justify-center py-20 text-slate-500">
+    <span class="animate-pulse">Loading chapters…</span>
+  </div>
+} @else {
+  <div class="space-y-10">
+    <div class="relative overflow-hidden rounded-3xl bg-gradient-to-r from-slate-900 via-sky-950 to-indigo-950 p-6 md:p-8 border border-sky-500/20 shadow-2xl">
+      <div class="absolute -right-10 -bottom-10 w-64 h-64 bg-sky-500/10 rounded-full blur-3xl pointer-events-none"></div>
+      <div class="absolute -left-10 -top-10 w-64 h-64 bg-amber-500/10 rounded-full blur-3xl pointer-events-none"></div>
+      <div class="relative z-10">
+        <span class="px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-sky-500/20 text-sky-300 border border-sky-500/30">
+          Curriculum
+        </span>
+        <h1 class="text-2xl sm:text-3xl font-extrabold text-white tracking-tight mt-3">
+          @if (q()) { Results for "{{ q() }}" } @else { Browse Chapters }
+        </h1>
+        <p class="text-slate-300 text-sm mt-1.5">Pick a chapter to watch animated explainers and practice problems.</p>
+      </div>
+    </div>
+
+    @if (!groups().length) {
+      <div class="rounded-2xl border border-dashed border-slate-800 bg-slate-900/40 p-10 text-center text-slate-500">
+        <p>No chapters match "{{ q() }}".</p>
+        <a routerLink="/" class="inline-block mt-3 px-4 py-2 rounded-full bg-sky-600 hover:bg-sky-500 text-white text-sm font-semibold transition-colors">
+          Clear search
+        </a>
+      </div>
+    }
+
+    @for (group of groups(); track group.subject + group.class) {
+      <section>
+        <h2 class="text-lg font-bold text-white mb-4 capitalize flex items-center gap-2.5">
+          <span class="w-8 h-8 rounded-xl flex items-center justify-center border {{ color(group.subject) }}">
+            <i class="fa-solid {{ icon(group.subject) }} text-sm"></i>
+          </span>
+          Class {{ group.class }} &middot; {{ group.subject }}
+        </h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 stagger">
+          @for (ch of group.chapters; track ch.chapter) {
+            <a [routerLink]="['/chapter']" [queryParams]="{ subject: ch.subject, class: ch.class, chapter: ch.chapter }"
+               class="animate-fade-in-up group block rounded-2xl border border-white/[0.08] bg-slate-900/75 backdrop-blur-md p-5
+                      hover:border-sky-500/50 hover:shadow-lg hover:shadow-sky-500/5 hover:-translate-y-0.5 transition-all duration-200">
+              <div class="font-semibold text-white group-hover:text-sky-400 transition-colors">{{ ch.chapter }}</div>
+              <div class="text-xs text-slate-400 mt-2.5 inline-flex items-center gap-1.5 bg-slate-950/60 border border-slate-800 rounded-full px-2.5 py-1">
+                <i class="fa-solid fa-clapperboard text-sky-400"></i> {{ ch.subtopic_count }} topic{{ ch.subtopic_count === 1 ? '' : 's' }}
+              </div>
+            </a>
+          }
+        </div>
+      </section>
+    }
+  </div>
+}

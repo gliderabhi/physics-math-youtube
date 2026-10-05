@@ -1,0 +1,23 @@
+{
+  "item": {
+    "subject": "physics",
+    "class": 11,
+    "chapter": "Gravitation",
+    "subtopic": "Escape velocity",
+    "content_type": "explainer",
+    "difficulty": null
+  },
+  "narration": {
+    "opening": "किसी planet की gravity से escape करना असल में कैसा दिखता है? चलिए Earth से कुछ objects launch करते हैं, और इस बार, उनकी energy को पूरे रास्ते track करते हैं, सिर्फ उन्हें उड़ते हुए नहीं देखते।",
+    "steps": [
+      "सबसे पहले, कुछ straight up launch करते हैं, escape velocity से slower speed पर। नीचे, white curve उसकी motion energy है, और purple curve gravity का pull है। देखिए कैसे white curve नीचे आकर purple curve से मिलता है, बिल्कुल flight के top पर, फिर वो वापस गिरता है और white curve फिर से ऊपर जाता है।",
+      "अब उस blue line को देखिए जो पीछे रह गई, वो है motion energy और gravity के pull का sum, यानी total energy। ध्यान दीजिए ये बिल्कुल flat है, energy कभी बनती या खत्म नहीं होती, सिर्फ motion और gravity के बीच move होती रहती है। और ध्यान दीजिए ये zero से नीचे है।",
+      "चलिए फिर से try करते हैं, इस बार एक angle पर, थोड़ा तेज़, लेकिन फिर भी escape velocity से कम। वही story, white और purple curves cross होते हैं, और नया orange total line भी flat है, फिर भी zero से नीचे, बस पहले से थोड़ा ऊपर।",
+      "आखिर में, वही angle, लेकिन अब escape velocity के आसपास। इस बार white motion-energy curve को देखिए, वो गिरता है, लेकिन purple curve से कभी नहीं मिलता। और नई green total line को देखिए, वो बिल्कुल zero पर बैठी है।",
+      "अब तीनों total energy lines को साथ में देखिए। Blue और orange zero से नीचे फंसी हैं, वो gravity का जो debt है, वही वजह है कि इन दोनों objects को वापस गिरना पड़ा। Green line zero पर है, कोई debt बचा नहीं, इसलिए gravity को उसे वापस खींचने का मौका ही नहीं मिलता।",
+      "यही पूरी idea है formula के पीछे। Escape velocity बस वो speed है जहां total energy, motion energy plus gravity का pull, बिल्कुल zero हो जाता है।",
+      "इस equation को rearrange करने पर, object का खुद का mass दोनों sides से पूरी तरह cancel हो जाता है। जो बचता है वो escape velocity का formula है, जो सिर्फ planet के mass और radius पर depend करता है, कभी इस बात पर नहीं कि आप क्या launch कर रहे हैं।"
+    ],
+    "closing": "Earth के लिए, वो critical speed लगभग ग्यारह point दो किलोमीटर per second निकलती है, चाहे आप किसी भी direction में launch करें।"
+  }
+}

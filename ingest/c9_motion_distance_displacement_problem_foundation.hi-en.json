@@ -1,0 +1,20 @@
+{
+  "item": {
+    "subject": "physics",
+    "class": 9,
+    "chapter": "Motion",
+    "subtopic": "Distance and displacement",
+    "content_type": "problem",
+    "difficulty": "foundation"
+  },
+  "narration": {
+    "opening": "एक लड़का पांच मीटर east की तरफ चलता है, फिर तीन मीटर north की तरफ, और आखिर में पांच मीटर वापस west की तरफ, वही line follow करते हुए जिस पर वो east गया था। उसकी total distance और starting point से उसका net displacement निकालिए।",
+    "steps": [
+      "लड़के की journey के तीन हिस्से हैं: पांच मीटर east, फिर तीन मीटर north, फिर पांच मीटर west। चलिए इस path को एक coordinate grid पर plot करते हैं।",
+      "Total distance बस उन सभी path lengths का sum है जो वो actually चला, चाहे direction कुछ भी हो। पांच plus तीन plus पांच, यानी तेरह मीटर।",
+      "अब displacement की बात करते हैं। ध्यान दीजिए पांच मीटर east और पांच मीटर west बिल्कुल cancel हो जाते हैं, क्योंकि वो उसी line पर वापस आ गया। Starting point से उसकी final position तक की straight line distance सिर्फ तीन मीटर north है।",
+      "ये एक बहुत अच्छा example है कि displacement, distance से कितना कम हो सकता है। भले ही उसने total तेरह मीटर चला, वो अपनी starting position से सिर्फ तीन मीटर दूर पहुंचा।"
+    ],
+    "closing": "Total distance तेरह मीटर है, जबकि displacement सिर्फ तीन मीटर, north की तरफ है।"
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "item": {
+    "subject": "physics",
+    "class": 9,
+    "chapter": "Motion",
+    "subtopic": "Distance and displacement",
+    "content_type": "problem",
+    "difficulty": "jee_advanced_neet"
+  },
+  "narration": {
+    "opening": "एक athlete सात मीटर radius वाले एक circular track पर दौड़ता है। Distance travelled और displacement की magnitude निकालिए जब athlete (a) आधा चक्कर पूरा करे, और (b) पूरा एक चक्कर पूरा करे। Pi को बाईस बटा सात लीजिए।",
+    "steps": [
+      "आधे चक्कर के लिए, athlete circle के बिल्कुल आधे हिस्से पर दौड़ता है। Distance covered आधी circumference होती है, pi गुना radius, जो pi को बाईस बटा सात और radius सात मीटर लेने पर बिल्कुल बाईस मीटर निकलती है।",
+      "लेकिन आधे चक्कर के बाद displacement सिर्फ circle के आर-पार की straight line है, यानी diameter। वो radius का दोगुना है, तो दो गुना सात, यानी चौदह मीटर।",
+      "अब पूरे चक्कर के लिए, athlete पूरे circle का एक चक्कर लगाता है। Distance पूरी circumference होती है, दो pi R, जो निकलती है चवालीस मीटर।",
+      "लेकिन ध्यान दीजिए, एक पूरा चक्कर लगाने के बाद, athlete बिल्कुल वहीं वापस आ जाता है जहां से शुरू किया था। तो भले ही distance covered एक बहुत बड़ा चवालीस मीटर है, displacement zero है।"
+    ],
+    "closing": "आधे चक्कर के लिए, distance बाईस मीटर है और displacement चौदह मीटर है। पूरे चक्कर के लिए, distance चवालीस मीटर है, लेकिन displacement zero है।"
+  }
+}

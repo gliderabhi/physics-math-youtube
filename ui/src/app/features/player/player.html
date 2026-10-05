@@ -1,0 +1,152 @@
+@if (loading()) {
+  <div class="flex items-center justify-center py-20 text-slate-500">
+    <span class="animate-pulse">Loading…</span>
+  </div>
+} @else {
+  <div class="space-y-5 animate-fade-in-up max-w-4xl">
+    <h1 class="text-xl sm:text-2xl font-extrabold text-white tracking-tight">{{ result()?.title ?? subtopic() }}</h1>
+
+    @switch (result()?.status) {
+      @case ('published') {
+        <div class="aspect-video w-full rounded-2xl overflow-hidden bg-black border border-slate-800 shadow-2xl shadow-black/40">
+          <iframe class="w-full h-full" [src]="embedUrl()" title="Video" frameborder="0" allowfullscreen></iframe>
+        </div>
+      }
+      @case ('local') {
+        <video class="w-full rounded-2xl bg-black border border-slate-800 shadow-2xl shadow-black/40" controls [src]="streamUrl(result()!.run_id!)"></video>
+      }
+      @default {
+        @if (!result()?.ncert_note && !result()?.ncert_problems?.length && !result()?.wiki_text) {
+          <div class="rounded-2xl border border-dashed border-slate-800 bg-slate-900/40 p-10 text-center text-slate-500">
+            <i class="fa-regular fa-circle-xmark text-2xl text-slate-600 mb-2"></i>
+            <p>Not available in this language yet.</p>
+            @if (result()?.available_languages?.length) {
+              <p class="mt-2 text-sm text-slate-600">Try: {{ result()!.available_languages.join(', ') }}</p>
+            }
+          </div>
+        } @else {
+          <div class="rounded-2xl border border-dashed border-slate-800 bg-slate-900/40 px-5 py-3 text-sm text-slate-500 flex items-center gap-2.5">
+            <i class="fa-regular fa-circle-xmark text-slate-600"></i>
+            Video not generated yet &mdash; explanation below.
+          </div>
+        }
+      }
+    }
+
+    @if (result()?.explanation; as exp) {
+      <div class="rounded-2xl glass-panel p-6 space-y-5">
+        @if (exp.problem_statement) {
+          <section>
+            <h2 class="text-sm font-bold text-sky-400 uppercase tracking-wide mb-2 flex items-center gap-2">
+              <i class="fa-solid fa-puzzle-piece"></i> The Problem
+            </h2>
+            <p class="text-slate-300 leading-relaxed">{{ exp.problem_statement }}</p>
+          </section>
+        } @else if (exp.intro) {
+          <section>
+            <h2 class="text-sm font-bold text-sky-400 uppercase tracking-wide mb-2 flex items-center gap-2">
+              <i class="fa-solid fa-book-open"></i> About this video
+            </h2>
+            <p class="text-slate-300 leading-relaxed">{{ exp.intro }}</p>
+          </section>
+        }
+
+        @if (exp.steps.length) {
+          <section>
+            <h2 class="text-sm font-bold text-sky-400 uppercase tracking-wide mb-3 flex items-center gap-2">
+              <i class="fa-solid {{ exp.problem_statement ? 'fa-shoe-prints' : 'fa-key' }}"></i>
+              {{ exp.problem_statement ? 'Step-by-step solution' : 'Key points' }}
+            </h2>
+            <ol class="space-y-3">
+              @for (step of exp.steps; track $index) {
+                <li class="flex gap-3">
+                  <span class="shrink-0 h-6 w-6 rounded-full bg-sky-500/20 border border-sky-500/30 text-sky-300 text-xs font-bold flex items-center justify-center mt-0.5">
+                    {{ $index + 1 }}
+                  </span>
+                  <div class="space-y-1.5">
+                    <p class="text-slate-300 leading-relaxed">{{ step.text }}</p>
+                    @if (step.latex) {
+                      <div class="inline-block bg-slate-950/60 border border-slate-800 rounded-md px-3 py-1.5 text-slate-200" [innerHTML]="renderLatex(step.latex)"></div>
+                    }
+                  </div>
+                </li>
+              }
+            </ol>
+          </section>
+        }
+
+        @if (exp.final_answer) {
+          <section class="rounded-xl bg-amber-500/10 border border-amber-500/30 px-4 py-3">
+            <h2 class="text-xs font-bold text-amber-400 uppercase tracking-wide mb-1 flex items-center gap-1.5">
+              <i class="fa-solid fa-circle-check"></i> Final Answer
+            </h2>
+            <p class="text-slate-100">{{ exp.final_answer }}</p>
+          </section>
+        } @else if (exp.summary) {
+          <section class="rounded-xl bg-sky-500/10 border border-sky-500/30 px-4 py-3">
+            <h2 class="text-xs font-bold text-sky-400 uppercase tracking-wide mb-1 flex items-center gap-1.5">
+              <i class="fa-solid fa-lightbulb"></i> Key takeaway
+            </h2>
+            <p class="text-slate-100">{{ exp.summary }}</p>
+          </section>
+        }
+      </div>
+    }
+
+    @if (result()?.ncert_note || result()?.ncert_problems?.length) {
+      <div class="rounded-2xl glass-panel p-6 space-y-5">
+        @if (result()?.ncert_note; as note) {
+          <section>
+            <h2 class="text-sm font-bold text-sky-400 uppercase tracking-wide mb-2 flex items-center gap-2">
+              <i class="fa-solid fa-book-open-reader"></i> NCERT Explanation
+            </h2>
+            <div [innerHTML]="formatNcertHtml(note)"></div>
+          </section>
+        }
+
+        @if (result()?.ncert_problems?.length) {
+          <section>
+            <h2 class="text-sm font-bold text-sky-400 uppercase tracking-wide mb-3 flex items-center gap-2">
+              <i class="fa-solid fa-pen-ruler"></i> Practice problems
+            </h2>
+            <div class="space-y-4">
+              @for (p of result()!.ncert_problems; track $index) {
+                <div class="rounded-xl bg-slate-950/40 border border-slate-800 p-4">
+                  <div [innerHTML]="formatNcertHtml(p.question)"></div>
+                  <div class="mt-3 pt-3 border-t border-slate-800/60">
+                    <span class="text-[10px] font-bold uppercase tracking-wider text-slate-500 block mb-1.5">Solution</span>
+                    <div [innerHTML]="formatNcertHtml(p.solution)"></div>
+                  </div>
+                </div>
+              }
+            </div>
+          </section>
+        }
+      </div>
+    }
+
+    @if (result()?.wiki_text; as note) {
+      <div class="rounded-2xl glass-panel p-6 space-y-5">
+        <section>
+          <h2 class="text-sm font-bold text-sky-400 uppercase tracking-wide mb-2 flex items-center gap-2">
+            <i class="fa-solid fa-book-open-reader"></i> Explanation
+          </h2>
+          <div [innerHTML]="formatNcertHtml(note, result()!.wiki_images)"></div>
+        </section>
+
+        <footer class="pt-3 border-t border-slate-800/60 text-[11px] text-slate-500 space-y-1">
+          <p>
+            Further reading:
+            <a [href]="result()!.wiki_source_url!" target="_blank" rel="noopener" class="text-sky-400 hover:underline">{{ result()!.wiki_title }}</a>
+            on Wikipedia.
+          </p>
+          @if (result()?.wiki_images?.length) {
+            @for (img of result()!.wiki_images; track img.url) {
+              <p>{{ img.title }} &mdash; {{ img.artist }}, {{ img.license }}, via Wikimedia Commons.</p>
+            }
+          }
+        </footer>
+      </div>
+    }
+  </div>
+}

@@ -1,0 +1,15 @@
+.venv/
+__pycache__/
+*.pyc
+output/
+videos/
+state/
+media/
+credentials/
+.env
+.DS_Store
+*.log
+node_modules/
+.angular/
+ui/dist/
+ui/src/styles.css
