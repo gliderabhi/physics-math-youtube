@@ -2,11 +2,10 @@ import { Component, inject, input, computed } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { ChaptersService } from '../../../core/services/chapters';
 import { ChapterSummary } from '../../../core/models/models';
-import { subjectIcon, subjectColor } from '../../../core/utils/subjects';
+import { subjectIcon, subjectColor, subjectName } from '../../../core/utils/subjects';
 
 interface ChapterGroup {
   subject: string;
-  class: number;
   chapters: ChapterSummary[];
 }
 
@@ -29,13 +28,13 @@ export class ChapterListComponent {
       ? all.filter((ch) => ch.chapter.toLowerCase().includes(term) || ch.subject.toLowerCase().includes(term))
       : all;
 
-    const bySubjectClass = new Map<string, ChapterGroup>();
+    const bySubject = new Map<string, ChapterGroup>();
     for (const ch of filtered) {
-      const key = `${ch.subject}-${ch.class}`;
-      if (!bySubjectClass.has(key)) bySubjectClass.set(key, { subject: ch.subject, class: ch.class, chapters: [] });
-      bySubjectClass.get(key)!.chapters.push(ch);
+      const key = ch.subject;
+      if (!bySubject.has(key)) bySubject.set(key, { subject: ch.subject, chapters: [] });
+      bySubject.get(key)!.chapters.push(ch);
     }
-    return Array.from(bySubjectClass.values()).sort((a, b) => a.class - b.class || a.subject.localeCompare(b.subject));
+    return Array.from(bySubject.values()).sort((a, b) => a.subject.localeCompare(b.subject));
   });
 
   icon(subject: string): string {
@@ -44,5 +43,9 @@ export class ChapterListComponent {
 
   color(subject: string): string {
     return subjectColor(subject);
+  }
+
+  subjectName(subject: string): string {
+    return subjectName(subject);
   }
 }

@@ -2,35 +2,18 @@
   <div class="flex items-center justify-center py-20 text-slate-500">
     <span class="animate-pulse">Loading…</span>
   </div>
-} @else {
+} @else if (result(); as res) {
   <div class="space-y-5 animate-fade-in-up max-w-4xl">
-    <h1 class="text-xl sm:text-2xl font-extrabold text-white tracking-tight">{{ result()?.title ?? subtopic() }}</h1>
+    <h1 class="text-xl sm:text-2xl font-extrabold text-white tracking-tight">
+      {{ res.title ?? res.wiki_title ?? subtopic() }}
+    </h1>
 
-    @switch (result()?.status) {
-      @case ('published') {
-        <div class="aspect-video w-full rounded-2xl overflow-hidden bg-black border border-slate-800 shadow-2xl shadow-black/40">
-          <iframe class="w-full h-full" [src]="embedUrl()" title="Video" frameborder="0" allowfullscreen></iframe>
-        </div>
-      }
-      @case ('local') {
-        <video class="w-full rounded-2xl bg-black border border-slate-800 shadow-2xl shadow-black/40" controls [src]="streamUrl(result()!.run_id!)"></video>
-      }
-      @default {
-        @if (!result()?.ncert_note && !result()?.ncert_problems?.length && !result()?.wiki_text) {
-          <div class="rounded-2xl border border-dashed border-slate-800 bg-slate-900/40 p-10 text-center text-slate-500">
-            <i class="fa-regular fa-circle-xmark text-2xl text-slate-600 mb-2"></i>
-            <p>Not available in this language yet.</p>
-            @if (result()?.available_languages?.length) {
-              <p class="mt-2 text-sm text-slate-600">Try: {{ result()!.available_languages.join(', ') }}</p>
-            }
-          </div>
-        } @else {
-          <div class="rounded-2xl border border-dashed border-slate-800 bg-slate-900/40 px-5 py-3 text-sm text-slate-500 flex items-center gap-2.5">
-            <i class="fa-regular fa-circle-xmark text-slate-600"></i>
-            Video not generated yet &mdash; explanation below.
-          </div>
-        }
-      }
+    @if (res.status === 'published' && res.youtube_video_id) {
+      <div class="aspect-video w-full rounded-2xl overflow-hidden bg-black border border-slate-800 shadow-2xl shadow-black/40">
+        <iframe class="w-full h-full" [src]="embedUrl()" title="Video" frameborder="0" allowfullscreen></iframe>
+      </div>
+    } @else if (res.run_id && (res.status === 'local' || res.status === 'published')) {
+      <video class="w-full rounded-2xl bg-black border border-slate-800 shadow-2xl shadow-black/40" controls [src]="streamUrl(res.run_id)"></video>
     }
 
     @if (result()?.explanation; as exp) {
@@ -125,7 +108,57 @@
       </div>
     }
 
-    @if (result()?.wiki_text; as note) {
+    @if (result()?.wiki_html; as wikiHtml) {
+      <div class="rounded-2xl glass-panel p-6 space-y-6">
+        @if (result()?.parts?.length) {
+          <section class="space-y-4">
+            @for (part of result()!.parts!; track $index) {
+              <div class="rounded-xl bg-slate-900/70 border border-slate-800/90 p-5 hover:border-slate-700 transition-all">
+                <div class="mb-3">
+                  <h3 class="text-base font-bold text-slate-100 tracking-tight">{{ part.heading }}</h3>
+                </div>
+
+                <div class="wiki-rendered-content text-slate-300 leading-relaxed text-sm" [innerHTML]="sanitizedWikiHtml(part.paragraph_html || part.paragraph)"></div>
+
+                @if (part.diagram_url) {
+                  <div class="mt-4 pt-3 border-t border-slate-800/60 flex flex-col items-center">
+                    <figure class="max-w-md w-full text-center">
+                      <img [src]="part.diagram_url" [alt]="part.diagram_caption || part.heading" class="rounded-lg border border-slate-800 shadow-lg max-h-80 mx-auto object-contain bg-slate-950/60 p-2" />
+                      @if (part.diagram_caption) {
+                        <figcaption class="text-xs text-slate-400 mt-2 italic px-2">{{ part.diagram_caption }}</figcaption>
+                      }
+                    </figure>
+                  </div>
+                }
+              </div>
+            }
+          </section>
+        } @else {
+          <div class="wiki-rendered-content text-slate-300 leading-relaxed text-sm" [innerHTML]="sanitizedWikiHtml(wikiHtml)"></div>
+        }
+
+        <!-- Full article reference accordion -->
+        <details class="group rounded-xl border border-slate-800/60 bg-slate-900/30 p-4 transition-all">
+          <summary class="flex items-center justify-between cursor-pointer list-none text-xs font-bold text-slate-400 hover:text-sky-400 uppercase tracking-wide">
+            <span class="flex items-center gap-2">
+              <i class="fa-solid fa-book-open-reader"></i> Full Reference Article (Wikipedia)
+            </span>
+            <i class="fa-solid fa-chevron-down text-slate-500 group-open:rotate-180 transition-transform"></i>
+          </summary>
+          <div class="mt-4 pt-4 border-t border-slate-800/80 wiki-rendered-content" [innerHTML]="sanitizedWikiHtml(wikiHtml)"></div>
+        </details>
+
+        <footer class="pt-2 text-xs text-slate-500 flex flex-wrap items-center justify-between gap-2">
+          <p>
+            Reference:
+            <a [href]="result()!.wiki_source_url!" target="_blank" rel="noopener" class="text-sky-400 hover:underline">
+              {{ result()!.wiki_title }} on Wikipedia
+            </a>
+            (CC BY-SA 4.0)
+          </p>
+        </footer>
+      </div>
+    } @else if (result()?.wiki_text; as note) {
       <div class="rounded-2xl glass-panel p-6 space-y-5">
         <section>
           <h2 class="text-sm font-bold text-sky-400 uppercase tracking-wide mb-2 flex items-center gap-2">
@@ -148,5 +181,15 @@
         </footer>
       </div>
     }
+  </div>
+} @else {
+  <div class="rounded-2xl border border-dashed border-slate-800 bg-slate-900/40 p-12 text-center text-slate-400 max-w-xl mx-auto my-12">
+    <i class="fa-solid fa-circle-info text-3xl text-sky-400 mb-3"></i>
+    <h3 class="text-lg font-bold text-white mb-1">{{ subtopic() }}</h3>
+    <p class="text-sm text-slate-400 mb-4">Topic content could not be loaded.</p>
+    <a [routerLink]="['/chapter']" [queryParams]="{ subject: subject(), class: class_(), chapter: chapter() }"
+       class="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs font-semibold text-slate-200 transition-colors">
+      <i class="fa-solid fa-arrow-left"></i> Back to {{ chapter() }}
+    </a>
   </div>
 }

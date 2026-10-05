@@ -30,8 +30,19 @@ export class ApiService {
     return this.http.get<ChapterSummary[]>(`${BASE}/physics-service/api/chapters`);
   }
 
-  getSubtopics(subject: string, classValue: string, chapter: string): Observable<ChapterDetail> {
-    const params = new HttpParams().set('subject', subject).set('class', classValue).set('chapter', chapter);
+  getSubtopics(subject: string, arg2: string, arg3?: string): Observable<ChapterDetail> {
+    let classValue: string | undefined;
+    let chapter: string;
+    if (arg3 !== undefined) {
+      classValue = arg2;
+      chapter = arg3;
+    } else {
+      chapter = arg2;
+    }
+    let params = new HttpParams().set('subject', subject).set('chapter', chapter);
+    if (classValue) {
+      params = params.set('class', classValue);
+    }
     return this.http.get<ChapterDetail>(`${BASE}/physics-service/api/subtopics`, { params });
   }
 
@@ -44,14 +55,16 @@ export class ApiService {
     difficulty: string,
     language: string,
   ): Observable<ResolveResult> {
-    const params = new HttpParams()
+    let params = new HttpParams()
       .set('subject', subject)
-      .set('class', classValue)
       .set('chapter', chapter)
       .set('subtopic', subtopic)
       .set('content_type', contentType)
       .set('difficulty', difficulty)
       .set('language', language);
+    if (classValue) {
+      params = params.set('class', classValue);
+    }
     return this.http.get<ResolveResult>(`${BASE}/physics-service/api/resolve`, { params });
   }
 

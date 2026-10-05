@@ -106,6 +106,40 @@ CREATE TABLE IF NOT EXISTS topic_problems (
     created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     UNIQUE KEY uq_topic_problems (subject, class, chapter, subtopic, language)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE IF NOT EXISTS subtopic_wiki_html (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    subject VARCHAR(20) NOT NULL,
+    class INT NOT NULL,
+    chapter VARCHAR(150) NOT NULL,
+    subtopic VARCHAR(200) NOT NULL,
+    language VARCHAR(20) NOT NULL DEFAULT 'en',
+    wiki_title VARCHAR(255) NOT NULL,
+    wiki_url VARCHAR(500) NOT NULL,
+    html_content MEDIUMTEXT NOT NULL,
+    has_diagrams TINYINT(1) DEFAULT 0,
+    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    UNIQUE KEY uq_subtopic_wiki_lang (subject, class, chapter, subtopic, language)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS subtopic_wiki_parts (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    subject VARCHAR(20) NOT NULL,
+    class INT NOT NULL,
+    chapter VARCHAR(150) NOT NULL,
+    subtopic VARCHAR(200) NOT NULL,
+    language VARCHAR(20) NOT NULL DEFAULT 'en',
+    part_index INT NOT NULL,
+    heading VARCHAR(255) NOT NULL,
+    paragraph TEXT NOT NULL,
+    paragraph_html MEDIUMTEXT NOT NULL,
+    diagram_url VARCHAR(500),
+    diagram_caption TEXT,
+    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    UNIQUE KEY uq_subtopic_part (subject, class, chapter, subtopic, language, part_index)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 """
 
 

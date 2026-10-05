@@ -65,13 +65,20 @@ def _as_url(img: dict) -> dict:
     }
 
 
-def wiki_for(subject: str, class_: int, chapter: str, subtopic: str) -> dict | None:
+def wiki_for(subject: str, chapter: str, subtopic: str, class_: int | None = None) -> dict | None:
     with get_conn() as conn, conn.cursor() as cur:
-        cur.execute(
-            "SELECT wiki_title, wiki_text, wiki_source_url, wiki_images FROM wiki_notes "
-            "WHERE subject=%s AND class=%s AND chapter=%s AND subtopic=%s",
-            (subject, class_, chapter, subtopic),
-        )
+        if class_ is not None:
+            cur.execute(
+                "SELECT wiki_title, wiki_text, wiki_source_url, wiki_images FROM wiki_notes "
+                "WHERE subject=%s AND class=%s AND chapter=%s AND subtopic=%s",
+                (subject, class_, chapter, subtopic),
+            )
+        else:
+            cur.execute(
+                "SELECT wiki_title, wiki_text, wiki_source_url, wiki_images FROM wiki_notes "
+                "WHERE subject=%s AND chapter=%s AND subtopic=%s LIMIT 1",
+                (subject, chapter, subtopic),
+            )
         row = cur.fetchone()
     if not row:
         return None
@@ -81,6 +88,65 @@ def wiki_for(subject: str, class_: int, chapter: str, subtopic: str) -> dict | N
         "source_url": row["wiki_source_url"],
         "images": [_as_url(img) for img in json.loads(row["wiki_images"])],
     }
+
+
+def wiki_html_for(subject: str, chapter: str, subtopic: str, class_: int | None = None, language: str = "en") -> dict | None:
+    lang_candidates = [language]
+    if language in ("hi", "hi-en"):
+        lang_candidates = ["hi-en", "hi", "en"]
+    elif language != "en":
+        lang_candidates.append("en")
+
+    with get_conn() as conn, conn.cursor() as cur:
+        for lang in lang_candidates:
+            if class_ is not None:
+                cur.execute(
+                    "SELECT wiki_title, wiki_url, html_content, has_diagrams FROM subtopic_wiki_html "
+                    "WHERE subject=%s AND class=%s AND chapter=%s AND subtopic=%s AND language=%s",
+                    (subject, class_, chapter, subtopic, lang),
+                )
+            else:
+                cur.execute(
+                    "SELECT wiki_title, wiki_url, html_content, has_diagrams FROM subtopic_wiki_html "
+                    "WHERE subject=%s AND chapter=%s AND subtopic=%s AND language=%s LIMIT 1",
+                    (subject, chapter, subtopic, lang),
+                )
+            row = cur.fetchone()
+            if row:
+                return {
+                    "title": row["wiki_title"],
+                    "url": row["wiki_url"],
+                    "html": row["html_content"],
+                    "has_diagrams": bool(row["has_diagrams"]),
+                }
+    return None
+
+
+def save_subtopic_html(subject: str, class_: int, chapter: str, subtopic: str, data: dict, language: str = "en") -> None:
+    with get_conn() as conn, conn.cursor() as cur:
+        cur.execute(
+            """
+            INSERT INTO subtopic_wiki_html
+                (subject, class, chapter, subtopic, language, wiki_title, wiki_url, html_content, has_diagrams)
+            VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)
+            ON DUPLICATE KEY UPDATE
+                wiki_title = VALUES(wiki_title),
+                wiki_url = VALUES(wiki_url),
+                html_content = VALUES(html_content),
+                has_diagrams = VALUES(has_diagrams)
+            """,
+            (
+                subject,
+                class_,
+                chapter,
+                subtopic,
+                language,
+                data["title"],
+                data["source_url"] if "source_url" in data else data.get("url", ""),
+                data["html"],
+                data["has_diagrams"],
+            ),
+        )
 
 
 def update_images(subject: str, class_: int, chapter: str, subtopic: str, images: list[dict]) -> int:
@@ -105,3 +171,74 @@ def existing_keys() -> set[tuple]:
     with get_conn() as conn, conn.cursor() as cur:
         cur.execute("SELECT subject, class, chapter, subtopic FROM wiki_notes")
         return {(r["subject"], r["class"], r["chapter"], r["subtopic"]) for r in cur.fetchall()}
+
+
+def wiki_parts_for(subject: str, chapter: str, subtopic: str, class_: int | None = None, language: str = "en") -> list[dict]:
+    lang_candidates = [language]
+    if language in ("hi", "hi-en"):
+        lang_candidates = ["hi-en", "hi", "en"]
+    elif language != "en":
+        lang_candidates.append("en")
+
+    with get_conn() as conn, conn.cursor() as cur:
+        for lang in lang_candidates:
+            if class_ is not None:
+                cur.execute(
+                    "SELECT part_index, heading, paragraph, paragraph_html, diagram_url, diagram_caption "
+                    "FROM subtopic_wiki_parts "
+                    "WHERE subject=%s AND class=%s AND chapter=%s AND subtopic=%s AND language=%s "
+                    "ORDER BY part_index ASC",
+                    (subject, class_, chapter, subtopic, lang),
+                )
+            else:
+                cur.execute(
+                    "SELECT part_index, heading, paragraph, paragraph_html, diagram_url, diagram_caption "
+                    "FROM subtopic_wiki_parts "
+                    "WHERE subject=%s AND chapter=%s AND subtopic=%s AND language=%s "
+                    "ORDER BY part_index ASC",
+                    (subject, chapter, subtopic, lang),
+                )
+            rows = cur.fetchall()
+            if rows:
+                return [
+                    {
+                        "part_index": r["part_index"],
+                        "heading": r["heading"],
+                        "paragraph": r["paragraph"],
+                        "paragraph_html": r["paragraph_html"],
+                        "diagram_url": r["diagram_url"],
+                        "diagram_caption": r["diagram_caption"],
+                    }
+                    for r in rows
+                ]
+    return []
+
+
+def save_subtopic_parts(subject: str, class_: int, chapter: str, subtopic: str, language: str, parts: list[dict]) -> None:
+    with get_conn() as conn, conn.cursor() as cur:
+        cur.execute(
+            "DELETE FROM subtopic_wiki_parts WHERE subject=%s AND class=%s AND chapter=%s AND subtopic=%s AND language=%s",
+            (subject, class_, chapter, subtopic, language),
+        )
+        for p in parts:
+            cur.execute(
+                """
+                INSERT INTO subtopic_wiki_parts
+                    (subject, class, chapter, subtopic, language, part_index, heading, paragraph, paragraph_html, diagram_url, diagram_caption)
+                VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+                """,
+                (
+                    subject,
+                    class_,
+                    chapter,
+                    subtopic,
+                    language,
+                    p["part_index"],
+                    p["heading"],
+                    p["paragraph"],
+                    p.get("paragraph_html", ""),
+                    p.get("diagram_url"),
+                    p.get("diagram_caption"),
+                ),
+            )
+

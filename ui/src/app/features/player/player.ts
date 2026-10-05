@@ -1,4 +1,5 @@
 import { Component, inject, input, signal, effect } from '@angular/core';
+import { RouterLink } from '@angular/router';
 import { DomSanitizer, SafeResourceUrl, SafeHtml } from '@angular/platform-browser';
 import { renderToString as katexRenderToString } from 'katex';
 import { ApiService } from '../../core/services/api';
@@ -8,7 +9,7 @@ import { ResolveResult, WikiImage } from '../../core/models/models';
 
 @Component({
   selector: 'app-player',
-  imports: [],
+  imports: [RouterLink],
   templateUrl: './player.html',
 })
 export class PlayerComponent {
@@ -67,6 +68,11 @@ export class PlayerComponent {
     } catch {
       return this.sanitizer.bypassSecurityTrustHtml(latex);
     }
+  }
+
+  sanitizedWikiHtml(html: string): SafeHtml {
+    if (!html) return '';
+    return this.sanitizer.bypassSecurityTrustHtml(html);
   }
 
   // Spelled-out math words that legitimately appear inside a formula (sin(theta), 2(pi)sqrt(m/k))

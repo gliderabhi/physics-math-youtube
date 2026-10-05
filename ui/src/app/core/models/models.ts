@@ -22,6 +22,10 @@ export interface ChapterSummary {
   class: number;
   chapter: string;
   subtopic_count: number;
+  subtopics?: string[];
+  has_video?: boolean;
+  video_count?: number;
+  video_subtopics?: string[];
 }
 
 export interface SubtopicItem {
@@ -41,6 +45,7 @@ export interface TextProblem {
 export interface SubtopicGroup {
   subtopic: string;
   items: SubtopicItem[];
+  has_video?: boolean;
 }
 
 export interface ChapterDetail {
@@ -71,6 +76,15 @@ export interface WikiImage {
   artist: string;
 }
 
+export interface SubtopicPart {
+  part_index: number;
+  heading: string;
+  paragraph: string;
+  paragraph_html: string;
+  diagram_url: string | null;
+  diagram_caption: string | null;
+}
+
 export interface ResolveResult {
   status: 'published' | 'local' | 'not_available';
   run_id: string | null;
@@ -82,6 +96,9 @@ export interface ResolveResult {
   ncert_problems: TextProblem[];
   wiki_title: string | null;
   wiki_text: string | null;
+  wiki_html?: string | null;
+  parts?: SubtopicPart[];
+  has_diagrams?: boolean;
   wiki_source_url: string | null;
   wiki_images: WikiImage[];
 }

@@ -92,55 +92,166 @@
 
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex flex-col md:flex-row gap-6">
     <aside class="hidden md:block w-96 shrink-0">
-      <nav class="w-96 sticky top-22 max-h-[calc(100vh-6rem)] overflow-y-auto overflow-x-hidden custom-scrollbar glass-panel rounded-2xl p-3 space-y-1">
-        @for (group of subjectGroups(); track group.subject) {
-          <div class="min-w-0">
-            <button (click)="toggleSubject(group.subject)"
-                    class="w-full flex items-center gap-2 px-2.5 py-2 rounded-lg text-sm font-bold text-white hover:bg-slate-900/80 transition-colors">
-              <i class="fa-solid {{ subjectIcon(group.subject) }} text-sky-400 w-3 shrink-0"></i>
-              <span class="flex-1 min-w-0 text-left truncate">{{ subjectName(group.subject) }}</span>
-              <i class="fa-solid fa-chevron-down text-[10px] text-slate-600 transition-transform shrink-0" [class.rotate-180]="isSubjectOpen(group.subject)"></i>
-            </button>
+      <nav class="w-96 sticky top-22 max-h-[calc(100vh-6rem)] overflow-y-auto overflow-x-hidden custom-scrollbar glass-panel rounded-2xl p-3 space-y-3">
+        <!-- Super Dropdown 1: With Video -->
+        <div class="rounded-xl border border-emerald-500/20 bg-slate-900/60 overflow-hidden shadow-sm">
+          <button (click)="toggleSuper('with_video')"
+                  class="w-full flex items-center justify-between px-3 py-2.5 bg-gradient-to-r from-emerald-500/10 via-slate-900/80 to-transparent hover:from-emerald-500/15 transition-all text-left">
+            <div class="flex items-center gap-2 min-w-0">
+              <span class="w-6 h-6 rounded-lg bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 flex items-center justify-center shrink-0">
+                <i class="fa-solid fa-circle-play text-xs"></i>
+              </span>
+              <span class="text-xs font-bold uppercase tracking-wider text-emerald-300">With Video</span>
+              <span class="rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 text-[10px] font-bold px-2 py-0.5">
+                {{ totalWithVideoCount() }}
+              </span>
+            </div>
+            <i class="fa-solid fa-chevron-down text-[10px] text-emerald-400/70 transition-transform shrink-0" [class.rotate-180]="superWithVideoOpen()"></i>
+          </button>
 
-            @if (isSubjectOpen(group.subject)) {
-              <div class="ml-2 pl-2 border-l border-slate-800 space-y-0.5 mt-0.5 mb-1 min-w-0">
-                @for (ch of group.chapters; track ch.class + ch.chapter) {
-                  <div class="min-w-0">
-                    <div class="flex items-center gap-0.5 min-w-0">
-                      <a [routerLink]="['/chapter']" [queryParams]="{ subject: ch.subject, class: ch.class, chapter: ch.chapter }"
-                         (click)="toggleChapter(ch)"
-                         class="flex-1 min-w-0 flex items-center gap-2 px-2.5 py-1.5 rounded-lg text-sm font-semibold text-slate-200 hover:bg-slate-900/80 hover:text-white truncate transition-colors">
-                        <span class="truncate">{{ ch.chapter }}</span>
-                      </a>
-                      <button (click)="toggleChapter(ch)"
-                              class="w-6 h-6 shrink-0 flex items-center justify-center text-slate-600 hover:text-white transition-colors">
-                        <i class="fa-solid fa-chevron-down text-[10px] transition-transform" [class.rotate-180]="isChapterOpen(ch)"></i>
-                      </button>
-                    </div>
-                    @if (isChapterOpen(ch)) {
-                      @let subtopics = subtopicsFor(ch);
-                      <div class="ml-2 pl-2 border-l border-slate-800 space-y-0.5 mb-1 min-w-0">
-                        @if (subtopics === 'loading') {
-                          <p class="px-2.5 py-1 text-xs text-slate-500 truncate">Loading&hellip;</p>
-                        } @else if (subtopics && subtopics.length) {
-                          @for (st of subtopics; track st.subtopic) {
-                            <a [routerLink]="['/player']"
-                               [queryParams]="{ subject: ch.subject, class: ch.class, chapter: ch.chapter, subtopic: st.subtopic, contentType: 'explainer', difficulty: '' }"
-                               class="block px-2.5 py-1.5 rounded-lg text-xs text-slate-400 hover:bg-slate-900/80 hover:text-slate-100 truncate transition-colors">
-                              {{ st.subtopic }}
-                            </a>
-                          }
-                        } @else if (subtopics) {
-                          <p class="px-2.5 py-1 text-xs text-slate-500">No topics yet</p>
-                        }
-                      </div>
+          @if (superWithVideoOpen()) {
+            <div class="p-2 space-y-1 border-t border-emerald-500/10">
+              @for (group of videoSubjectGroups(); track group.subject) {
+                <div class="min-w-0">
+                  <button (click)="toggleSubject('with_video', group.subject)"
+                          class="w-full flex items-center gap-2 px-2.5 py-1.5 rounded-lg text-sm font-bold text-slate-200 hover:bg-slate-800/60 hover:text-white transition-colors">
+                    <i class="fa-solid {{ subjectIcon(group.subject) }} text-emerald-400 w-3 shrink-0"></i>
+                    <span class="flex-1 min-w-0 text-left truncate">{{ subjectName(group.subject) }}</span>
+                    @if (group.chapters.length) {
+                      <span class="text-[10px] text-slate-500 font-normal">({{ group.totalVideos }} videos)</span>
                     }
-                  </div>
-                }
-              </div>
-            }
-          </div>
-        }
+                    <i class="fa-solid fa-chevron-down text-[10px] text-slate-600 transition-transform shrink-0" [class.rotate-180]="isSubjectOpen('with_video', group.subject)"></i>
+                  </button>
+
+                  @if (isSubjectOpen('with_video', group.subject)) {
+                    <div class="ml-2 pl-2 border-l border-emerald-500/20 space-y-0.5 mt-0.5 mb-1 min-w-0">
+                      @if (!group.chapters.length) {
+                        <p class="px-2.5 py-1.5 text-xs text-slate-500 italic">No videos generated yet</p>
+                      } @else {
+                        @for (ch of group.chapters; track ch.class + ch.chapter) {
+                          <div class="min-w-0">
+                            <div class="flex items-center gap-0.5 min-w-0">
+                              <a [routerLink]="['/chapter']" [queryParams]="{ subject: ch.subject, class: ch.class, chapter: ch.chapter }"
+                                 (click)="toggleChapter('with_video', ch)"
+                                 class="flex-1 min-w-0 flex items-center justify-between gap-2 px-2.5 py-1.5 rounded-lg text-xs font-semibold text-slate-200 hover:bg-slate-800/70 hover:text-white truncate transition-colors">
+                                <span class="truncate">{{ ch.chapter }}</span>
+                                <span class="text-[10px] text-emerald-400/80 font-mono shrink-0">{{ ch.video_count ?? ch.video_subtopics?.length ?? 0 }}</span>
+                              </a>
+                              <button (click)="toggleChapter('with_video', ch)"
+                                      class="w-6 h-6 shrink-0 flex items-center justify-center text-slate-500 hover:text-white transition-colors">
+                                <i class="fa-solid fa-chevron-down text-[10px] transition-transform" [class.rotate-180]="isChapterOpen('with_video', ch)"></i>
+                              </button>
+                            </div>
+                            @if (isChapterOpen('with_video', ch)) {
+                              @let subtopics = subtopicsFor('with_video', ch);
+                              <div class="ml-2 pl-2 border-l border-slate-800 space-y-0.5 mb-1 min-w-0">
+                                @if (subtopics === 'loading') {
+                                  <p class="px-2.5 py-1 text-xs text-slate-500 truncate">Loading&hellip;</p>
+                                } @else if (subtopics && subtopics.length) {
+                                  @for (st of subtopics; track st) {
+                                    <a [routerLink]="['/player']"
+                                       [queryParams]="{ subject: ch.subject, class: ch.class, chapter: ch.chapter, subtopic: st, contentType: 'explainer', difficulty: '' }"
+                                       class="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs text-slate-300 hover:bg-slate-800/80 hover:text-emerald-300 truncate transition-colors">
+                                      <i class="fa-solid fa-play text-[8px] text-emerald-400 shrink-0"></i>
+                                      <span class="truncate">{{ st }}</span>
+                                    </a>
+                                  }
+                                } @else if (subtopics) {
+                                  <p class="px-2.5 py-1 text-xs text-slate-500">No videos in this chapter</p>
+                                }
+                              </div>
+                            }
+                          </div>
+                        }
+                      }
+                    </div>
+                  }
+                </div>
+              }
+            </div>
+          }
+        </div>
+
+        <!-- Super Dropdown 2: Without Video -->
+        <div class="rounded-xl border border-slate-800 bg-slate-900/60 overflow-hidden shadow-sm">
+          <button (click)="toggleSuper('without_video')"
+                  class="w-full flex items-center justify-between px-3 py-2.5 bg-gradient-to-r from-sky-500/10 via-slate-900/80 to-transparent hover:from-sky-500/15 transition-all text-left">
+            <div class="flex items-center gap-2 min-w-0">
+              <span class="w-6 h-6 rounded-lg bg-sky-500/20 border border-sky-500/30 text-sky-400 flex items-center justify-center shrink-0">
+                <i class="fa-solid fa-book-open text-xs"></i>
+              </span>
+              <span class="text-xs font-bold uppercase tracking-wider text-sky-300">Without Video</span>
+              <span class="rounded-full bg-sky-500/20 text-sky-300 border border-sky-500/30 text-[10px] font-bold px-2 py-0.5">
+                {{ totalWithoutVideoCount() }}
+              </span>
+            </div>
+            <i class="fa-solid fa-chevron-down text-[10px] text-sky-400/70 transition-transform shrink-0" [class.rotate-180]="superWithoutVideoOpen()"></i>
+          </button>
+
+          @if (superWithoutVideoOpen()) {
+            <div class="p-2 space-y-1 border-t border-slate-800">
+              @for (group of nonVideoSubjectGroups(); track group.subject) {
+                <div class="min-w-0">
+                  <button (click)="toggleSubject('without_video', group.subject)"
+                          class="w-full flex items-center gap-2 px-2.5 py-1.5 rounded-lg text-sm font-bold text-slate-200 hover:bg-slate-800/60 hover:text-white transition-colors">
+                    <i class="fa-solid {{ subjectIcon(group.subject) }} text-sky-400 w-3 shrink-0"></i>
+                    <span class="flex-1 min-w-0 text-left truncate">{{ subjectName(group.subject) }}</span>
+                    @if (group.chapters.length) {
+                      <span class="text-[10px] text-slate-500 font-normal">({{ group.totalTopics }} topics)</span>
+                    }
+                    <i class="fa-solid fa-chevron-down text-[10px] text-slate-600 transition-transform shrink-0" [class.rotate-180]="isSubjectOpen('without_video', group.subject)"></i>
+                  </button>
+
+                  @if (isSubjectOpen('without_video', group.subject)) {
+                    <div class="ml-2 pl-2 border-l border-slate-800 space-y-0.5 mt-0.5 mb-1 min-w-0">
+                      @if (!group.chapters.length) {
+                        <p class="px-2.5 py-1.5 text-xs text-slate-500 italic">No topics</p>
+                      } @else {
+                        @for (ch of group.chapters; track ch.class + ch.chapter) {
+                          <div class="min-w-0">
+                            <div class="flex items-center gap-0.5 min-w-0">
+                              <a [routerLink]="['/chapter']" [queryParams]="{ subject: ch.subject, class: ch.class, chapter: ch.chapter }"
+                                 (click)="toggleChapter('without_video', ch)"
+                                 class="flex-1 min-w-0 flex items-center justify-between gap-2 px-2.5 py-1.5 rounded-lg text-xs font-semibold text-slate-200 hover:bg-slate-800/70 hover:text-white truncate transition-colors">
+                                <span class="truncate">{{ ch.chapter }}</span>
+                                <span class="text-[10px] text-slate-500 font-mono shrink-0">
+                                  {{ (ch.subtopic_count || ch.subtopics?.length || 0) - (ch.video_count ?? ch.video_subtopics?.length ?? 0) }}
+                                </span>
+                              </a>
+                              <button (click)="toggleChapter('without_video', ch)"
+                                      class="w-6 h-6 shrink-0 flex items-center justify-center text-slate-500 hover:text-white transition-colors">
+                                <i class="fa-solid fa-chevron-down text-[10px] transition-transform" [class.rotate-180]="isChapterOpen('without_video', ch)"></i>
+                              </button>
+                            </div>
+                            @if (isChapterOpen('without_video', ch)) {
+                              @let subtopics = subtopicsFor('without_video', ch);
+                              <div class="ml-2 pl-2 border-l border-slate-800 space-y-0.5 mb-1 min-w-0">
+                                @if (subtopics === 'loading') {
+                                  <p class="px-2.5 py-1 text-xs text-slate-500 truncate">Loading&hellip;</p>
+                                } @else if (subtopics && subtopics.length) {
+                                  @for (st of subtopics; track st) {
+                                    <a [routerLink]="['/player']"
+                                       [queryParams]="{ subject: ch.subject, class: ch.class, chapter: ch.chapter, subtopic: st, contentType: 'explainer', difficulty: '' }"
+                                       class="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs text-slate-400 hover:bg-slate-800/80 hover:text-slate-100 truncate transition-colors">
+                                      <i class="fa-regular fa-file-lines text-[8px] text-slate-500 shrink-0"></i>
+                                      <span class="truncate">{{ st }}</span>
+                                    </a>
+                                  }
+                                } @else if (subtopics) {
+                                  <p class="px-2.5 py-1 text-xs text-slate-500">No topics</p>
+                                }
+                              </div>
+                            }
+                          </div>
+                        }
+                      }
+                    </div>
+                  }
+                </div>
+              }
+            </div>
+          }
+        </div>
       </nav>
     </aside>
 

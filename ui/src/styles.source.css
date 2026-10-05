@@ -67,4 +67,132 @@
     box-shadow: 0 0 20px -3px rgba(14, 165, 233, 0.35);
     border-color: rgba(56, 189, 248, 0.5);
   }
+
+  /* Wikipedia Content Renderer - Dark Theme Safe */
+  .wiki-rendered-content {
+    color: #cbd5e1;
+    font-size: 0.95rem;
+    line-height: 1.8;
+  }
+  .wiki-rendered-content .sidebar,
+  .wiki-rendered-content .mw-empty-elt {
+    display: none !important;
+  }
+  .wiki-rendered-content h1,
+  .wiki-rendered-content h2 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #f8fafc;
+    margin-top: 1.75rem;
+    margin-bottom: 0.75rem;
+    padding-bottom: 0.35rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  }
+  .wiki-rendered-content h3 {
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: #38bdf8;
+    margin-top: 1.25rem;
+    margin-bottom: 0.5rem;
+  }
+  .wiki-rendered-content h4 {
+    font-size: 0.92rem;
+    font-weight: 600;
+    color: #94a3b8;
+    margin-top: 1rem;
+    margin-bottom: 0.35rem;
+  }
+  .wiki-rendered-content p {
+    margin-bottom: 1rem;
+  }
+  .wiki-rendered-content ul {
+    list-style-type: disc;
+    padding-left: 1.5rem;
+    margin-bottom: 1rem;
+  }
+  .wiki-rendered-content ol {
+    list-style-type: decimal;
+    padding-left: 1.5rem;
+    margin-bottom: 1rem;
+  }
+  .wiki-rendered-content li {
+    margin-bottom: 0.35rem;
+  }
+  .wiki-rendered-content a {
+    color: #38bdf8;
+    text-decoration: none;
+    transition: color 0.15s ease;
+  }
+  .wiki-rendered-content a:hover {
+    color: #7dd3fc;
+    text-decoration: underline;
+  }
+  .wiki-rendered-content figure {
+    margin: 1.75rem auto;
+    padding: 0.85rem;
+    background: rgba(2, 6, 23, 0.55);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 0.85rem;
+    max-width: 90%;
+    text-align: center;
+  }
+  .wiki-rendered-content figure img {
+    margin: 0 auto;
+    max-height: 420px;
+    object-fit: contain;
+    border-radius: 0.5rem;
+  }
+  .wiki-rendered-content figcaption {
+    font-size: 0.82rem;
+    color: #94a3b8;
+    margin-top: 0.6rem;
+    line-height: 1.5;
+  }
+  .wiki-rendered-content table {
+    width: 100%;
+    margin: 1.25rem 0;
+    border-collapse: collapse;
+    background: rgba(2, 6, 23, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 0.5rem;
+    overflow: hidden;
+  }
+  .wiki-rendered-content th {
+    background: rgba(15, 23, 42, 0.85);
+    color: #f1f5f9;
+    font-weight: 600;
+    text-align: left;
+    padding: 0.6rem 0.8rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    font-size: 0.85rem;
+  }
+  .wiki-rendered-content td {
+    padding: 0.5rem 0.8rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    color: #cbd5e1;
+    font-size: 0.85rem;
+  }
+  .wiki-rendered-content blockquote {
+    border-left: 3px solid #38bdf8;
+    padding-left: 1rem;
+    margin: 1rem 0;
+    color: #94a3b8;
+    font-style: italic;
+  }
+  .wiki-rendered-content code {
+    background: rgba(2, 6, 23, 0.6);
+    color: #38bdf8;
+    padding: 0.15rem 0.35rem;
+    border-radius: 0.25rem;
+    font-size: 0.85em;
+  }
+  .wiki-rendered-content .mwe-math-element,
+  .wiki-rendered-content math {
+    display: inline-block;
+    color: #f8fafc;
+    vertical-align: middle;
+  }
+  .wiki-rendered-content .mwe-math-fallback-image-inline {
+    filter: invert(1) hue-rotate(180deg);
+  }
 }

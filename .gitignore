@@ -14,3 +14,16 @@ node_modules/
 .angular/
 ui/dist/
 ui/src/styles.css
+
+# Scratch, logs, and temporary audits
+*.tmp
+test_*.py
+check_remote*.py
+check_all_matches.py
+inspect_*.py
+all_en_wiki_rows.json
+full_audit.json
+audit_readable.txt
+remaining_review.txt
+generate_review_list.py
+syllabus_original_backup.json
