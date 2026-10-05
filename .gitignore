@@ -5,6 +5,7 @@ output/
 videos/
 state/
 media/
+thumbnails/
 credentials/
 .env
 .DS_Store
