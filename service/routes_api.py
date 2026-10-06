@@ -83,10 +83,23 @@ def chapters():
     for item in merged.values():
         ch_key = (item["subject"].lower(), item["chapter"].lower())
         ch_video_subs = video_map.get(ch_key, set())
-        video_subs = [
-            st for st in item["subtopics"]
-            if st.lower() in ch_video_subs or st.split(":")[0].strip().lower() in ch_video_subs
-        ]
+
+        # Map parent to its first/overview subtopic
+        parent_first: dict[str, str] = {}
+        for st in item["subtopics"]:
+            p = st.split(":")[0].strip() if ":" in st else st
+            if p not in parent_first:
+                parent_first[p] = st
+
+        video_subs = []
+        for st in item["subtopics"]:
+            p = st.split(":")[0].strip() if ":" in st else st
+            if st.lower() in ch_video_subs:
+                video_subs.append(st)
+            elif p.lower() in ch_video_subs:
+                if ": overview" in st.lower() or parent_first.get(p) == st:
+                    video_subs.append(st)
+
         item["video_subtopics"] = video_subs
         item["video_count"] = len(video_subs)
         item["has_video"] = len(video_subs) > 0
@@ -110,14 +123,21 @@ def subtopics(subject: str, chapter: str, class_: int | None = Query(None, alias
     for r in rows:
         by_key.setdefault((r["subtopic"], r["content_type"], r["difficulty"]), []).append(r)
 
+    parent_first: dict[str, str] = {}
+    for st in subtopic_list:
+        p = st.split(":")[0].strip() if ":" in st else st
+        if p not in parent_first:
+            parent_first[p] = st
+
     slots = [("explainer", "")] + [("problem", d) for d in config.PROBLEM_DIFFICULTIES]
     result = []
     for subtopic in subtopic_list:
         parent_sub = subtopic.split(":")[0].strip() if ":" in subtopic else subtopic
+        is_overview = (subtopic == parent_sub) or (": overview" in subtopic.lower()) or (parent_first.get(parent_sub) == subtopic)
         items = []
         for content_type, difficulty in slots:
             matches = by_key.get((subtopic, content_type, difficulty), [])
-            if not matches and parent_sub != subtopic:
+            if not matches and is_overview:
                 matches = by_key.get((parent_sub, content_type, difficulty), [])
             items.append(
                 {
@@ -148,23 +168,55 @@ def resolve(
     difficulty: str = Query(""),
 ):
     parent_sub = subtopic.split(":")[0].strip() if ":" in subtopic else subtopic
-    with get_conn() as conn, conn.cursor() as cur:
-        cur.execute(
-            "SELECT run_id, status, youtube_video_id, title, subtopic FROM runs "
-            "WHERE subject=%s AND chapter=%s AND (subtopic=%s OR subtopic=%s) "
-            "AND content_type=%s AND difficulty=%s AND language=%s "
-            "ORDER BY (subtopic=%s) DESC, (status='published') DESC, created_at DESC LIMIT 1",
-            (subject, chapter, subtopic, parent_sub, content_type, difficulty, language, subtopic),
-        )
-        row = cur.fetchone()
+    try:
+        subtopic_list = _find_topics(subject, chapter, class_)
+    except Exception:
+        subtopic_list = []
 
-        cur.execute(
-            "SELECT DISTINCT language FROM runs "
-            "WHERE subject=%s AND chapter=%s AND (subtopic=%s OR subtopic=%s) "
-            "AND content_type=%s AND difficulty=%s",
-            (subject, chapter, subtopic, parent_sub, content_type, difficulty),
-        )
-        available = sorted(r["language"] for r in cur.fetchall())
+    first_for_parent = None
+    for st in subtopic_list:
+        p = st.split(":")[0].strip() if ":" in st else st
+        if p == parent_sub:
+            first_for_parent = st
+            break
+
+    is_overview = (subtopic == parent_sub) or (": overview" in subtopic.lower()) or (subtopic == first_for_parent)
+
+    with get_conn() as conn, conn.cursor() as cur:
+        if is_overview:
+            cur.execute(
+                "SELECT run_id, status, youtube_video_id, title, subtopic FROM runs "
+                "WHERE subject=%s AND chapter=%s AND (subtopic=%s OR subtopic=%s) "
+                "AND content_type=%s AND difficulty=%s AND language=%s "
+                "ORDER BY (subtopic=%s) DESC, (status='published') DESC, created_at DESC LIMIT 1",
+                (subject, chapter, subtopic, parent_sub, content_type, difficulty, language, subtopic),
+            )
+            row = cur.fetchone()
+
+            cur.execute(
+                "SELECT DISTINCT language FROM runs "
+                "WHERE subject=%s AND chapter=%s AND (subtopic=%s OR subtopic=%s) "
+                "AND content_type=%s AND difficulty=%s",
+                (subject, chapter, subtopic, parent_sub, content_type, difficulty),
+            )
+            available = sorted(r["language"] for r in cur.fetchall())
+        else:
+            cur.execute(
+                "SELECT run_id, status, youtube_video_id, title, subtopic FROM runs "
+                "WHERE subject=%s AND chapter=%s AND subtopic=%s "
+                "AND content_type=%s AND difficulty=%s AND language=%s "
+                "ORDER BY (status='published') DESC, created_at DESC LIMIT 1",
+                (subject, chapter, subtopic, content_type, difficulty, language),
+            )
+            row = cur.fetchone()
+
+            cur.execute(
+                "SELECT DISTINCT language FROM runs "
+                "WHERE subject=%s AND chapter=%s AND subtopic=%s "
+                "AND content_type=%s AND difficulty=%s",
+                (subject, chapter, subtopic, content_type, difficulty),
+            )
+            available = sorted(r["language"] for r in cur.fetchall())
 
     if row and row["status"] == "published" and row["youtube_video_id"]:
         status = "published"

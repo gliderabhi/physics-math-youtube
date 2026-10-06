@@ -4,6 +4,14 @@
   </div>
 } @else if (result(); as res) {
   <div class="space-y-5 animate-fade-in-up max-w-4xl">
+    <div class="flex items-center gap-2 text-xs font-semibold text-sky-400">
+      <a [routerLink]="['/chapter']" [queryParams]="{ subject: subject(), class: class_(), chapter: chapter() }" class="hover:underline flex items-center gap-1.5 text-slate-400 hover:text-sky-300 transition-colors">
+        <i class="fa-solid fa-arrow-left text-[10px]"></i> {{ chapter() }}
+      </a>
+      <span class="text-slate-600">&rsaquo;</span>
+      <span class="text-slate-300 truncate">{{ subtopic() }}</span>
+    </div>
+
     <h1 class="text-xl sm:text-2xl font-extrabold text-white tracking-tight">
       {{ res.title ?? res.wiki_title ?? subtopic() }}
     </h1>
