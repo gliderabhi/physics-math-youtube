@@ -16,7 +16,7 @@
       <video class="w-full rounded-2xl bg-black border border-slate-800 shadow-2xl shadow-black/40" controls [src]="streamUrl(res.run_id)"></video>
     }
 
-    @if (result()?.explanation; as exp) {
+    @if (res.explanation || result()?.explanation; as exp) {
       <div class="rounded-2xl glass-panel p-6 space-y-5">
         @if (exp.problem_statement) {
           <section>
@@ -28,7 +28,7 @@
         } @else if (exp.intro) {
           <section>
             <h2 class="text-sm font-bold text-sky-400 uppercase tracking-wide mb-2 flex items-center gap-2">
-              <i class="fa-solid fa-book-open"></i> About this video
+              <i class="fa-solid fa-microphone-lines"></i> About this video / Narration
             </h2>
             <p class="text-slate-300 leading-relaxed">{{ exp.intro }}</p>
           </section>
@@ -37,8 +37,8 @@
         @if (exp.steps.length) {
           <section>
             <h2 class="text-sm font-bold text-sky-400 uppercase tracking-wide mb-3 flex items-center gap-2">
-              <i class="fa-solid {{ exp.problem_statement ? 'fa-shoe-prints' : 'fa-key' }}"></i>
-              {{ exp.problem_statement ? 'Step-by-step solution' : 'Key points' }}
+              <i class="fa-solid {{ exp.problem_statement ? 'fa-shoe-prints' : 'fa-closed-captioning' }}"></i>
+              {{ exp.problem_statement ? 'Step-by-step solution' : 'Video Narration & Key Points' }}
             </h2>
             <ol class="space-y-3">
               @for (step of exp.steps; track $index) {

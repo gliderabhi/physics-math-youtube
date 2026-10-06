@@ -158,7 +158,7 @@ def resolve(
     with get_conn() as conn, conn.cursor() as cur:
         if class_ is not None:
             cur.execute(
-                "SELECT run_id, status, youtube_video_id, title FROM runs "
+                "SELECT run_id, status, youtube_video_id, title, subtopic, class FROM runs "
                 "WHERE subject=%s AND class=%s AND chapter=%s AND (subtopic=%s OR subtopic=%s) "
                 "AND content_type=%s AND difficulty=%s AND language=%s "
                 "ORDER BY (subtopic=%s) DESC, (status='published') DESC, created_at DESC LIMIT 1",
@@ -166,7 +166,7 @@ def resolve(
             )
         else:
             cur.execute(
-                "SELECT run_id, status, youtube_video_id, title FROM runs "
+                "SELECT run_id, status, youtube_video_id, title, subtopic, class FROM runs "
                 "WHERE subject=%s AND chapter=%s AND (subtopic=%s OR subtopic=%s) "
                 "AND content_type=%s AND difficulty=%s AND language=%s "
                 "ORDER BY (subtopic=%s) DESC, (status='published') DESC, created_at DESC LIMIT 1",
@@ -199,21 +199,37 @@ def resolve(
 
     explanation = None
     if row:
-        try:
-            item = CurriculumItem(subject, class_ or 0, chapter, subtopic, content_type, difficulty or None)
-            content, _ = content_store.load_content(item, language)
-            explanation = {
-                "intro": content.get("intro"),
-                "summary": content.get("summary"),
-                "problem_statement": content.get("problem_statement"),
-                "final_answer": content.get("final_answer"),
-                "steps": [
-                    {"text": s.get("narration", ""), "label": s.get("display_text", ""), "latex": s.get("latex", "")}
-                    for s in content.get("steps", [])
-                ],
-            }
-        except LookupError:
-            pass
+        candidates = []
+        for s in [subtopic, row.get("subtopic"), parent_sub]:
+            if s and s not in candidates:
+                candidates.append(s)
+
+        cls = class_ if class_ is not None else row.get("class", 0)
+        lang_candidates = [language]
+        for l in ["hi-en", "en"]:
+            if l not in lang_candidates:
+                lang_candidates.append(l)
+
+        for candidate_sub in candidates:
+            for candidate_lang in lang_candidates:
+                try:
+                    item = CurriculumItem(subject, cls or 0, chapter, candidate_sub, content_type, difficulty or None)
+                    content, _ = content_store.load_content(item, candidate_lang)
+                    explanation = {
+                        "intro": content.get("intro"),
+                        "summary": content.get("summary"),
+                        "problem_statement": content.get("problem_statement"),
+                        "final_answer": content.get("final_answer"),
+                        "steps": [
+                            {"text": s.get("narration", ""), "label": s.get("display_text", ""), "latex": s.get("latex", "")}
+                            for s in content.get("steps", [])
+                        ],
+                    }
+                    break
+                except LookupError:
+                    continue
+            if explanation:
+                break
 
     ncert_note = note_for(subject, class_ or 0, chapter, subtopic, language) if class_ else None
     ncert_problems = problems_for(subject, class_ or 0, chapter, subtopic, language) if class_ else []
