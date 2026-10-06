@@ -152,33 +152,33 @@ def get_jobs_to_process():
     with get_conn() as conn, conn.cursor() as cur:
         # Get all English rows
         cur.execute(
-            "SELECT id, subject, class, chapter, subtopic, wiki_title, wiki_url, html_content, has_diagrams "
+            "SELECT id, subject, chapter, subtopic, wiki_title, wiki_url, html_content, has_diagrams "
             "FROM subtopic_wiki_html WHERE language = 'en'"
         )
         en_rows = cur.fetchall()
 
         # Get existing Hindi subtopic keys
-        cur.execute("SELECT subject, class, chapter, subtopic FROM subtopic_wiki_html WHERE language = 'hi-en'")
-        existing_hi = {(r["subject"], r["class"], r["chapter"], r["subtopic"]) for r in cur.fetchall()}
+        cur.execute("SELECT subject, chapter, subtopic FROM subtopic_wiki_html WHERE language = 'hi-en'")
+        existing_hi = {(r["subject"], r["chapter"], r["subtopic"]) for r in cur.fetchall()}
 
-    pending = [r for r in en_rows if (r["subject"], r["class"], r["chapter"], r["subtopic"]) not in existing_hi]
+    pending = [r for r in en_rows if (r["subject"], r["chapter"], r["subtopic"]) not in existing_hi]
     return pending, len(existing_hi), len(en_rows)
 
 
-def save_hindi_row(subject: str, class_: int, chapter: str, subtopic: str, wiki_title: str, wiki_url: str, html: str, has_diagrams: int):
+def save_hindi_row(subject: str, chapter: str, subtopic: str, wiki_title: str, wiki_url: str, html: str, has_diagrams: int):
     with get_conn() as conn, conn.cursor() as cur:
         cur.execute(
             """
             INSERT INTO subtopic_wiki_html
-                (subject, class, chapter, subtopic, language, wiki_title, wiki_url, html_content, has_diagrams)
-            VALUES (%s, %s, %s, %s, 'hi-en', %s, %s, %s, %s)
+                (subject, chapter, subtopic, language, wiki_title, wiki_url, html_content, has_diagrams)
+            VALUES (%s, %s, %s, 'hi-en', %s, %s, %s, %s)
             ON DUPLICATE KEY UPDATE
                 wiki_title = VALUES(wiki_title),
                 wiki_url = VALUES(wiki_url),
                 html_content = VALUES(html_content),
                 has_diagrams = VALUES(has_diagrams)
             """,
-            (subject, class_, chapter, subtopic, wiki_title, wiki_url, html, has_diagrams)
+            (subject, chapter, subtopic, wiki_title, wiki_url, html, has_diagrams)
         )
 
 
@@ -186,7 +186,6 @@ def process_subtopic(row, total: int):
     subtopic = row["subtopic"]
     chapter = row["chapter"]
     subject = row["subject"]
-    class_ = row["class"]
     title = row["wiki_title"]
     html = row["html_content"]
     url = row["wiki_url"]
@@ -200,17 +199,17 @@ def process_subtopic(row, total: int):
         hi_html = translate_wiki_html(html)
 
         # 3. Save duplicate row for Hindi ('hi-en')
-        save_hindi_row(subject, class_, chapter, subtopic, hi_title, url, hi_html, has_diagrams)
+        save_hindi_row(subject, chapter, subtopic, hi_title, url, hi_html, has_diagrams)
 
         with _lock:
             _counts["done"] += 1
             idx = _counts["done"] + _counts["failed"]
-            print(f"[{idx}/{total}] OK: {subject} c{class_} | {chapter} | {subtopic} -> '{hi_title}' ({len(hi_html)} bytes)")
+            print(f"[{idx}/{total}] OK: {subject} | {chapter} | {subtopic} -> '{hi_title}' ({len(hi_html)} bytes)")
     except Exception as e:
         with _lock:
             _counts["failed"] += 1
             idx = _counts["done"] + _counts["failed"]
-            print(f"[{idx}/{total}] FAILED: {subject} c{class_} | {chapter} | {subtopic} -- {e}")
+            print(f"[{idx}/{total}] FAILED: {subject} | {chapter} | {subtopic} -- {e}")
 
 
 def main():

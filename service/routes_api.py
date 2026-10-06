@@ -99,18 +99,11 @@ def subtopics(subject: str, chapter: str, class_: int | None = Query(None, alias
     subtopic_list = _find_topics(subject, chapter, class_)
 
     with get_conn() as conn, conn.cursor() as cur:
-        if class_ is not None:
-            cur.execute(
-                "SELECT run_id, subtopic, content_type, difficulty, language, status, title "
-                "FROM runs WHERE subject=%s AND `class`=%s AND chapter=%s",
-                (subject, class_, chapter),
-            )
-        else:
-            cur.execute(
-                "SELECT run_id, subtopic, content_type, difficulty, language, status, title "
-                "FROM runs WHERE subject=%s AND chapter=%s",
-                (subject, chapter),
-            )
+        cur.execute(
+            "SELECT run_id, subtopic, content_type, difficulty, language, status, title "
+            "FROM runs WHERE subject=%s AND chapter=%s",
+            (subject, chapter),
+        )
         rows = cur.fetchall()
 
     by_key: dict[tuple, list[dict]] = {}
@@ -156,38 +149,21 @@ def resolve(
 ):
     parent_sub = subtopic.split(":")[0].strip() if ":" in subtopic else subtopic
     with get_conn() as conn, conn.cursor() as cur:
-        if class_ is not None:
-            cur.execute(
-                "SELECT run_id, status, youtube_video_id, title, subtopic, `class` FROM runs "
-                "WHERE subject=%s AND `class`=%s AND chapter=%s AND (subtopic=%s OR subtopic=%s) "
-                "AND content_type=%s AND difficulty=%s AND language=%s "
-                "ORDER BY (subtopic=%s) DESC, (status='published') DESC, created_at DESC LIMIT 1",
-                (subject, class_, chapter, subtopic, parent_sub, content_type, difficulty, language, subtopic),
-            )
-        else:
-            cur.execute(
-                "SELECT run_id, status, youtube_video_id, title, subtopic, `class` FROM runs "
-                "WHERE subject=%s AND chapter=%s AND (subtopic=%s OR subtopic=%s) "
-                "AND content_type=%s AND difficulty=%s AND language=%s "
-                "ORDER BY (subtopic=%s) DESC, (status='published') DESC, created_at DESC LIMIT 1",
-                (subject, chapter, subtopic, parent_sub, content_type, difficulty, language, subtopic),
-            )
+        cur.execute(
+            "SELECT run_id, status, youtube_video_id, title, subtopic FROM runs "
+            "WHERE subject=%s AND chapter=%s AND (subtopic=%s OR subtopic=%s) "
+            "AND content_type=%s AND difficulty=%s AND language=%s "
+            "ORDER BY (subtopic=%s) DESC, (status='published') DESC, created_at DESC LIMIT 1",
+            (subject, chapter, subtopic, parent_sub, content_type, difficulty, language, subtopic),
+        )
         row = cur.fetchone()
 
-        if class_ is not None:
-            cur.execute(
-                "SELECT DISTINCT language FROM runs "
-                "WHERE subject=%s AND `class`=%s AND chapter=%s AND (subtopic=%s OR subtopic=%s) "
-                "AND content_type=%s AND difficulty=%s",
-                (subject, class_, chapter, subtopic, parent_sub, content_type, difficulty),
-            )
-        else:
-            cur.execute(
-                "SELECT DISTINCT language FROM runs "
-                "WHERE subject=%s AND chapter=%s AND (subtopic=%s OR subtopic=%s) "
-                "AND content_type=%s AND difficulty=%s",
-                (subject, chapter, subtopic, parent_sub, content_type, difficulty),
-            )
+        cur.execute(
+            "SELECT DISTINCT language FROM runs "
+            "WHERE subject=%s AND chapter=%s AND (subtopic=%s OR subtopic=%s) "
+            "AND content_type=%s AND difficulty=%s",
+            (subject, chapter, subtopic, parent_sub, content_type, difficulty),
+        )
         available = sorted(r["language"] for r in cur.fetchall())
 
     if row and row["status"] == "published" and row["youtube_video_id"]:
@@ -204,7 +180,7 @@ def resolve(
             if s and s not in candidates:
                 candidates.append(s)
 
-        cls = class_ if class_ is not None else row.get("class", 0)
+        cls = class_ or 0
         lang_candidates = [language]
         for l in ["hi-en", "en"]:
             if l not in lang_candidates:
@@ -231,8 +207,8 @@ def resolve(
             if explanation:
                 break
 
-    ncert_note = note_for(subject, class_ or 0, chapter, subtopic, language) if class_ else None
-    ncert_problems = problems_for(subject, class_ or 0, chapter, subtopic, language) if class_ else []
+    ncert_note = note_for(subject, chapter, subtopic, language)
+    ncert_problems = problems_for(subject, chapter, subtopic, language)
 
     wiki_html = wiki_html_for(subject, chapter, subtopic, class_, language)
     wiki = wiki_for(subject, chapter, subtopic, class_) if not wiki_html else None

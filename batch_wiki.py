@@ -16,15 +16,15 @@ def pending_jobs():
     jobs = []
     for ch in load_syllabus():
         for subtopic in ch["subtopics"]:
-            key = (ch["subject"], ch["class"], ch["chapter"], subtopic)
+            key = (ch["subject"], ch["chapter"], subtopic)
             if key not in done:
                 jobs.append(key)
     return jobs
 
 
 def run_job(job, total):
-    subject, class_, chapter, subtopic = job
-    label = f"{subject} c{class_} | {chapter} | {subtopic}"
+    subject, chapter, subtopic = job
+    label = f"{subject} | {chapter} | {subtopic}"
     try:
         data = content_for_subtopic(subtopic)
         with _lock:
@@ -32,7 +32,7 @@ def run_job(job, total):
                 _counts["skipped"] += 1
                 print(f"SKIP ({_counts['done']+_counts['skipped']+_counts['failed']}/{total}): {label} -- no good Wikipedia match")
                 return
-        save_wiki(subject, class_, chapter, subtopic, data)
+        save_wiki(subject, chapter, subtopic, data)
         with _lock:
             _counts["done"] += 1
             print(f"OK ({_counts['done']+_counts['skipped']+_counts['failed']}/{total}): {label} -> {data['title']}")

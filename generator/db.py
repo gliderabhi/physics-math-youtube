@@ -9,7 +9,6 @@ SCHEMA = """
 CREATE TABLE IF NOT EXISTS curriculum_progress (
     id INT AUTO_INCREMENT PRIMARY KEY,
     subject VARCHAR(20) NOT NULL,
-    class INT NOT NULL,
     chapter VARCHAR(150) NOT NULL,
     subtopic VARCHAR(200) NOT NULL,
     content_type VARCHAR(20) NOT NULL,
@@ -17,13 +16,12 @@ CREATE TABLE IF NOT EXISTS curriculum_progress (
     status VARCHAR(20) NOT NULL DEFAULT 'generated',
     run_id VARCHAR(32),
     created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    UNIQUE KEY uq_curriculum_item (subject, class, chapter, subtopic, content_type, difficulty)
+    UNIQUE KEY uq_curriculum_item (subject, chapter, subtopic, content_type, difficulty)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 CREATE TABLE IF NOT EXISTS runs (
     run_id VARCHAR(32) PRIMARY KEY,
     subject VARCHAR(20) NOT NULL,
-    class INT NOT NULL,
     chapter VARCHAR(150) NOT NULL,
     subtopic VARCHAR(200) NOT NULL,
     content_type VARCHAR(20) NOT NULL,
@@ -47,7 +45,6 @@ CREATE TABLE IF NOT EXISTS playlists (
 CREATE TABLE IF NOT EXISTS content_items (
     id INT AUTO_INCREMENT PRIMARY KEY,
     subject VARCHAR(20) NOT NULL,
-    class INT NOT NULL,
     chapter VARCHAR(150) NOT NULL,
     subtopic VARCHAR(200) NOT NULL,
     content_type VARCHAR(20) NOT NULL,
@@ -56,7 +53,7 @@ CREATE TABLE IF NOT EXISTS content_items (
     body JSON NOT NULL,
     metadata JSON NOT NULL,
     created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    UNIQUE KEY uq_content_item (subject, class, chapter, subtopic, content_type, difficulty)
+    UNIQUE KEY uq_content_item (subject, chapter, subtopic, content_type, difficulty)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 CREATE TABLE IF NOT EXISTS narrations (
@@ -72,19 +69,17 @@ CREATE TABLE IF NOT EXISTS narrations (
 CREATE TABLE IF NOT EXISTS topic_notes (
     id INT AUTO_INCREMENT PRIMARY KEY,
     subject VARCHAR(20) NOT NULL,
-    class INT NOT NULL,
     chapter VARCHAR(150) NOT NULL,
     subtopic VARCHAR(200) NOT NULL,
     language VARCHAR(20) NOT NULL,
     explanation TEXT NOT NULL,
     created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    UNIQUE KEY uq_topic_note (subject, class, chapter, subtopic, language)
+    UNIQUE KEY uq_topic_note (subject, chapter, subtopic, language)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 CREATE TABLE IF NOT EXISTS wiki_notes (
     id INT AUTO_INCREMENT PRIMARY KEY,
     subject VARCHAR(20) NOT NULL,
-    class INT NOT NULL,
     chapter VARCHAR(150) NOT NULL,
     subtopic VARCHAR(200) NOT NULL,
     wiki_title VARCHAR(255) NOT NULL,
@@ -92,25 +87,23 @@ CREATE TABLE IF NOT EXISTS wiki_notes (
     wiki_source_url VARCHAR(500) NOT NULL,
     wiki_images JSON NOT NULL,
     created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    UNIQUE KEY uq_wiki_note (subject, class, chapter, subtopic)
+    UNIQUE KEY uq_wiki_note (subject, chapter, subtopic)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 CREATE TABLE IF NOT EXISTS topic_problems (
     id INT AUTO_INCREMENT PRIMARY KEY,
     subject VARCHAR(20) NOT NULL,
-    class INT NOT NULL,
     chapter VARCHAR(150) NOT NULL,
     subtopic VARCHAR(200) NOT NULL,
     language VARCHAR(20) NOT NULL,
     problems JSON NOT NULL,
     created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    UNIQUE KEY uq_topic_problems (subject, class, chapter, subtopic, language)
+    UNIQUE KEY uq_topic_problems (subject, chapter, subtopic, language)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 CREATE TABLE IF NOT EXISTS subtopic_wiki_html (
     id INT AUTO_INCREMENT PRIMARY KEY,
     subject VARCHAR(20) NOT NULL,
-    class INT NOT NULL,
     chapter VARCHAR(150) NOT NULL,
     subtopic VARCHAR(200) NOT NULL,
     language VARCHAR(20) NOT NULL DEFAULT 'en',
@@ -120,13 +113,12 @@ CREATE TABLE IF NOT EXISTS subtopic_wiki_html (
     has_diagrams TINYINT(1) DEFAULT 0,
     created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    UNIQUE KEY uq_subtopic_wiki_lang (subject, class, chapter, subtopic, language)
+    UNIQUE KEY uq_subtopic_wiki_lang (subject, chapter, subtopic, language)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE IF NOT EXISTS subtopic_wiki_parts (
     id INT AUTO_INCREMENT PRIMARY KEY,
     subject VARCHAR(20) NOT NULL,
-    class INT NOT NULL,
     chapter VARCHAR(150) NOT NULL,
     subtopic VARCHAR(200) NOT NULL,
     language VARCHAR(20) NOT NULL DEFAULT 'en',
@@ -138,7 +130,7 @@ CREATE TABLE IF NOT EXISTS subtopic_wiki_parts (
     diagram_caption TEXT,
     created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    UNIQUE KEY uq_subtopic_part (subject, class, chapter, subtopic, language, part_index)
+    UNIQUE KEY uq_subtopic_part (subject, chapter, subtopic, language, part_index)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 """
 

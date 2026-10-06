@@ -108,10 +108,10 @@ def _finalize(
 
     with get_conn() as conn, conn.cursor() as cur:
         cur.execute(
-            "INSERT INTO runs (run_id, subject, class, chapter, subtopic, content_type, difficulty, language, title, status, video_path, thumbnail_path) "
-            "VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, 'generated', %s, %s)",
+            "INSERT INTO runs (run_id, subject, chapter, subtopic, content_type, difficulty, language, title, status, video_path, thumbnail_path) "
+            "VALUES (%s, %s, %s, %s, %s, %s, %s, %s, 'generated', %s, %s)",
             (
-                run_id, item.subject, item.class_, item.chapter, item.subtopic, item.content_type, item.difficulty or "",
+                run_id, item.subject, item.chapter, item.subtopic, item.content_type, item.difficulty or "",
                 language, video_metadata["youtube_title"], str(video_dest), str(thumb_dest),
             ),
         )
@@ -186,7 +186,7 @@ def build_from_db(item: CurriculumItem, language: str, quality: str | None = Non
 
 
 def _item_from_row(row) -> CurriculumItem:
-    return CurriculumItem(row["subject"], row["class"], row["chapter"], row["subtopic"], row["content_type"], row["difficulty"] or None)
+    return CurriculumItem(row["subject"], row.get("class", 0), row["chapter"], row["subtopic"], row["content_type"], row["difficulty"] or None)
 
 
 def publish_run(run_id: str | None = None) -> None:

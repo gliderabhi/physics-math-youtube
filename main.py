@@ -27,7 +27,7 @@ def main():
 
     bld = sub.add_parser("build", help="Build a video from DB-stored content for one curriculum item + language (no files needed)")
     bld.add_argument("--subject", required=True)
-    bld.add_argument("--class", dest="class_", required=True, type=int)
+    bld.add_argument("--class", dest="class_", required=False, default=0, type=int)
     bld.add_argument("--chapter", required=True)
     bld.add_argument("--subtopic", required=True)
     bld.add_argument("--content-type", dest="content_type", required=True, choices=["explainer", "problem"])
@@ -38,7 +38,7 @@ def main():
 
     gi = sub.add_parser("generate-item", help="Claude generates script+visuals for one exact subtopic/difficulty/language — the admin page's Generate button")
     gi.add_argument("--subject", required=True)
-    gi.add_argument("--class", dest="class_", required=True, type=int)
+    gi.add_argument("--class", dest="class_", required=False, default=0, type=int)
     gi.add_argument("--chapter", required=True)
     gi.add_argument("--subtopic", required=True)
     gi.add_argument("--content-type", dest="content_type", required=True, choices=["explainer", "problem"])

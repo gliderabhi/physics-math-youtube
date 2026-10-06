@@ -18,9 +18,9 @@ def pending_jobs():
     for ch in load_syllabus():
         for subtopic in ch["subtopics"]:
             for language in config.CHANNELS:
-                key = (ch["subject"], ch["class"], ch["chapter"], subtopic, language)
+                key = (ch["subject"], ch["chapter"], subtopic, language)
                 if key not in done:
-                    jobs.append(key)
+                    jobs.append((ch["subject"], ch.get("class", 0), ch["chapter"], subtopic, language))
     return jobs
 
 
@@ -29,7 +29,7 @@ def run_job(job, total):
     item = CurriculumItem(subject, class_, chapter, subtopic, "explainer")
     try:
         problems = generate_topic_problems(item, language)
-        save_problems(subject, class_, chapter, subtopic, language, problems)
+        save_problems(subject, chapter, subtopic, language, problems)
         with _lock:
             _counts["done"] += 1
             print(f"OK ({_counts['done']+_counts['failed']}/{total}): {item.label()} [{language}]")

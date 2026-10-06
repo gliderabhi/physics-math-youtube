@@ -12,7 +12,6 @@ def main():
     for data in items:
         save_wiki(
             data["subject"],
-            int(data["class"]),
             data["chapter"],
             data["subtopic"],
             {

@@ -52,12 +52,12 @@ def load_syllabus() -> list[dict]:
 def _done_keys() -> set[tuple]:
     with get_conn() as conn, conn.cursor() as cur:
         cur.execute(
-            "SELECT subject, class, chapter, subtopic, content_type, difficulty "
+            "SELECT subject, chapter, subtopic, content_type, difficulty "
             "FROM curriculum_progress WHERE status IN ('generated', 'published')"
         )
         rows = cur.fetchall()
     return {
-        (r["subject"], r["class"], r["chapter"], r["subtopic"], r["content_type"], r["difficulty"])
+        (r["subject"], r["chapter"], r["subtopic"], r["content_type"], r["difficulty"])
         for r in rows
     }
 
@@ -65,13 +65,13 @@ def _done_keys() -> set[tuple]:
 def get_next_item() -> Optional[CurriculumItem]:
     done = _done_keys()
     for ch in load_syllabus():
-        subject, class_, chapter = ch["subject"], ch["class"], ch["chapter"]
+        subject, class_, chapter = ch["subject"], ch.get("class", 0), ch["chapter"]
         for subtopic in ch["subtopics"]:
-            explainer_key = (subject, class_, chapter, subtopic, "explainer", "")
+            explainer_key = (subject, chapter, subtopic, "explainer", "")
             if explainer_key not in done:
                 return CurriculumItem(subject, class_, chapter, subtopic, "explainer")
             for difficulty in config.PROBLEM_DIFFICULTIES:
-                problem_key = (subject, class_, chapter, subtopic, "problem", difficulty)
+                problem_key = (subject, chapter, subtopic, "problem", difficulty)
                 if problem_key not in done:
                     return CurriculumItem(subject, class_, chapter, subtopic, "problem", difficulty)
     return None
@@ -80,10 +80,10 @@ def get_next_item() -> Optional[CurriculumItem]:
 def mark_done(item: CurriculumItem, run_id: str, status: str = "generated") -> None:
     with get_conn() as conn, conn.cursor() as cur:
         cur.execute(
-            "INSERT INTO curriculum_progress (subject, class, chapter, subtopic, content_type, difficulty, status, run_id) "
-            "VALUES (%s, %s, %s, %s, %s, %s, %s, %s) "
+            "INSERT INTO curriculum_progress (subject, chapter, subtopic, content_type, difficulty, status, run_id) "
+            "VALUES (%s, %s, %s, %s, %s, %s, %s) "
             "ON DUPLICATE KEY UPDATE status = VALUES(status), run_id = VALUES(run_id)",
-            (item.subject, item.class_, item.chapter, item.subtopic, item.content_type, _db_difficulty(item.difficulty), status, run_id),
+            (item.subject, item.chapter, item.subtopic, item.content_type, _db_difficulty(item.difficulty), status, run_id),
         )
 
 
@@ -91,8 +91,8 @@ def mark_published(item: CurriculumItem) -> None:
     with get_conn() as conn, conn.cursor() as cur:
         cur.execute(
             "UPDATE curriculum_progress SET status = 'published' "
-            "WHERE subject = %s AND class = %s AND chapter = %s AND subtopic = %s AND content_type = %s AND difficulty = %s",
-            (item.subject, item.class_, item.chapter, item.subtopic, item.content_type, _db_difficulty(item.difficulty)),
+            "WHERE subject = %s AND chapter = %s AND subtopic = %s AND content_type = %s AND difficulty = %s",
+            (item.subject, item.chapter, item.subtopic, item.content_type, _db_difficulty(item.difficulty)),
         )
 
 
@@ -102,15 +102,15 @@ def status_report() -> str:
     done = _done_keys()
     lines = [f"Total curriculum items: {total_items}, done: {len(done)}", ""]
     for ch in syllabus:
-        subject, class_, chapter = ch["subject"], ch["class"], ch["chapter"]
+        subject, class_, chapter = ch["subject"], ch.get("class", 0), ch["chapter"]
         chapter_total = len(ch["subtopics"]) * (1 + len(config.PROBLEM_DIFFICULTIES))
         chapter_done = sum(
             1
             for subtopic in ch["subtopics"]
             for content_type, difficulty in [("explainer", "")] + [("problem", d) for d in config.PROBLEM_DIFFICULTIES]
-            if (subject, class_, chapter, subtopic, content_type, difficulty) in done
+            if (subject, chapter, subtopic, content_type, difficulty) in done
         )
-        lines.append(f"Class {class_} {subject.title():8s} {chapter:45s} {chapter_done}/{chapter_total}")
+        lines.append(f"{subject.title():8s} {chapter:45s} {chapter_done}/{chapter_total}")
     next_item = get_next_item()
     lines.append("")
     lines.append(f"Next up: {next_item.label() if next_item else 'Curriculum complete!'}")

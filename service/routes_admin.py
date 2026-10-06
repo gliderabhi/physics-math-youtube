@@ -18,7 +18,7 @@ class CommentBody(BaseModel):
 def review_queue():
     with get_conn() as conn, conn.cursor() as cur:
         cur.execute(
-            "SELECT run_id, subject, class, chapter, subtopic, content_type, difficulty, "
+            "SELECT run_id, subject, chapter, subtopic, content_type, difficulty, "
             "language, title, review_comment, created_at FROM runs "
             "WHERE status = 'generated' ORDER BY created_at ASC"
         )
@@ -55,7 +55,7 @@ def comment(run_id: str, body: CommentBody):
 
 class GenerateBody(BaseModel):
     subject: str
-    class_: int = Field(alias="class")
+    class_: int = Field(0, alias="class")
     chapter: str
     subtopic: str
     content_type: str

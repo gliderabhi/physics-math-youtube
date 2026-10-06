@@ -15,7 +15,7 @@ def title_from_url(url: str) -> str:
 
 
 def process(row: dict) -> tuple[str, int, str]:
-    key = f"{row['subject']}/{row['class']}/{row['chapter']}/{row['subtopic']}"
+    key = f"{row['subject']}/{row['chapter']}/{row['subtopic']}"
     try:
         real_title = title_from_url(row["wiki_source_url"])
         images = fetch_images(real_title, limit=IMAGES_PER_TOPIC)
@@ -23,7 +23,7 @@ def process(row: dict) -> tuple[str, int, str]:
             images = search_commons_images(row["subtopic"], limit=IMAGES_PER_TOPIC)
         if not images:
             return (key, 0, "no open-licensed images found")
-        saved = update_images(row["subject"], row["class"], row["chapter"], row["subtopic"], images)
+        saved = update_images(row["subject"], row["chapter"], row["subtopic"], images)
         return (key, saved, "ok")
     except Exception as e:
         return (key, 0, f"error: {e}")
@@ -33,8 +33,8 @@ def main():
     with get_conn() as conn:
         cur = conn.cursor()
         cur.execute(
-            "SELECT subject, class, chapter, subtopic, wiki_source_url FROM wiki_notes "
-            "WHERE JSON_LENGTH(wiki_images)=0 ORDER BY subject, class, chapter, subtopic"
+            "SELECT subject, chapter, subtopic, wiki_source_url FROM wiki_notes "
+            "WHERE JSON_LENGTH(wiki_images)=0 ORDER BY subject, chapter, subtopic"
         )
         rows = cur.fetchall()
 

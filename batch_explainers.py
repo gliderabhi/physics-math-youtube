@@ -14,22 +14,22 @@ SUMMARY_LOG = LOG_DIR / "_summary.log"
 def pending_jobs():
     init_db()
     with get_conn() as conn, conn.cursor() as cur:
-        cur.execute("SELECT DISTINCT subject, class, chapter, subtopic, language FROM runs WHERE content_type='explainer'")
-        done = {(r["subject"], r["class"], r["chapter"], r["subtopic"], r["language"]) for r in cur.fetchall()}
+        cur.execute("SELECT DISTINCT subject, chapter, subtopic, language FROM runs WHERE content_type='explainer'")
+        done = {(r["subject"], r["chapter"], r["subtopic"], r["language"]) for r in cur.fetchall()}
 
     jobs = []
     for ch in load_syllabus():
         for subtopic in ch["subtopics"]:
             for language in config.CHANNELS:
-                key = (ch["subject"], ch["class"], ch["chapter"], subtopic, language)
+                key = (ch["subject"], ch["chapter"], subtopic, language)
                 if key not in done:
-                    jobs.append((ch["subject"], ch["class"], ch["chapter"], subtopic, language))
+                    jobs.append((ch["subject"], ch.get("class", 0), ch["chapter"], subtopic, language))
     return jobs
 
 
 def _slug(job, index: int) -> str:
     subject, class_, chapter, subtopic, language = job
-    raw = f"{index:04d}-{language}-c{class_}-{chapter}-{subtopic}"
+    raw = f"{index:04d}-{language}-{chapter}-{subtopic}"
     safe = "".join(c if c.isalnum() else "-" for c in raw).strip("-").lower()
     return safe[:120]
 

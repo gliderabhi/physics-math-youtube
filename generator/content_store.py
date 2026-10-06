@@ -56,17 +56,17 @@ def merge_content(body: dict, narration: dict) -> dict:
 def save_content_item(item: CurriculumItem, body: dict, metadata: dict) -> int:
     with get_conn() as conn, conn.cursor() as cur:
         cur.execute(
-            "INSERT INTO content_items (subject, class, chapter, subtopic, content_type, difficulty, title, body, metadata) "
-            "VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s) "
+            "INSERT INTO content_items (subject, chapter, subtopic, content_type, difficulty, title, body, metadata) "
+            "VALUES (%s, %s, %s, %s, %s, %s, %s, %s) "
             "ON DUPLICATE KEY UPDATE title = VALUES(title), body = VALUES(body), metadata = VALUES(metadata)",
             (
-                item.subject, item.class_, item.chapter, item.subtopic, item.content_type, item.difficulty or "",
+                item.subject, item.chapter, item.subtopic, item.content_type, item.difficulty or "",
                 body["title"], json.dumps(body), json.dumps(metadata),
             ),
         )
         cur.execute(
-            "SELECT id FROM content_items WHERE subject=%s AND class=%s AND chapter=%s AND subtopic=%s AND content_type=%s AND difficulty=%s",
-            (item.subject, item.class_, item.chapter, item.subtopic, item.content_type, item.difficulty or ""),
+            "SELECT id FROM content_items WHERE subject=%s AND chapter=%s AND subtopic=%s AND content_type=%s AND difficulty=%s",
+            (item.subject, item.chapter, item.subtopic, item.content_type, item.difficulty or ""),
         )
         return cur.fetchone()["id"]
 
@@ -83,8 +83,8 @@ def save_narration(content_item_id: int, language: str, narration: dict) -> None
 def get_content_item_id(item: CurriculumItem) -> int | None:
     with get_conn() as conn, conn.cursor() as cur:
         cur.execute(
-            "SELECT id FROM content_items WHERE subject=%s AND class=%s AND chapter=%s AND subtopic=%s AND content_type=%s AND difficulty=%s",
-            (item.subject, item.class_, item.chapter, item.subtopic, item.content_type, item.difficulty or ""),
+            "SELECT id FROM content_items WHERE subject=%s AND chapter=%s AND subtopic=%s AND content_type=%s AND difficulty=%s",
+            (item.subject, item.chapter, item.subtopic, item.content_type, item.difficulty or ""),
         )
         row = cur.fetchone()
         return row["id"] if row else None
@@ -94,8 +94,8 @@ def load_content(item: CurriculumItem, language: str) -> tuple[dict, dict]:
     """Returns (content, metadata) merged from DB, ready for script.build_segments()."""
     with get_conn() as conn, conn.cursor() as cur:
         cur.execute(
-            "SELECT id, body, metadata FROM content_items WHERE subject=%s AND class=%s AND chapter=%s AND subtopic=%s AND content_type=%s AND difficulty=%s",
-            (item.subject, item.class_, item.chapter, item.subtopic, item.content_type, item.difficulty or ""),
+            "SELECT id, body, metadata FROM content_items WHERE subject=%s AND chapter=%s AND subtopic=%s AND content_type=%s AND difficulty=%s",
+            (item.subject, item.chapter, item.subtopic, item.content_type, item.difficulty or ""),
         )
         row = cur.fetchone()
         if row is None:

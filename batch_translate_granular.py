@@ -75,12 +75,12 @@ def is_protected(tag) -> bool:
 
 
 def process_subtopic(subtopic_key: tuple, total: int):
-    subj, cl, chap, sub = subtopic_key
+    subj, chap, sub = subtopic_key
     try:
         with get_conn() as conn, conn.cursor() as cur:
             cur.execute(
-                "SELECT * FROM subtopic_wiki_parts WHERE subject=%s AND class=%s AND chapter=%s AND subtopic=%s AND language='en'",
-                (subj, cl, chap, sub)
+                "SELECT * FROM subtopic_wiki_parts WHERE subject=%s AND chapter=%s AND subtopic=%s AND language='en'",
+                (subj, chap, sub)
             )
             part = cur.fetchone()
             if not part:
@@ -89,8 +89,8 @@ def process_subtopic(subtopic_key: tuple, total: int):
                 return
 
             cur.execute(
-                "SELECT * FROM subtopic_wiki_html WHERE subject=%s AND class=%s AND chapter=%s AND subtopic=%s AND language='en'",
-                (subj, cl, chap, sub)
+                "SELECT * FROM subtopic_wiki_html WHERE subject=%s AND chapter=%s AND subtopic=%s AND language='en'",
+                (subj, chap, sub)
             )
             html_row = cur.fetchone()
 
@@ -171,8 +171,8 @@ def process_subtopic(subtopic_key: tuple, total: int):
             cur.execute(
                 """
                 INSERT INTO subtopic_wiki_parts
-                    (subject, class, chapter, subtopic, language, part_index, heading, paragraph, paragraph_html, diagram_url, diagram_caption)
-                VALUES (%s, %s, %s, %s, 'hi-en', 1, %s, %s, %s, %s, %s)
+                    (subject, chapter, subtopic, language, part_index, heading, paragraph, paragraph_html, diagram_url, diagram_caption)
+                VALUES (%s, %s, %s, 'hi-en', 1, %s, %s, %s, %s, %s)
                 ON DUPLICATE KEY UPDATE
                     heading = VALUES(heading),
                     paragraph = VALUES(paragraph),
@@ -180,7 +180,7 @@ def process_subtopic(subtopic_key: tuple, total: int):
                     diagram_url = VALUES(diagram_url),
                     diagram_caption = VALUES(diagram_caption)
                 """,
-                (subj, cl, chap, sub, hi_heading, hi_p, hi_ph, part["diagram_url"], hi_caption)
+                (subj, chap, sub, hi_heading, hi_p, hi_ph, part["diagram_url"], hi_caption)
             )
 
             wiki_url = html_row["wiki_url"] if html_row else ""
@@ -188,15 +188,15 @@ def process_subtopic(subtopic_key: tuple, total: int):
             cur.execute(
                 """
                 INSERT INTO subtopic_wiki_html
-                    (subject, class, chapter, subtopic, language, wiki_title, wiki_url, html_content, has_diagrams)
-                VALUES (%s, %s, %s, %s, 'hi-en', %s, %s, %s, %s)
+                    (subject, chapter, subtopic, language, wiki_title, wiki_url, html_content, has_diagrams)
+                VALUES (%s, %s, %s, 'hi-en', %s, %s, %s, %s)
                 ON DUPLICATE KEY UPDATE
                     wiki_title = VALUES(wiki_title),
                     wiki_url = VALUES(wiki_url),
                     html_content = VALUES(html_content),
                     has_diagrams = VALUES(has_diagrams)
                 """,
-                (subj, cl, chap, sub, hi_title, wiki_url, hi_full_html, has_diag)
+                (subj, chap, sub, hi_title, wiki_url, hi_full_html, has_diag)
             )
             conn.commit()
 
@@ -222,11 +222,11 @@ def main():
     syllabus_subtopics = []
     for ch in syllabus:
         for st in ch["subtopics"]:
-            syllabus_subtopics.append((ch["subject"], ch["class"], ch["chapter"], st))
+            syllabus_subtopics.append((ch["subject"], ch["chapter"], st))
 
     with get_conn() as conn, conn.cursor() as cur:
-        cur.execute("SELECT subject, class, chapter, subtopic FROM subtopic_wiki_parts WHERE language='hi-en'")
-        existing_hi = {(r["subject"], r["class"], r["chapter"], r["subtopic"]) for r in cur.fetchall()}
+        cur.execute("SELECT subject, chapter, subtopic FROM subtopic_wiki_parts WHERE language='hi-en'")
+        existing_hi = {(r["subject"], r["chapter"], r["subtopic"]) for r in cur.fetchall()}
 
     pending = [k for k in syllabus_subtopics if k not in existing_hi]
     total = len(pending)

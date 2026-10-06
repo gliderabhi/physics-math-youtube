@@ -32,7 +32,7 @@ def generate_metadata(item: CurriculumItem, content: dict) -> dict:
                 "role": "user",
                 "content": (
                     f"Video title (internal): {content['title']}\n"
-                    f"Class: {item.class_}, Subject: {item.subject}, Chapter: {item.chapter}, Subtopic: {item.subtopic}\n"
+                    f"Subject: {item.subject}, Chapter: {item.chapter}, Subtopic: {item.subtopic}\n"
                     f"Type: {item.content_type}{' (' + item.difficulty + ')' if item.difficulty else ''}\n"
                     f"Content summary: {body_text}\n\n"
                     "Generate the YouTube metadata now."

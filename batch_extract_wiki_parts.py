@@ -101,7 +101,7 @@ def extract_parts_from_html(html_content: str, max_parts: int = 7) -> list[dict]
 def main():
     init_db()
     with get_conn() as conn, conn.cursor() as cur:
-        cur.execute("SELECT id, subject, class, chapter, subtopic, language, wiki_title, html_content FROM subtopic_wiki_html WHERE language='en'")
+        cur.execute("SELECT id, subject, chapter, subtopic, language, wiki_title, html_content FROM subtopic_wiki_html WHERE language='en'")
         rows = cur.fetchall()
 
     total = len(rows)
@@ -111,7 +111,6 @@ def main():
 
     for idx, r in enumerate(rows, 1):
         subj = r["subject"]
-        cl = r["class"]
         chap = r["chapter"]
         sub = r["subtopic"]
         lang = r["language"]
@@ -131,7 +130,7 @@ def main():
                 "diagram_caption": None,
             }]
 
-        save_subtopic_parts(subj, cl, chap, sub, lang, parts)
+        save_subtopic_parts(subj, chap, sub, lang, parts)
         total_parts_created += len(parts)
         if idx % 20 == 0 or idx == total:
             print(f"[{idx}/{total}] Processed... (Total parts so far: {total_parts_created})")

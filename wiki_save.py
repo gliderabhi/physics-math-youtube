@@ -11,7 +11,6 @@ def main():
     init_db()
     save_wiki(
         data["subject"],
-        int(data["class"]),
         data["chapter"],
         data["subtopic"],
         {

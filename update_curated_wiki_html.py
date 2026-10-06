@@ -4,14 +4,14 @@ from curated_wiki_mapping import FIXES
 from batch_pull_wiki_html import fetch_and_clean_html
 from generator.db import get_conn
 
-def update_english_and_clear_hindi(subject: str, class_: int, chapter: str, subtopic: str, data: dict):
+def update_english_and_clear_hindi(subject: str, chapter: str, subtopic: str, data: dict, class_: int | None = None):
     with get_conn() as conn, conn.cursor() as cur:
         # 1. Update English row
         cur.execute(
             """
             INSERT INTO subtopic_wiki_html
-                (subject, class, chapter, subtopic, language, wiki_title, wiki_url, html_content, has_diagrams)
-            VALUES (%s, %s, %s, %s, 'en', %s, %s, %s, %s)
+                (subject, chapter, subtopic, language, wiki_title, wiki_url, html_content, has_diagrams)
+            VALUES (%s, %s, %s, 'en', %s, %s, %s, %s)
             ON DUPLICATE KEY UPDATE
                 wiki_title = VALUES(wiki_title),
                 wiki_url = VALUES(wiki_url),
@@ -20,7 +20,6 @@ def update_english_and_clear_hindi(subject: str, class_: int, chapter: str, subt
             """,
             (
                 subject,
-                class_,
                 chapter,
                 subtopic,
                 data["title"],
@@ -33,9 +32,9 @@ def update_english_and_clear_hindi(subject: str, class_: int, chapter: str, subt
         cur.execute(
             """
             DELETE FROM subtopic_wiki_html
-            WHERE subject=%s AND class=%s AND chapter=%s AND subtopic=%s AND language='hi-en'
+            WHERE subject=%s AND chapter=%s AND subtopic=%s AND language='hi-en'
             """,
-            (subject, class_, chapter, subtopic),
+            (subject, chapter, subtopic),
         )
 
 

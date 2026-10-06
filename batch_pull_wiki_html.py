@@ -165,17 +165,17 @@ def fetch_and_clean_html(title: str) -> dict | None:
 
 def get_existing_saved() -> set[tuple]:
     with get_conn() as conn, conn.cursor() as cur:
-        cur.execute("SELECT subject, class, chapter, subtopic FROM subtopic_wiki_html")
-        return {(r["subject"], r["class"], r["chapter"], r["subtopic"]) for r in cur.fetchall()}
+        cur.execute("SELECT subject, chapter, subtopic FROM subtopic_wiki_html")
+        return {(r["subject"], r["chapter"], r["subtopic"]) for r in cur.fetchall()}
 
 
-def save_subtopic_html(subject: str, class_: int, chapter: str, subtopic: str, data: dict):
+def save_subtopic_html(subject: str, chapter: str, subtopic: str, data: dict):
     with get_conn() as conn, conn.cursor() as cur:
         cur.execute(
             """
             INSERT INTO subtopic_wiki_html
-                (subject, class, chapter, subtopic, wiki_title, wiki_url, html_content, has_diagrams)
-            VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
+                (subject, chapter, subtopic, wiki_title, wiki_url, html_content, has_diagrams)
+            VALUES (%s, %s, %s, %s, %s, %s, %s)
             ON DUPLICATE KEY UPDATE
                 wiki_title = VALUES(wiki_title),
                 wiki_url = VALUES(wiki_url),
@@ -184,7 +184,6 @@ def save_subtopic_html(subject: str, class_: int, chapter: str, subtopic: str, d
             """,
             (
                 subject,
-                class_,
                 chapter,
                 subtopic,
                 data["title"],
@@ -203,9 +202,9 @@ def main():
     all_jobs = []
     for ch in syllabus:
         for subtopic in ch["subtopics"]:
-            key = (ch["subject"], ch["class"], ch["chapter"], subtopic)
+            key = (ch["subject"], ch["chapter"], subtopic)
             if key not in existing:
-                all_jobs.append((ch["subject"], ch["class"], ch["chapter"], subtopic))
+                all_jobs.append((ch["subject"], ch["chapter"], subtopic))
 
     total = len(all_jobs)
     print(f"Total subtopics pending: {total} (Already in DB: {len(existing)})")
@@ -217,8 +216,8 @@ def main():
     success_count = 0
     fail_count = 0
 
-    for idx, (subject, class_, chapter, subtopic) in enumerate(all_jobs, 1):
-        print(f"[{idx}/{total}] {subject} c{class_} | {chapter} | {subtopic}...", end="", flush=True)
+    for idx, (subject, chapter, subtopic) in enumerate(all_jobs, 1):
+        print(f"[{idx}/{total}] {subject} | {chapter} | {subtopic}...", end="", flush=True)
 
         wiki_title = search_wikipedia_title(subtopic, chapter, subject)
         if not wiki_title:
@@ -232,7 +231,7 @@ def main():
             fail_count += 1
             continue
 
-        save_subtopic_html(subject, class_, chapter, subtopic, data)
+        save_subtopic_html(subject, chapter, subtopic, data)
         success_count += 1
         print(f" OK -> '{wiki_title}' ({len(data['html'])} bytes, diagrams: {bool(data['has_diagrams'])})")
 
