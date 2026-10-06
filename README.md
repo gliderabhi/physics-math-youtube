@@ -1,7 +1,7 @@
 # Physics/Math YouTube Pipeline
 
-Automated pipeline for a faceless YouTube channel covering Physics and Math from
-Class 9 through JEE/NEET level: picks the next curriculum item, generates a script
+Automated pipeline for an illustrated YouTube channel covering Physics and Math
+from foundation through JEE/NEET level: picks the next curriculum item, generates a script
 with Claude, narrates it with a free neural TTS voice, animates it with Manim,
 assembles the final video, generates a thumbnail + metadata, and (optionally)
 publishes it to YouTube into a per-chapter playlist.

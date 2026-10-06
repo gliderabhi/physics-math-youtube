@@ -9,7 +9,7 @@ METADATA_TOOL = {
     "input_schema": {
         "type": "object",
         "properties": {
-            "youtube_title": {"type": "string", "description": "SEO-friendly title, under 100 characters, includes class and chapter."},
+            "youtube_title": {"type": "string", "description": "SEO-friendly title, under 100 characters, includes topic, chapter, and subject."},
             "description": {"type": "string", "description": "3-5 sentence YouTube description including the topic, a call to action to subscribe, and relevant keywords."},
             "tags": {"type": "array", "items": {"type": "string"}, "description": "10-15 search tags."},
         },
@@ -24,7 +24,7 @@ def generate_metadata(item: CurriculumItem, content: dict) -> dict:
     response = client.messages.create(
         model=config.ANTHROPIC_MODEL,
         max_tokens=1024,
-        system="You write high-CTR, SEO-optimised YouTube metadata for an Indian physics/math education channel (Class 9-12, JEE/NEET).",
+        system="You write high-CTR, SEO-optimised YouTube metadata for an Indian physics/math education channel (JEE/NEET and foundation prep). Do not include 'Class 9/10/11/12' in the title or description.",
         tools=[METADATA_TOOL],
         tool_choice={"type": "tool", "name": METADATA_TOOL["name"]},
         messages=[

@@ -44,7 +44,7 @@ def _produce_video(item: CurriculumItem, content: dict, quality: str | None = No
     enriched = tts.synthesize_steps(segments, out_dir / "audio", voice=voice)
 
     steps_spec = {
-        "header_label": f"Class {item.class_} {item.subject.title()} | {item.chapter}",
+        "header_label": f"{item.subject.title()} | {item.chapter}",
         "title": content["title"],
         "segments": [
             {

@@ -193,15 +193,16 @@ def _call_tool(system: str, user: str, tool: dict) -> dict:
 
 def generate_explainer(item: CurriculumItem, language: str) -> dict:
     system = (
-        "You are writing the script for a YouTube video on an Indian school physics/math channel "
-        "covering NCERT Class 9-12 and JEE/NEET prep. Explain the concept clearly and rigorously, "
+        "You are writing the script for a YouTube video on an Indian physics/math education channel "
+        "covering foundational concepts and JEE/NEET prep. Explain the concept clearly and rigorously, "
         "assuming the student has covered earlier chapters but not this one. Keep each step's narration "
-        "concise and natural for voice narration. Produce 5-9 steps that build up the concept logically.\n\n"
+        "concise and natural for voice narration. Produce 5-9 steps that build up the concept logically. "
+        "Do not refer to class numbers (e.g. Class 9/10/11/12) in titles or content.\n\n"
         + NARRATION_STYLE.get(language, NARRATION_STYLE["en"])
         + VISUAL_GUIDE
     )
     user = (
-        f"Subject: {item.subject}\nClass: {item.class_}\nChapter: {item.chapter}\n"
+        f"Subject: {item.subject}\nChapter: {item.chapter}\n"
         f"Subtopic to explain: {item.subtopic}\n\n"
         "Create the explainer video script now."
     )
@@ -211,15 +212,16 @@ def generate_explainer(item: CurriculumItem, language: str) -> dict:
 def generate_problem(item: CurriculumItem, language: str) -> dict:
     difficulty_note = DIFFICULTY_GUIDANCE[item.difficulty]
     system = (
-        "You are writing the script for a YouTube video on an Indian school physics/math channel "
-        "covering NCERT Class 9-12 and JEE/NEET prep. Pose an original problem on the given subtopic "
+        "You are writing the script for a YouTube video on an Indian physics/math education channel "
+        "covering foundational concepts and JEE/NEET prep. Pose an original problem on the given subtopic "
         "at the specified difficulty, then solve it step by step. Keep each step's narration concise "
-        "and natural for voice narration. Produce 4-8 solution steps.\n\n"
+        "and natural for voice narration. Produce 4-8 solution steps. "
+        "Do not refer to class numbers (e.g. Class 9/10/11/12) in titles or content.\n\n"
         + NARRATION_STYLE.get(language, NARRATION_STYLE["en"])
         + VISUAL_GUIDE
     )
     user = (
-        f"Subject: {item.subject}\nClass: {item.class_}\nChapter: {item.chapter}\n"
+        f"Subject: {item.subject}\nChapter: {item.chapter}\n"
         f"Subtopic: {item.subtopic}\nDifficulty: {item.difficulty} -> {difficulty_note}\n\n"
         "Create an original problem and its full step-by-step solution now."
     )
@@ -268,8 +270,8 @@ def generate_topic_note(item: CurriculumItem, language: str) -> str:
     from .ncert_source import text_for_chapter
 
     system = (
-        f"You are writing a short reading-page explanation of one NCERT Class {item.class_} {item.subject} "
-        f"subtopic from the chapter '{item.chapter}', grounded in the actual NCERT textbook's treatment of "
+        f"You are writing a short reading-page explanation of one {item.subject} "
+        f"subtopic from the chapter '{item.chapter}', grounded in foundational textbook treatment of "
         "this topic.\n\n" + NOTE_STYLE.get(language, NOTE_STYLE["en"])
     )
     excerpt = text_for_chapter(item.subject, item.class_, item.chapter)
@@ -312,9 +314,9 @@ def generate_topic_problems(item: CurriculumItem, language: str) -> list[dict]:
     from .ncert_source import text_for_chapter
 
     system = (
-        f"You are selecting and writing short practice problems for one NCERT Class {item.class_} "
+        f"You are selecting and writing short practice problems for one "
         f"{item.subject} subtopic from the chapter '{item.chapter}', for a reading page (not a video). "
-        "Prefer adapting actual NCERT-style exercise problems for this subtopic over inventing unrelated "
+        "Prefer adapting standard practice problems for this subtopic over inventing unrelated "
         "ones.\n\n" + NOTE_STYLE.get(language, NOTE_STYLE["en"])
     )
     excerpt = text_for_chapter(item.subject, item.class_, item.chapter)

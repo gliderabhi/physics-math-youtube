@@ -22,7 +22,7 @@ def get_or_create_playlist(youtube, item: CurriculumItem, channel: str) -> str:
         if row:
             return row["youtube_playlist_id"]
 
-    title = f"Class {item.class_} {item.subject.title()} | {item.chapter}"
+    title = f"{item.subject.title()} | {item.chapter}"
     response = (
         youtube.playlists()
         .insert(
