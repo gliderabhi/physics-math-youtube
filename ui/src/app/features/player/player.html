@@ -79,6 +79,9 @@
               <i class="fa-solid fa-puzzle-piece"></i> The Problem
             </h2>
             <p class="text-slate-300 leading-relaxed">{{ exp.problem_statement }}</p>
+            @if (exp.opening_visual && hasVisual(exp.opening_visual)) {
+              <div class="mt-3.5 rounded-xl overflow-hidden border border-slate-800 bg-slate-950/80 p-3 max-w-lg shadow-md" [innerHTML]="renderVisualSvg(exp.opening_visual)"></div>
+            }
           </section>
         } @else if (exp.intro) {
           <section>
@@ -92,19 +95,25 @@
         @if (exp.steps.length) {
           <section>
             <h2 class="text-sm font-bold text-sky-400 uppercase tracking-wide mb-3 flex items-center gap-2">
-              <i class="fa-solid {{ exp.problem_statement ? 'fa-shoe-prints' : 'fa-closed-captioning' }}"></i>
-              {{ exp.problem_statement ? 'Step-by-step solution' : 'Video Narration & Key Points' }}
+              <i class="fa-solid {{ isProblem() ? 'fa-shoe-prints' : 'fa-closed-captioning' }}"></i>
+              {{ isProblem() ? 'Step-by-step solution' : 'Video Narration & Key Points' }}
             </h2>
             <ol class="space-y-3">
               @for (step of exp.steps; track $index) {
-                <li class="flex gap-3">
-                  <span class="shrink-0 h-6 w-6 rounded-full bg-sky-500/20 border border-sky-500/30 text-sky-300 text-xs font-bold flex items-center justify-center mt-0.5">
+                <li class="flex gap-3.5 p-3.5 rounded-xl bg-slate-950/40 border border-slate-800/80">
+                  <span class="shrink-0 h-7 w-7 rounded-lg bg-sky-500/20 border border-sky-500/30 text-sky-300 text-xs font-bold flex items-center justify-center mt-0.5 shadow-sm">
                     {{ $index + 1 }}
                   </span>
-                  <div class="space-y-1.5">
-                    <p class="text-slate-300 leading-relaxed">{{ step.text }}</p>
+                  <div class="space-y-2 flex-1 min-w-0">
+                    @if (step.label) {
+                      <h4 class="text-xs font-bold uppercase tracking-wider text-sky-400/90">{{ step.label }}</h4>
+                    }
+                    <p class="text-slate-200 text-sm leading-relaxed">{{ step.text }}</p>
                     @if (step.latex) {
-                      <div class="inline-block bg-slate-950/60 border border-slate-800 rounded-md px-3 py-1.5 text-slate-200" [innerHTML]="renderLatex(step.latex)"></div>
+                      <div class="inline-block bg-slate-950 border border-slate-800 rounded-lg px-3.5 py-2 text-slate-100 shadow-inner" [innerHTML]="renderLatex(step.latex)"></div>
+                    }
+                    @if (step.visual && hasVisual(step.visual)) {
+                      <div class="mt-2.5 rounded-xl overflow-hidden border border-slate-800 bg-slate-900/80 p-3 max-w-lg shadow-md" [innerHTML]="renderVisualSvg(step.visual)"></div>
                     }
                   </div>
                 </li>
@@ -114,11 +123,14 @@
         }
 
         @if (exp.final_answer) {
-          <section class="rounded-xl bg-amber-500/10 border border-amber-500/30 px-4 py-3">
-            <h2 class="text-xs font-bold text-amber-400 uppercase tracking-wide mb-1 flex items-center gap-1.5">
-              <i class="fa-solid fa-circle-check"></i> Final Answer
+          <section class="rounded-xl bg-emerald-500/10 border border-emerald-500/30 px-5 py-4 space-y-2 shadow-lg shadow-emerald-950/20">
+            <h2 class="text-xs font-bold text-emerald-400 uppercase tracking-wide flex items-center gap-1.5">
+              <i class="fa-solid fa-circle-check text-sm"></i> Final Answer
             </h2>
-            <p class="text-slate-100">{{ exp.final_answer }}</p>
+            <p class="text-slate-100 text-sm font-medium leading-relaxed">{{ exp.final_answer }}</p>
+            @if (exp.final_answer_latex) {
+              <div class="inline-block bg-slate-950/80 border border-emerald-500/30 rounded-lg px-3.5 py-1.5 text-emerald-200 text-sm shadow-inner mt-1" [innerHTML]="renderLatex(exp.final_answer_latex)"></div>
+            }
           </section>
         } @else if (exp.summary) {
           <section class="rounded-xl bg-sky-500/10 border border-sky-500/30 px-4 py-3">
@@ -131,110 +143,132 @@
       </div>
     }
 
-    @if (result()?.ncert_note || result()?.ncert_problems?.length) {
-      <div class="rounded-2xl glass-panel p-6 space-y-5">
-        @if (result()?.ncert_note; as note) {
-          <section>
-            <h2 class="text-sm font-bold text-sky-400 uppercase tracking-wide mb-2 flex items-center gap-2">
-              <i class="fa-solid fa-book-open-reader"></i> NCERT Explanation
-            </h2>
-            <div [innerHTML]="formatNcertHtml(note)"></div>
-          </section>
-        }
-
-        @if (result()?.ncert_problems?.length) {
-          <section>
-            <h2 class="text-sm font-bold text-sky-400 uppercase tracking-wide mb-3 flex items-center gap-2">
-              <i class="fa-solid fa-pen-ruler"></i> Practice problems
-            </h2>
-            <div class="space-y-4">
-              @for (p of result()!.ncert_problems; track $index) {
-                <div class="rounded-xl bg-slate-950/40 border border-slate-800 p-4">
-                  <div [innerHTML]="formatNcertHtml(p.question)"></div>
-                  <div class="mt-3 pt-3 border-t border-slate-800/60">
-                    <span class="text-[10px] font-bold uppercase tracking-wider text-slate-500 block mb-1.5">Solution</span>
-                    <div [innerHTML]="formatNcertHtml(p.solution)"></div>
-                  </div>
-                </div>
+    <!-- Reference Diagrams (for problems with illustrations from reference material) -->
+    @if (isProblem() && problemDiagrams().length) {
+      <div class="rounded-2xl glass-panel p-6 space-y-4">
+        <h2 class="text-sm font-bold text-sky-400 uppercase tracking-wide flex items-center gap-2">
+          <i class="fa-solid fa-diagram-project"></i> Reference Diagrams
+        </h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          @for (d of problemDiagrams(); track d.url) {
+            <figure class="rounded-xl bg-slate-900/70 border border-slate-800 p-3 text-center flex flex-col items-center">
+              <img [src]="d.url" [alt]="d.caption" class="rounded-lg max-h-56 object-contain bg-slate-950/60 p-2 border border-slate-800/80" />
+              @if (d.caption) {
+                <figcaption class="text-xs text-slate-400 mt-2 italic px-2">{{ d.caption }}</figcaption>
               }
-            </div>
-          </section>
-        }
+            </figure>
+          }
+        </div>
       </div>
     }
 
-    @if (result()?.wiki_html; as wikiHtml) {
-      <div class="rounded-2xl glass-panel p-6 space-y-6">
-        @if (result()?.parts?.length) {
-          <section class="space-y-4">
-            @for (part of result()!.parts!; track $index) {
-              <div class="rounded-xl bg-slate-900/70 border border-slate-800/90 p-5 hover:border-slate-700 transition-all">
-                <div class="mb-3">
-                  <h3 class="text-base font-bold text-slate-100 tracking-tight">{{ part.heading }}</h3>
-                </div>
+    <!-- Full explanation (NCERT & Wikipedia theory) — only shown for concept / explainer pages, NOT problems -->
+    @if (!isProblem()) {
+      @if (result()?.ncert_note || result()?.ncert_problems?.length) {
+        <div class="rounded-2xl glass-panel p-6 space-y-5">
+          @if (result()?.ncert_note; as note) {
+            <section>
+              <h2 class="text-sm font-bold text-sky-400 uppercase tracking-wide mb-2 flex items-center gap-2">
+                <i class="fa-solid fa-book-open-reader"></i> NCERT Explanation
+              </h2>
+              <div [innerHTML]="formatNcertHtml(note)"></div>
+            </section>
+          }
 
-                <div class="wiki-rendered-content text-slate-300 leading-relaxed text-sm" [innerHTML]="sanitizedWikiHtml(part.paragraph_html || part.paragraph)"></div>
-
-                @if (part.diagram_url) {
-                  <div class="mt-4 pt-3 border-t border-slate-800/60 flex flex-col items-center">
-                    <figure class="max-w-md w-full text-center">
-                      <img [src]="part.diagram_url" [alt]="part.diagram_caption || part.heading" class="rounded-lg border border-slate-800 shadow-lg max-h-80 mx-auto object-contain bg-slate-950/60 p-2" />
-                      @if (part.diagram_caption) {
-                        <figcaption class="text-xs text-slate-400 mt-2 italic px-2">{{ part.diagram_caption }}</figcaption>
-                      }
-                    </figure>
+          @if (result()?.ncert_problems?.length) {
+            <section>
+              <h2 class="text-sm font-bold text-sky-400 uppercase tracking-wide mb-3 flex items-center gap-2">
+                <i class="fa-solid fa-pen-ruler"></i> Practice problems
+              </h2>
+              <div class="space-y-4">
+                @for (p of result()!.ncert_problems; track $index) {
+                  <div class="rounded-xl bg-slate-950/40 border border-slate-800 p-4">
+                    <div [innerHTML]="formatNcertHtml(p.question)"></div>
+                    <div class="mt-3 pt-3 border-t border-slate-800/60">
+                      <span class="text-[10px] font-bold uppercase tracking-wider text-slate-500 block mb-1.5">Solution</span>
+                      <div [innerHTML]="formatNcertHtml(p.solution)"></div>
+                    </div>
                   </div>
                 }
               </div>
-            }
-          </section>
-        } @else {
-          <div class="wiki-rendered-content text-slate-300 leading-relaxed text-sm" [innerHTML]="sanitizedWikiHtml(wikiHtml)"></div>
-        }
-
-        <!-- Full article reference accordion -->
-        <details class="group rounded-xl border border-slate-800/60 bg-slate-900/30 p-4 transition-all">
-          <summary class="flex items-center justify-between cursor-pointer list-none text-xs font-bold text-slate-400 hover:text-sky-400 uppercase tracking-wide">
-            <span class="flex items-center gap-2">
-              <i class="fa-solid fa-book-open-reader"></i> Full Reference Article (Wikipedia)
-            </span>
-            <i class="fa-solid fa-chevron-down text-slate-500 group-open:rotate-180 transition-transform"></i>
-          </summary>
-          <div class="mt-4 pt-4 border-t border-slate-800/80 wiki-rendered-content" [innerHTML]="sanitizedWikiHtml(wikiHtml)"></div>
-        </details>
-
-        <footer class="pt-2 text-xs text-slate-500 flex flex-wrap items-center justify-between gap-2">
-          <p>
-            Reference:
-            <a [href]="result()!.wiki_source_url!" target="_blank" rel="noopener" class="text-sky-400 hover:underline">
-              {{ result()!.wiki_title }} on Wikipedia
-            </a>
-            (CC BY-SA 4.0)
-          </p>
-        </footer>
-      </div>
-    } @else if (result()?.wiki_text; as note) {
-      <div class="rounded-2xl glass-panel p-6 space-y-5">
-        <section>
-          <h2 class="text-sm font-bold text-sky-400 uppercase tracking-wide mb-2 flex items-center gap-2">
-            <i class="fa-solid fa-book-open-reader"></i> Explanation
-          </h2>
-          <div [innerHTML]="formatNcertHtml(note, result()!.wiki_images)"></div>
-        </section>
-
-        <footer class="pt-3 border-t border-slate-800/60 text-[11px] text-slate-500 space-y-1">
-          <p>
-            Further reading:
-            <a [href]="result()!.wiki_source_url!" target="_blank" rel="noopener" class="text-sky-400 hover:underline">{{ result()!.wiki_title }}</a>
-            on Wikipedia.
-          </p>
-          @if (result()?.wiki_images?.length) {
-            @for (img of result()!.wiki_images; track img.url) {
-              <p>{{ img.title }} &mdash; {{ img.artist }}, {{ img.license }}, via Wikimedia Commons.</p>
-            }
+            </section>
           }
-        </footer>
-      </div>
+        </div>
+      }
+
+      @if (result()?.wiki_html; as wikiHtml) {
+        <div class="rounded-2xl glass-panel p-6 space-y-6">
+          @if (result()?.parts?.length) {
+            <section class="space-y-4">
+              @for (part of result()!.parts!; track $index) {
+                <div class="rounded-xl bg-slate-900/70 border border-slate-800/90 p-5 hover:border-slate-700 transition-all">
+                  <div class="mb-3">
+                    <h3 class="text-base font-bold text-slate-100 tracking-tight">{{ part.heading }}</h3>
+                  </div>
+
+                  <div class="wiki-rendered-content text-slate-300 leading-relaxed text-sm" [innerHTML]="sanitizedWikiHtml(part.paragraph_html || part.paragraph)"></div>
+
+                  @if (part.diagram_url) {
+                    <div class="mt-4 pt-3 border-t border-slate-800/60 flex flex-col items-center">
+                      <figure class="max-w-md w-full text-center">
+                        <img [src]="part.diagram_url" [alt]="part.diagram_caption || part.heading" class="rounded-lg border border-slate-800 shadow-lg max-h-80 mx-auto object-contain bg-slate-950/60 p-2" />
+                        @if (part.diagram_caption) {
+                          <figcaption class="text-xs text-slate-400 mt-2 italic px-2">{{ part.diagram_caption }}</figcaption>
+                        }
+                      </figure>
+                    </div>
+                  }
+                </div>
+              }
+            </section>
+          } @else {
+            <div class="wiki-rendered-content text-slate-300 leading-relaxed text-sm" [innerHTML]="sanitizedWikiHtml(wikiHtml)"></div>
+          }
+
+          <!-- Full article reference accordion -->
+          <details class="group rounded-xl border border-slate-800/60 bg-slate-900/30 p-4 transition-all">
+            <summary class="flex items-center justify-between cursor-pointer list-none text-xs font-bold text-slate-400 hover:text-sky-400 uppercase tracking-wide">
+              <span class="flex items-center gap-2">
+                <i class="fa-solid fa-book-open-reader"></i> Full Reference Article (Wikipedia)
+              </span>
+              <i class="fa-solid fa-chevron-down text-slate-500 group-open:rotate-180 transition-transform"></i>
+            </summary>
+            <div class="mt-4 pt-4 border-t border-slate-800/80 wiki-rendered-content" [innerHTML]="sanitizedWikiHtml(wikiHtml)"></div>
+          </details>
+
+          <footer class="pt-2 text-xs text-slate-500 flex flex-wrap items-center justify-between gap-2">
+            <p>
+              Reference:
+              <a [href]="result()!.wiki_source_url!" target="_blank" rel="noopener" class="text-sky-400 hover:underline">
+                {{ result()!.wiki_title }} on Wikipedia
+              </a>
+              (CC BY-SA 4.0)
+            </p>
+          </footer>
+        </div>
+      } @else if (result()?.wiki_text; as note) {
+        <div class="rounded-2xl glass-panel p-6 space-y-5">
+          <section>
+            <h2 class="text-sm font-bold text-sky-400 uppercase tracking-wide mb-2 flex items-center gap-2">
+              <i class="fa-solid fa-book-open-reader"></i> Explanation
+            </h2>
+            <div [innerHTML]="formatNcertHtml(note, result()!.wiki_images)"></div>
+          </section>
+
+          <footer class="pt-3 border-t border-slate-800/60 text-[11px] text-slate-500 space-y-1">
+            <p>
+              Further reading:
+              <a [href]="result()!.wiki_source_url!" target="_blank" rel="noopener" class="text-sky-400 hover:underline">{{ result()!.wiki_title }}</a>
+              on Wikipedia.
+            </p>
+            @if (result()?.wiki_images?.length) {
+              @for (img of result()!.wiki_images; track img.url) {
+                <p>{{ img.title }} &mdash; {{ img.artist }}, {{ img.license }}, via Wikimedia Commons.</p>
+              }
+            }
+          </footer>
+        </div>
+      }
     }
   </div>
 } @else {

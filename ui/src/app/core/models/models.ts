@@ -59,6 +59,7 @@ export interface ExplanationStep {
   text: string;
   label: string;
   latex: string;
+  visual?: any;
 }
 
 export interface Explanation {
@@ -66,6 +67,9 @@ export interface Explanation {
   summary: string | null;
   problem_statement: string | null;
   final_answer: string | null;
+  final_answer_latex?: string | null;
+  opening_visual?: any;
+  closing_visual?: any;
   steps: ExplanationStep[];
 }
 

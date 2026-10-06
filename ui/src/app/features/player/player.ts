@@ -40,6 +40,229 @@ export class PlayerComponent {
 
   isReviewer = computed(() => isReviewerEmail(this.auth.user()?.email));
 
+  isProblem = computed(() => {
+    const ct = (this.contentType() || this.result()?.content_type || '').toLowerCase();
+    if (ct === 'problem') return true;
+    if (ct === 'explainer') return false;
+    return !!this.result()?.explanation?.problem_statement;
+  });
+
+  problemDiagrams = computed(() => {
+    const parts = this.result()?.parts ?? [];
+    return parts.filter((p) => !!p.diagram_url).map((p) => ({
+      url: p.diagram_url!,
+      caption: p.diagram_caption || p.heading || '',
+    }));
+  });
+
+  hasVisual(v: any): boolean {
+    if (!v || typeof v !== 'object') return false;
+    return (
+      (Array.isArray(v.objects) && v.objects.length > 0) ||
+      (Array.isArray(v.vectors) && v.vectors.length > 0) ||
+      (Array.isArray(v.curves) && v.curves.length > 0) ||
+      v.type === 'circular_path' ||
+      v.type === 'free_body_diagram'
+    );
+  }
+
+  private static readonly COLOR_MAP: Record<string, string> = {
+    BLUE: '#38bdf8',
+    RED: '#f87171',
+    GREEN: '#4ade80',
+    YELLOW: '#facc15',
+    ORANGE: '#fb923c',
+    GRAY: '#94a3b8',
+    WHITE: '#f8fafc',
+    PURPLE: '#c084fc',
+  };
+
+  renderVisualSvg(visual: any): SafeHtml {
+    if (!this.hasVisual(visual)) return '';
+
+    const width = 380;
+    const height = 220;
+    const cx = width / 2;
+    const cy = height / 2;
+
+    const colors = PlayerComponent.COLOR_MAP;
+    const getColor = (c: string | undefined, def: string) => colors[(c || '').toUpperCase()] || def;
+
+    const defs = `
+      <defs>
+        <marker id="arrow-def" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+          <path d="M 0 1 L 10 5 L 0 9 z" fill="#facc15" />
+        </marker>
+        <marker id="arrow-blue" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+          <path d="M 0 1 L 10 5 L 0 9 z" fill="#38bdf8" />
+        </marker>
+        <marker id="arrow-red" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+          <path d="M 0 1 L 10 5 L 0 9 z" fill="#f87171" />
+        </marker>
+        <marker id="arrow-green" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+          <path d="M 0 1 L 10 5 L 0 9 z" fill="#4ade80" />
+        </marker>
+        <marker id="arrow-orange" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+          <path d="M 0 1 L 10 5 L 0 9 z" fill="#fb923c" />
+        </marker>
+      </defs>
+    `;
+
+    const markerFor = (c: string | undefined) => {
+      const u = (c || '').toUpperCase();
+      if (u === 'BLUE') return 'url(#arrow-blue)';
+      if (u === 'RED') return 'url(#arrow-red)';
+      if (u === 'GREEN') return 'url(#arrow-green)';
+      if (u === 'ORANGE') return 'url(#arrow-orange)';
+      return 'url(#arrow-def)';
+    };
+
+    let inner = '';
+
+    if (visual.type === 'free_body_diagram') {
+      const scale = 40;
+      if (visual.ground) {
+        inner += `<line x1="20" y1="185" x2="360" y2="185" stroke="#475569" stroke-width="2" />`;
+        for (let x = 25; x < 355; x += 12) {
+          inner += `<line x1="${x}" y1="185" x2="${x - 8}" y2="197" stroke="#334155" stroke-width="1.5" />`;
+        }
+      }
+
+      if (Array.isArray(visual.rope) && visual.rope.length > 1) {
+        const points = visual.rope
+          .map((p: number[]) => `${cx + p[0] * scale},${cy - p[1] * scale}`)
+          .join(' ');
+        inner += `<polyline points="${points}" fill="none" stroke="#94a3b8" stroke-width="2.5" stroke-dasharray="4,2" />`;
+      }
+
+      for (const obj of visual.objects || []) {
+        const ox = cx + (obj.pos?.[0] || 0) * scale;
+        const oy = cy - (obj.pos?.[1] || 0) * scale;
+        const ocolor = getColor(obj.color, '#38bdf8');
+
+        if (obj.kind === 'pulley') {
+          inner += `<circle cx="${ox}" cy="${oy}" r="16" fill="#1e293b" stroke="${ocolor}" stroke-width="2.5" />`;
+          inner += `<circle cx="${ox}" cy="${oy}" r="4" fill="${ocolor}" />`;
+        } else {
+          inner += `<rect x="${ox - 24}" y="${oy - 18}" width="48" height="36" rx="6" fill="#1e293b" stroke="${ocolor}" stroke-width="2" />`;
+        }
+
+        if (obj.label) {
+          inner += `<text x="${ox}" y="${oy + 4}" fill="#f8fafc" font-size="11" font-weight="600" text-anchor="middle">${obj.label}</text>`;
+        }
+
+        for (const arrow of obj.arrows || []) {
+          const dx = (arrow.dx || 0) * scale;
+          const dy = -(arrow.dy || 0) * scale;
+          const startX = ox;
+          const startY = arrow.at_surface ? oy + 18 : oy;
+          const tipX = startX + dx;
+          const tipY = startY + dy;
+          const acolor = getColor(arrow.color, '#facc15');
+          const m = markerFor(arrow.color);
+
+          inner += `<line x1="${startX}" y1="${startY}" x2="${tipX}" y2="${tipY}" stroke="${acolor}" stroke-width="2.5" marker-end="${m}" />`;
+          if (arrow.label) {
+            const lx = tipX + (dx > 5 ? 8 : dx < -5 ? -8 : 0);
+            const ly = tipY + (dy > 5 ? 14 : dy < -5 ? -8 : -6);
+            const anchor = dx < -5 ? 'end' : dx > 5 ? 'start' : 'middle';
+            inner += `<text x="${lx}" y="${ly}" fill="${acolor}" font-size="11" font-weight="700" text-anchor="${anchor}">${arrow.label}</text>`;
+          }
+        }
+      }
+    } else if (visual.type === 'vector_path' && Array.isArray(visual.vectors)) {
+      let currX = 0;
+      let currY = 0;
+      const pts: Array<{ x: number; y: number }> = [{ x: 0, y: 0 }];
+      for (const v of visual.vectors) {
+        currX += v.dx || 0;
+        currY += v.dy || 0;
+        pts.push({ x: currX, y: currY });
+      }
+
+      const xs = pts.map((p) => p.x);
+      const ys = pts.map((p) => p.y);
+      const minX = Math.min(...xs, 0);
+      const maxX = Math.max(...xs, 0);
+      const minY = Math.min(...ys, 0);
+      const maxY = Math.max(...ys, 0);
+      const spanX = Math.max(maxX - minX, 1);
+      const spanY = Math.max(maxY - minY, 1);
+      const scale = Math.min(260 / spanX, 140 / spanY);
+
+      const toSvgX = (x: number) => cx + (x - (minX + maxX) / 2) * scale;
+      const toSvgY = (y: number) => cy - (y - (minY + maxY) / 2) * scale;
+
+      const sx0 = toSvgX(0);
+      const sy0 = toSvgY(0);
+      inner += `<circle cx="${sx0}" cy="${sy0}" r="4" fill="#38bdf8" />`;
+      inner += `<text x="${sx0 - 8}" y="${sy0 - 8}" fill="#94a3b8" font-size="10">Start</text>`;
+
+      let px = 0;
+      let py = 0;
+      for (const v of visual.vectors) {
+        const nx = px + (v.dx || 0);
+        const ny = py + (v.dy || 0);
+        const p1x = toSvgX(px);
+        const p1y = toSvgY(py);
+        const p2x = toSvgX(nx);
+        const p2y = toSvgY(ny);
+        const vcolor = getColor(v.color, '#38bdf8');
+        const m = markerFor(v.color);
+
+        inner += `<line x1="${p1x}" y1="${p1y}" x2="${p2x}" y2="${p2y}" stroke="${vcolor}" stroke-width="2.5" marker-end="${m}" />`;
+        if (v.label) {
+          const mx = (p1x + p2x) / 2;
+          const my = (p1y + p2y) / 2 - 8;
+          inner += `<text x="${mx}" y="${my}" fill="${vcolor}" font-size="10" font-weight="600" text-anchor="middle">${v.label}</text>`;
+        }
+        px = nx;
+        py = ny;
+      }
+
+      if (visual.show_resultant) {
+        const finalX = toSvgX(currX);
+        const finalY = toSvgY(currY);
+        inner += `<line x1="${sx0}" y1="${sy0}" x2="${finalX}" y2="${finalY}" stroke="#facc15" stroke-width="2.5" stroke-dasharray="5,3" marker-end="url(#arrow-def)" />`;
+        if (visual.resultant_label) {
+          const rx = (sx0 + finalX) / 2;
+          const ry = (sy0 + finalY) / 2 + 16;
+          inner += `<text x="${rx}" y="${ry}" fill="#facc15" font-size="11" font-weight="700" text-anchor="middle">${visual.resultant_label}</text>`;
+        }
+      }
+    } else if (visual.type === 'circular_path') {
+      const r = 55;
+      const vcolor = getColor(visual.color, '#38bdf8');
+      inner += `<circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="#334155" stroke-width="1.5" stroke-dasharray="4,3" />`;
+      inner += `<circle cx="${cx}" cy="${cy}" r="3" fill="#64748b" />`;
+
+      const fraction = visual.fraction || 1.0;
+      if (fraction <= 0.5) {
+        inner += `<path d="M ${cx} ${cy - r} A ${r} ${r} 0 0 1 ${cx} ${cy + r}" fill="none" stroke="${vcolor}" stroke-width="2.5" marker-end="${markerFor(visual.color)}" />`;
+      } else {
+        inner += `<circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="${vcolor}" stroke-width="2.5" />`;
+      }
+
+      if (visual.show_resultant) {
+        inner += `<line x1="${cx}" y1="${cy - r}" x2="${cx}" y2="${cy + r}" stroke="#facc15" stroke-width="2.5" stroke-dasharray="4,2" marker-end="url(#arrow-def)" />`;
+        if (visual.resultant_label) {
+          inner += `<text x="${cx + 12}" y="${cy + 4}" fill="#facc15" font-size="11" font-weight="700">${visual.resultant_label}</text>`;
+        }
+      }
+    } else {
+      inner += `<text x="${cx}" y="${cy}" fill="#64748b" font-size="11" text-anchor="middle">Diagram</text>`;
+    }
+
+    const svg = `
+      <svg viewBox="0 0 ${width} ${height}" class="w-full h-auto max-h-56 select-none" xmlns="http://www.w3.org/2000/svg">
+        ${defs}
+        <rect width="${width}" height="${height}" rx="12" fill="#090d16" />
+        ${inner}
+      </svg>
+    `;
+    return this.sanitizer.bypassSecurityTrustHtml(svg);
+  }
+
   constructor() {
     effect(() => {
       this.loading.set(true);

@@ -287,8 +287,16 @@ def resolve(
                         "summary": content.get("summary"),
                         "problem_statement": content.get("problem_statement"),
                         "final_answer": content.get("final_answer"),
+                        "final_answer_latex": content.get("final_answer_latex", ""),
+                        "opening_visual": content.get("opening_visual"),
+                        "closing_visual": content.get("closing_visual"),
                         "steps": [
-                            {"text": s.get("narration", ""), "label": s.get("display_text", ""), "latex": s.get("latex", "")}
+                            {
+                                "text": s.get("narration", ""),
+                                "label": s.get("display_text", ""),
+                                "latex": s.get("latex", ""),
+                                "visual": s.get("visual"),
+                            }
                             for s in content.get("steps", [])
                         ],
                     }
