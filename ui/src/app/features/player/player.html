@@ -5,22 +5,69 @@
 } @else if (result(); as res) {
   <div class="space-y-5 animate-fade-in-up max-w-4xl">
     <div class="flex items-center gap-2 text-xs font-semibold text-sky-400">
-      <a [routerLink]="['/chapter']" [queryParams]="{ subject: subject(), class: class_(), chapter: chapter() }" class="hover:underline flex items-center gap-1.5 text-slate-400 hover:text-sky-300 transition-colors">
-        <i class="fa-solid fa-arrow-left text-[10px]"></i> {{ chapter() }}
+      <a [routerLink]="['/chapter']" [queryParams]="{ subject: subject() || res.subject, class: class_() || res.class, chapter: chapter() || res.chapter }" class="hover:underline flex items-center gap-1.5 text-slate-400 hover:text-sky-300 transition-colors">
+        <i class="fa-solid fa-arrow-left text-[10px]"></i> {{ chapter() || res.chapter }}
       </a>
       <span class="text-slate-600">&rsaquo;</span>
-      <span class="text-slate-300 truncate">{{ subtopic() }}</span>
+      <span class="text-slate-300 truncate">{{ subtopic() || res.subtopic }}</span>
     </div>
 
     <h1 class="text-xl sm:text-2xl font-extrabold text-white tracking-tight">
       {{ res.title ?? res.wiki_title ?? subtopic() }}
     </h1>
 
+    @if (isReviewer() && res.status === 'generated') {
+      <div class="rounded-2xl border border-amber-500/40 bg-gradient-to-r from-amber-500/15 via-slate-900/80 to-slate-950 p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4 shadow-xl shadow-amber-950/20">
+        <div class="flex items-center gap-3 min-w-0">
+          <span class="w-10 h-10 rounded-xl bg-amber-500/20 border border-amber-500/40 text-amber-400 flex items-center justify-center shrink-0">
+            <i class="fa-solid fa-clock-rotate-left text-lg"></i>
+          </span>
+          <div class="min-w-0">
+            <div class="text-xs font-bold uppercase tracking-wider text-amber-300 flex items-center gap-2">
+              <span>Video Pending Review</span>
+              @if (res.run_id) {
+                <span class="text-[10px] font-mono px-1.5 py-0.5 rounded bg-amber-500/20 text-amber-200 border border-amber-500/30">{{ res.run_id }}</span>
+              }
+            </div>
+            <p class="text-xs text-slate-300 mt-0.5 truncate">Review the video playback, narration, and explanation below.</p>
+          </div>
+        </div>
+        <div class="flex items-center gap-2 shrink-0">
+          <button (click)="approveRun(res.run_id!)" [disabled]="busyReview()"
+                  class="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold transition-all disabled:opacity-50 flex items-center gap-1.5 shadow-lg shadow-emerald-900/40 hover:scale-[1.02] active:scale-[0.98]">
+            <i class="fa-solid fa-check"></i> Approve Video
+          </button>
+          <button (click)="toggleReviewComment()"
+                  class="px-3.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold transition-colors flex items-center gap-1.5 border border-slate-700">
+            <i class="fa-solid fa-comment-dots"></i> Feedback
+          </button>
+        </div>
+      </div>
+      @if (showReviewComment()) {
+        <div class="rounded-xl border border-slate-800 bg-slate-900/90 p-4 space-y-3 animate-fade-in-up">
+          <label class="block text-xs font-bold uppercase tracking-wider text-slate-400">Review Feedback</label>
+          <textarea [(ngModel)]="reviewCommentText" rows="3" placeholder="Leave notes or requested changes for regeneration…"
+                    class="w-full rounded-xl bg-slate-950 border border-slate-800 p-3 text-xs text-slate-200 placeholder:text-slate-500 focus:outline-none focus:border-amber-500/50"></textarea>
+          <div class="flex justify-end gap-2">
+            <button (click)="toggleReviewComment()" class="px-3.5 py-1.5 rounded-lg text-xs font-medium text-slate-400 hover:text-slate-200">Cancel</button>
+            <button (click)="submitReviewComment(res.run_id!)" [disabled]="!reviewCommentText.trim() || busyReview()"
+                    class="px-4 py-1.5 rounded-lg bg-amber-600 hover:bg-amber-500 text-white text-xs font-semibold disabled:opacity-50">Save Feedback</button>
+          </div>
+        </div>
+      }
+    }
+    @if (res.status === 'approved') {
+      <div class="rounded-xl border border-emerald-500/40 bg-emerald-500/10 p-3.5 flex items-center gap-3">
+        <i class="fa-solid fa-circle-check text-emerald-400 text-base"></i>
+        <span class="text-xs font-bold text-emerald-300">Video Approved for Publishing</span>
+      </div>
+    }
+
     @if (res.status === 'published' && res.youtube_video_id) {
       <div class="aspect-video w-full rounded-2xl overflow-hidden bg-black border border-slate-800 shadow-2xl shadow-black/40">
         <iframe class="w-full h-full" [src]="embedUrl()" title="Video" frameborder="0" allowfullscreen></iframe>
       </div>
-    } @else if (res.run_id && (res.status === 'local' || res.status === 'published')) {
+    } @else if (res.run_id && (res.status === 'local' || res.status === 'published' || res.status === 'generated' || res.status === 'approved')) {
       <video class="w-full rounded-2xl bg-black border border-slate-800 shadow-2xl shadow-black/40" controls [src]="streamUrl(res.run_id)"></video>
     }
 

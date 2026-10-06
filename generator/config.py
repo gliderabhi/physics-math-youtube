@@ -31,7 +31,7 @@ DB_PASSWORD = os.environ.get("DB_PASSWORD", "")
 # Used by service/deps.py to resolve a caller's email (the gateway forwards
 # X-User-Id but not email) and to gate the admin review-queue endpoints.
 GATEWAY_BASE = os.environ.get("GATEWAY_BASE", "http://localhost:8080")
-ADMIN_EMAILS = {e.strip() for e in os.environ.get("ADMIN_EMAILS", "coolmunnabad@gmail.com").split(",") if e.strip()}
+ADMIN_EMAILS = {e.strip().lower() for e in os.environ.get("ADMIN_EMAILS", "coolmunnabad@gmail.com").split(",") if e.strip()}
 
 OUTPUT_DIR = ROOT / "output"
 VIDEOS_DIR = ROOT / "videos"

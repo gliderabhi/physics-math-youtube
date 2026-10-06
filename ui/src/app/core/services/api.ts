@@ -48,12 +48,13 @@ export class ApiService {
 
   resolve(
     subject: string,
-    classValue: string,
+    classValue: string | number,
     chapter: string,
     subtopic: string,
     contentType: string,
     difficulty: string,
     language: string,
+    runId: string = '',
   ): Observable<ResolveResult> {
     let params = new HttpParams()
       .set('subject', subject)
@@ -63,7 +64,10 @@ export class ApiService {
       .set('difficulty', difficulty)
       .set('language', language);
     if (classValue) {
-      params = params.set('class', classValue);
+      params = params.set('class', String(classValue));
+    }
+    if (runId) {
+      params = params.set('run_id', runId);
     }
     return this.http.get<ResolveResult>(`${BASE}/physics-service/api/resolve`, { params });
   }

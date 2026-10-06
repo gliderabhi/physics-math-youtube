@@ -3,6 +3,7 @@ import subprocess
 from fastapi import APIRouter, Depends, HTTPException
 from pydantic import BaseModel, Field
 
+from generator.curriculum import load_syllabus
 from generator.db import get_conn
 
 from .deps import require_admin
@@ -16,6 +17,11 @@ class CommentBody(BaseModel):
 
 @router.get("/review-queue")
 def review_queue():
+    syllabus = load_syllabus()
+    chapter_class = {
+        (ch["subject"].lower(), ch["chapter"].lower()): ch["class"]
+        for ch in syllabus
+    }
     with get_conn() as conn, conn.cursor() as cur:
         cur.execute(
             "SELECT run_id, subject, chapter, subtopic, content_type, difficulty, "
@@ -25,6 +31,7 @@ def review_queue():
         rows = cur.fetchall()
     for r in rows:
         r["created_at"] = r["created_at"].isoformat()
+        r["class"] = chapter_class.get((r["subject"].lower(), r["chapter"].lower()), 0)
     return rows
 
 

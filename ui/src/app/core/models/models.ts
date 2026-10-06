@@ -86,7 +86,7 @@ export interface SubtopicPart {
 }
 
 export interface ResolveResult {
-  status: 'published' | 'local' | 'not_available';
+  status: 'published' | 'local' | 'not_available' | 'generated' | 'approved';
   run_id: string | null;
   youtube_video_id: string | null;
   title: string | null;
@@ -101,6 +101,13 @@ export interface ResolveResult {
   has_diagrams?: boolean;
   wiki_source_url: string | null;
   wiki_images: WikiImage[];
+  subject?: string;
+  class?: number;
+  chapter?: string;
+  subtopic?: string;
+  content_type?: string;
+  difficulty?: string;
+  language?: string;
 }
 
 export interface ReviewItem {

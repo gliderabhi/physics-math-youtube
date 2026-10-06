@@ -1,12 +1,13 @@
-import { Component, inject, signal, computed } from '@angular/core';
+import { Component, inject, signal, computed, effect } from '@angular/core';
 import { RouterOutlet, RouterLink, Router } from '@angular/router';
 import { AuthService } from '../../core/services/auth';
 import { LanguageService } from '../../core/services/language';
 import { ChaptersService } from '../../core/services/chapters';
 import { ApiService } from '../../core/services/api';
-import { isAdminEmail } from '../../core/utils/admin';
+import { ReviewQueueService } from '../../core/services/review-queue.service';
+import { isAdminEmail, isReviewerEmail } from '../../core/utils/admin';
 import { subjectIcon, subjectName } from '../../core/utils/subjects';
-import { ChapterSummary, SubtopicGroup } from '../../core/models/models';
+import { ChapterSummary, SubtopicGroup, ReviewItem } from '../../core/models/models';
 
 @Component({
   selector: 'app-shell',
@@ -19,17 +20,21 @@ export class ShellComponent {
   chaptersSvc = inject(ChaptersService);
   private api = inject(ApiService);
   private router = inject(Router);
+  reviewQueue = inject(ReviewQueueService);
 
   langMenuOpen = signal(false);
   userMenuOpen = signal(false);
 
-  // Super dropdown states: both open by default
+  // Super dropdown states: all open by default
   superWithVideoOpen = signal(true);
   superWithoutVideoOpen = signal(true);
+  superReviewVideoOpen = signal(true);
 
-  toggleSuper(section: 'with_video' | 'without_video'): void {
+  toggleSuper(section: 'with_video' | 'without_video' | 'review_video'): void {
     if (section === 'with_video') {
       this.superWithVideoOpen.update((v) => !v);
+    } else if (section === 'review_video') {
+      this.superReviewVideoOpen.update((v) => !v);
     } else {
       this.superWithoutVideoOpen.update((v) => !v);
     }
@@ -42,6 +47,15 @@ export class ShellComponent {
 
   initial = computed(() => (this.auth.user()?.name?.trim()?.[0] ?? '?').toUpperCase());
   isAdmin = computed(() => isAdminEmail(this.auth.user()?.email));
+  isReviewer = computed(() => isReviewerEmail(this.auth.user()?.email));
+
+  constructor() {
+    effect(() => {
+      if (this.isReviewer()) {
+        this.reviewQueue.refresh();
+      }
+    });
+  }
 
   private expandedSubjects = signal<Set<string>>(new Set());
   private expandedChapters = signal<Set<string>>(new Set());
@@ -107,6 +121,42 @@ export class ShellComponent {
       }));
   });
 
+  // Review videos pending review grouped by subject -> chapter
+  reviewSubjectGroups = computed(() => {
+    const items = this.reviewQueue.items();
+    const map = new Map<string, Map<string, ReviewItem[]>>();
+    for (const s of this.defaultSubjects) {
+      map.set(s, new Map());
+    }
+    for (const it of items) {
+      const subj = it.subject.toLowerCase();
+      if (!map.has(subj)) map.set(subj, new Map());
+      const chMap = map.get(subj)!;
+      if (!chMap.has(it.chapter)) chMap.set(it.chapter, []);
+      chMap.get(it.chapter)!.push(it);
+    }
+    return Array.from(map.entries())
+      .filter(([_, chMap]) => chMap.size > 0)
+      .sort((a, b) => a[0].localeCompare(b[0]))
+      .map(([subject, chMap]) => ({
+        subject,
+        chapters: Array.from(chMap.entries())
+          .sort((a, b) => a[0].localeCompare(b[0]))
+          .map(([chapter, videos]) => ({
+            chapter,
+            subject,
+            class: videos[0]?.class ?? 0,
+            video_count: videos.length,
+            videos,
+          })),
+        totalVideos: Array.from(chMap.values()).reduce((sum, vids) => sum + vids.length, 0),
+      }));
+  });
+
+  totalReviewVideoCount = computed(() =>
+    this.reviewSubjectGroups().reduce((acc, g) => acc + g.totalVideos, 0),
+  );
+
   totalWithVideoCount = computed(() =>
     this.videoSubjectGroups().reduce((acc, g) => acc + g.totalVideos, 0),
   );
@@ -123,11 +173,11 @@ export class ShellComponent {
     return subjectName(subject);
   }
 
-  isSubjectOpen(section: 'with_video' | 'without_video', subject: string): boolean {
+  isSubjectOpen(section: 'with_video' | 'without_video' | 'review_video', subject: string): boolean {
     return this.expandedSubjects().has(`${section}:${subject}`);
   }
 
-  toggleSubject(section: 'with_video' | 'without_video', subject: string): void {
+  toggleSubject(section: 'with_video' | 'without_video' | 'review_video', subject: string): void {
     const key = `${section}:${subject}`;
     this.expandedSubjects.update((set) => {
       const next = new Set(set);
@@ -136,15 +186,15 @@ export class ShellComponent {
     });
   }
 
-  private chapterKey(ch: ChapterSummary): string {
+  private chapterKey(ch: ChapterSummary | { subject: string; chapter: string }): string {
     return `${ch.subject}:${ch.chapter}`;
   }
 
-  isChapterOpen(section: 'with_video' | 'without_video', ch: ChapterSummary): boolean {
+  isChapterOpen(section: 'with_video' | 'without_video' | 'review_video', ch: ChapterSummary | { subject: string; chapter: string }): boolean {
     return this.expandedChapters().has(`${section}:${this.chapterKey(ch)}`);
   }
 
-  toggleChapter(section: 'with_video' | 'without_video', ch: ChapterSummary): void {
+  toggleChapter(section: 'with_video' | 'without_video' | 'review_video', ch: ChapterSummary | { subject: string; chapter: string }): void {
     const key = `${section}:${this.chapterKey(ch)}`;
     const baseKey = this.chapterKey(ch);
     const isOpen = this.expandedChapters().has(key);
@@ -155,7 +205,7 @@ export class ShellComponent {
       return next;
     });
 
-    if (!isOpen && !this.chapterSubtopics()[baseKey]) {
+    if (section !== 'review_video' && !isOpen && !this.chapterSubtopics()[baseKey]) {
       this.chapterSubtopics.update((map) => ({ ...map, [baseKey]: 'loading' }));
       this.api.getSubtopics(ch.subject, ch.chapter).subscribe({
         next: (detail) => this.chapterSubtopics.update((map) => ({ ...map, [baseKey]: detail.subtopics })),

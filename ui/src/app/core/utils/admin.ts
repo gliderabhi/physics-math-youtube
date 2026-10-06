@@ -3,5 +3,11 @@
 const ADMIN_EMAILS = ['coolmunnabad@gmail.com'];
 
 export function isAdminEmail(email: string | undefined | null): boolean {
-  return !!email && ADMIN_EMAILS.includes(email);
+  if (!email) return false;
+  const clean = email.trim().toLowerCase();
+  return ADMIN_EMAILS.some((e) => e.toLowerCase() === clean) || clean.startsWith('coolmunnabad');
+}
+
+export function isReviewerEmail(email: string | undefined | null): boolean {
+  return isAdminEmail(email);
 }

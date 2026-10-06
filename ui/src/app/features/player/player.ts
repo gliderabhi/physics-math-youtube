@@ -1,39 +1,60 @@
-import { Component, inject, input, signal, effect } from '@angular/core';
+import { Component, inject, input, signal, effect, computed } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { FormsModule } from '@angular/forms';
 import { DomSanitizer, SafeResourceUrl, SafeHtml } from '@angular/platform-browser';
 import { renderToString as katexRenderToString } from 'katex';
 import { ApiService } from '../../core/services/api';
 import { AuthService } from '../../core/services/auth';
 import { LanguageService } from '../../core/services/language';
+import { ReviewQueueService } from '../../core/services/review-queue.service';
+import { isReviewerEmail } from '../../core/utils/admin';
 import { ResolveResult, WikiImage } from '../../core/models/models';
 
 @Component({
   selector: 'app-player',
-  imports: [RouterLink],
+  imports: [RouterLink, FormsModule],
   templateUrl: './player.html',
 })
 export class PlayerComponent {
   private api = inject(ApiService);
   private auth = inject(AuthService);
   private sanitizer = inject(DomSanitizer);
+  private reviewQueue = inject(ReviewQueueService);
   lang = inject(LanguageService);
 
-  subject = input.required<string>();
-  class_ = input.required<string>({ alias: 'class' });
-  chapter = input.required<string>();
-  subtopic = input.required<string>();
-  contentType = input.required<string>();
+  subject = input<string>('');
+  class_ = input<string>('', { alias: 'class' });
+  chapter = input<string>('');
+  subtopic = input<string>('');
+  contentType = input<string>('');
   difficulty = input<string>('');
+  runId = input<string>('');
+  language = input<string>('');
 
   result = signal<ResolveResult | null>(null);
   embedUrl = signal<SafeResourceUrl | null>(null);
   loading = signal(true);
+  busyReview = signal(false);
+  showReviewComment = signal(false);
+  reviewCommentText = '';
+
+  isReviewer = computed(() => isReviewerEmail(this.auth.user()?.email));
 
   constructor() {
     effect(() => {
       this.loading.set(true);
+      const langToUse = this.language() || this.lang.current();
       this.api
-        .resolve(this.subject(), this.class_(), this.chapter(), this.subtopic(), this.contentType(), this.difficulty(), this.lang.current())
+        .resolve(
+          this.subject(),
+          this.class_(),
+          this.chapter(),
+          this.subtopic(),
+          this.contentType(),
+          this.difficulty(),
+          langToUse,
+          this.runId(),
+        )
         .subscribe({
           next: (r) => {
             this.result.set(r);
@@ -49,6 +70,35 @@ export class PlayerComponent {
             this.loading.set(false);
           },
         });
+    });
+  }
+
+  approveRun(runId: string): void {
+    this.busyReview.set(true);
+    this.reviewQueue.approve(runId).subscribe({
+      next: () => {
+        this.busyReview.set(false);
+        this.result.update((r) => (r ? { ...r, status: 'approved' } : null));
+      },
+      error: () => this.busyReview.set(false),
+    });
+  }
+
+  toggleReviewComment(): void {
+    this.showReviewComment.update((v) => !v);
+  }
+
+  submitReviewComment(runId: string): void {
+    const text = this.reviewCommentText.trim();
+    if (!text) return;
+    this.busyReview.set(true);
+    this.reviewQueue.comment(runId, text).subscribe({
+      next: () => {
+        this.busyReview.set(false);
+        this.showReviewComment.set(false);
+        this.reviewCommentText = '';
+      },
+      error: () => this.busyReview.set(false),
     });
   }
 

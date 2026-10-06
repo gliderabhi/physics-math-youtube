@@ -57,7 +57,7 @@ def chapters():
     with get_conn() as conn, conn.cursor() as cur:
         cur.execute(
             "SELECT DISTINCT subject, chapter, subtopic FROM runs "
-            "WHERE status IN ('published', 'local') OR video_path IS NOT NULL OR youtube_video_id IS NOT NULL"
+            "WHERE status IN ('published', 'local', 'approved')"
         )
         video_rows = cur.fetchall()
 
@@ -159,67 +159,106 @@ def subtopics(subject: str, chapter: str, class_: int | None = Query(None, alias
 
 @router.get("/api/resolve")
 def resolve(
-    subject: str,
-    chapter: str,
-    subtopic: str,
-    content_type: str,
-    language: str,
+    subject: str = Query(""),
+    chapter: str = Query(""),
+    subtopic: str = Query(""),
+    content_type: str = Query(""),
+    language: str = Query(""),
     class_: int | None = Query(None, alias="class"),
     difficulty: str = Query(""),
+    run_id: str | None = Query(None),
 ):
+    row = None
+    available = []
+
+    if run_id:
+        with get_conn() as conn, conn.cursor() as cur:
+            cur.execute(
+                "SELECT run_id, status, youtube_video_id, title, subtopic, subject, chapter, content_type, difficulty, language "
+                "FROM runs WHERE run_id=%s",
+                (run_id,),
+            )
+            row = cur.fetchone()
+            if row:
+                subject = row["subject"]
+                chapter = row["chapter"]
+                subtopic = row["subtopic"]
+                content_type = row["content_type"]
+                difficulty = row["difficulty"]
+                if not language:
+                    language = row["language"] or "hi-en"
+
+                cur.execute(
+                    "SELECT DISTINCT language FROM runs "
+                    "WHERE subject=%s AND chapter=%s AND subtopic=%s "
+                    "AND content_type=%s AND difficulty=%s",
+                    (subject, chapter, subtopic, content_type, difficulty),
+                )
+                available = sorted(r["language"] for r in cur.fetchall())
+
+    if not class_ and subject and chapter:
+        for ch in _syllabus():
+            if ch["subject"].lower() == subject.lower() and ch["chapter"].lower() == chapter.lower():
+                class_ = ch["class"]
+                break
+
     parent_sub = subtopic.split(":")[0].strip() if ":" in subtopic else subtopic
-    try:
-        subtopic_list = _find_topics(subject, chapter, class_)
-    except Exception:
-        subtopic_list = []
 
-    first_for_parent = None
-    for st in subtopic_list:
-        p = st.split(":")[0].strip() if ":" in st else st
-        if p == parent_sub:
-            first_for_parent = st
-            break
+    if not row:
+        try:
+            subtopic_list = _find_topics(subject, chapter, class_)
+        except Exception:
+            subtopic_list = []
 
-    is_overview = (subtopic == parent_sub) or (": overview" in subtopic.lower()) or (subtopic == first_for_parent)
+        first_for_parent = None
+        for st in subtopic_list:
+            p = st.split(":")[0].strip() if ":" in st else st
+            if p == parent_sub:
+                first_for_parent = st
+                break
 
-    with get_conn() as conn, conn.cursor() as cur:
-        if is_overview:
-            cur.execute(
-                "SELECT run_id, status, youtube_video_id, title, subtopic FROM runs "
-                "WHERE subject=%s AND chapter=%s AND (subtopic=%s OR subtopic=%s) "
-                "AND content_type=%s AND difficulty=%s AND language=%s "
-                "ORDER BY (subtopic=%s) DESC, (status='published') DESC, created_at DESC LIMIT 1",
-                (subject, chapter, subtopic, parent_sub, content_type, difficulty, language, subtopic),
-            )
-            row = cur.fetchone()
+        is_overview = (subtopic == parent_sub) or (": overview" in subtopic.lower()) or (subtopic == first_for_parent)
 
-            cur.execute(
-                "SELECT DISTINCT language FROM runs "
-                "WHERE subject=%s AND chapter=%s AND (subtopic=%s OR subtopic=%s) "
-                "AND content_type=%s AND difficulty=%s",
-                (subject, chapter, subtopic, parent_sub, content_type, difficulty),
-            )
-            available = sorted(r["language"] for r in cur.fetchall())
-        else:
-            cur.execute(
-                "SELECT run_id, status, youtube_video_id, title, subtopic FROM runs "
-                "WHERE subject=%s AND chapter=%s AND subtopic=%s "
-                "AND content_type=%s AND difficulty=%s AND language=%s "
-                "ORDER BY (status='published') DESC, created_at DESC LIMIT 1",
-                (subject, chapter, subtopic, content_type, difficulty, language),
-            )
-            row = cur.fetchone()
+        with get_conn() as conn, conn.cursor() as cur:
+            if is_overview:
+                cur.execute(
+                    "SELECT run_id, status, youtube_video_id, title, subtopic FROM runs "
+                    "WHERE subject=%s AND chapter=%s AND (subtopic=%s OR subtopic=%s) "
+                    "AND content_type=%s AND difficulty=%s AND language=%s "
+                    "ORDER BY (subtopic=%s) DESC, (status='published') DESC, created_at DESC LIMIT 1",
+                    (subject, chapter, subtopic, parent_sub, content_type, difficulty, language, subtopic),
+                )
+                row = cur.fetchone()
 
-            cur.execute(
-                "SELECT DISTINCT language FROM runs "
-                "WHERE subject=%s AND chapter=%s AND subtopic=%s "
-                "AND content_type=%s AND difficulty=%s",
-                (subject, chapter, subtopic, content_type, difficulty),
-            )
-            available = sorted(r["language"] for r in cur.fetchall())
+                cur.execute(
+                    "SELECT DISTINCT language FROM runs "
+                    "WHERE subject=%s AND chapter=%s AND (subtopic=%s OR subtopic=%s) "
+                    "AND content_type=%s AND difficulty=%s",
+                    (subject, chapter, subtopic, parent_sub, content_type, difficulty),
+                )
+                available = sorted(r["language"] for r in cur.fetchall())
+            else:
+                cur.execute(
+                    "SELECT run_id, status, youtube_video_id, title, subtopic FROM runs "
+                    "WHERE subject=%s AND chapter=%s AND subtopic=%s "
+                    "AND content_type=%s AND difficulty=%s AND language=%s "
+                    "ORDER BY (status='published') DESC, created_at DESC LIMIT 1",
+                    (subject, chapter, subtopic, content_type, difficulty, language),
+                )
+                row = cur.fetchone()
+
+                cur.execute(
+                    "SELECT DISTINCT language FROM runs "
+                    "WHERE subject=%s AND chapter=%s AND subtopic=%s "
+                    "AND content_type=%s AND difficulty=%s",
+                    (subject, chapter, subtopic, content_type, difficulty),
+                )
+                available = sorted(r["language"] for r in cur.fetchall())
 
     if row and row["status"] == "published" and row["youtube_video_id"]:
         status = "published"
+    elif row and row["status"] in ("generated", "approved"):
+        status = row["status"]
     elif row:
         status = "local"
     else:
@@ -284,6 +323,13 @@ def resolve(
         "run_id": row["run_id"] if row else None,
         "youtube_video_id": row["youtube_video_id"] if row else None,
         "title": row["title"] if row else None,
+        "subject": subject,
+        "class": class_ or 0,
+        "chapter": chapter,
+        "subtopic": subtopic,
+        "content_type": content_type,
+        "difficulty": difficulty,
+        "language": language,
         "available_languages": available,
         "explanation": explanation,
         "ncert_note": ncert_note,
