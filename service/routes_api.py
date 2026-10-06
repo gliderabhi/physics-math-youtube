@@ -208,11 +208,24 @@ def resolve(
                 break
 
     ncert_note = note_for(subject, chapter, subtopic, language)
+    if not ncert_note and parent_sub != subtopic:
+        ncert_note = note_for(subject, chapter, parent_sub, language)
+
     ncert_problems = problems_for(subject, chapter, subtopic, language)
+    if not ncert_problems and parent_sub != subtopic:
+        ncert_problems = problems_for(subject, chapter, parent_sub, language)
 
     wiki_html = wiki_html_for(subject, chapter, subtopic, class_, language)
+    if not wiki_html and parent_sub != subtopic:
+        wiki_html = wiki_html_for(subject, chapter, parent_sub, class_, language)
+
     wiki = wiki_for(subject, chapter, subtopic, class_) if not wiki_html else None
+    if not wiki and not wiki_html and parent_sub != subtopic:
+        wiki = wiki_for(subject, chapter, parent_sub, class_)
+
     parts = wiki_parts_for(subject, chapter, subtopic, class_, language)
+    if not parts and parent_sub != subtopic:
+        parts = wiki_parts_for(subject, chapter, parent_sub, class_, language)
 
     return {
         "status": status,

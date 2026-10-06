@@ -4,11 +4,26 @@
     "subject": "physics",
     "chapter": "Motion",
     "subtopics": [
-      "Distance and displacement",
-      "Speed and velocity",
-      "Uniform and non-uniform acceleration",
-      "Equations of motion by graphical method",
-      "Interpreting position-time and velocity-time graphs"
+      "Distance and displacement: Scalar vs Vector and Path length",
+      "Distance and displacement: Straight-line motion and Direction reversals",
+      "Distance and displacement: 2D Right-angle and Hexagonal paths",
+      "Distance and displacement: Circular tracks and Closed loops (Displacement = 0)",
+      "Speed and velocity: Concept, Units and Scalar vs Vector distinction",
+      "Speed and velocity: Average speed vs Average velocity in 1D",
+      "Speed and velocity: Instantaneous speed and Instantaneous velocity",
+      "Speed and velocity: Circular motion with Constant speed vs Changing velocity",
+      "Uniform and non-uniform acceleration: Concept and Acceleration formula (a = (v-u)/t)",
+      "Uniform and non-uniform acceleration: Positive, Negative (Deceleration) and Zero acceleration",
+      "Uniform and non-uniform acceleration: Uniform vs Non-uniform acceleration on velocity-time graphs",
+      "Uniform and non-uniform acceleration: Multi-phase journeys (Acceleration, Coasting and Braking)",
+      "Equations of motion by graphical method: First equation (v = u + at)",
+      "Equations of motion by graphical method: Second equation (s = ut + 1/2 at^2)",
+      "Equations of motion by graphical method: Third equation (v^2 = u^2 + 2as)",
+      "Equations of motion by graphical method: Stopping distance and Reaction time problems",
+      "Position-time graphs: Slope as Velocity (Rest, Uniform motion and Acceleration)",
+      "Velocity-time graphs: Slope as Acceleration",
+      "Velocity-time graphs: Area under curve as Displacement",
+      "Interpreting graphs: Comparing two objects and Overtaking conditions"
     ]
   },
   {
@@ -16,10 +31,22 @@
     "subject": "physics",
     "chapter": "Force and Laws of Motion",
     "subtopics": [
-      "Newton's first law and inertia",
-      "Newton's second law and momentum",
-      "Newton's third law and action-reaction pairs",
-      "Conservation of momentum"
+      "Newton's first law and inertia: Concept of Inertia and Resistance to motion change",
+      "Newton's first law and inertia: Balanced vs Unbalanced forces and Equilibrium",
+      "Newton's first law and inertia: Net force and Overcoming friction",
+      "Newton's first law and inertia: Inertial frames and Pseudo force in accelerating systems",
+      "Newton's second law and momentum: Linear momentum (p = mv) and Rate of change of momentum",
+      "Newton's second law and momentum: Derivation of F = ma and Unit Newton",
+      "Newton's second law and momentum: Impulse and Force from momentum change (Ball hitting wall)",
+      "Newton's second law and momentum: Connected bodies system (Blocks, Pulleys and String tension)",
+      "Newton's third law and action-reaction pairs: Concept and Properties of Action-Reaction",
+      "Newton's third law and action-reaction pairs: Action-Reaction vs Balanced forces",
+      "Newton's third law and action-reaction pairs: Recoil of a gun and Rocket propulsion",
+      "Newton's third law and action-reaction pairs: Normal contact force and Apparent weight on scales",
+      "Conservation of momentum: Law of conservation of momentum in isolated systems",
+      "Conservation of momentum: Inelastic collisions (Bodies sticking together)",
+      "Conservation of momentum: Elastic collisions and Velocity exchange",
+      "Conservation of momentum: Explosions into two or three fragments"
     ]
   },
   {
@@ -27,12 +54,27 @@
     "subject": "physics",
     "chapter": "Gravitation",
     "subtopics": [
-      "Universal law of gravitation",
-      "Acceleration due to gravity",
-      "Free fall and equations of motion under gravity",
-      "Mass vs weight",
-      "Thrust, pressure and buoyancy",
-      "Archimedes' principle"
+      "Universal law of gravitation: Statement and Inverse-square law",
+      "Universal law of gravitation: Universal gravitational constant G and Cavendish experiment",
+      "Universal law of gravitation: Vector form of gravitational law",
+      "Universal law of gravitation: Superposition principle and Forces between extended spheres",
+      "Acceleration due to gravity: Relation between g and G (g = GM/R^2)",
+      "Acceleration due to gravity: Variation with Altitude (Height above Earth)",
+      "Acceleration due to gravity: Variation with Depth (Below Earth's surface)",
+      "Acceleration due to gravity: Variation with Latitude and Earth's shape",
+      "Free fall: Concept and Equations of motion under gravity",
+      "Free fall: Body projected vertically upwards (Max height and Time of flight)",
+      "Free fall: Body dropped from a height (Velocity and Distance in nth second)",
+      "Free fall: Motion with air resistance and Terminal velocity",
+      "Mass vs weight: Fundamental differences (Inertia vs Gravitational pull)",
+      "Mass vs weight: Apparent weight in an accelerating elevator",
+      "Mass vs weight: Weightlessness in free fall and orbiting satellites",
+      "Thrust and pressure: Definition, Units and Pressure in fluids",
+      "Fluid pressure: Variation with depth and Pascal's principle",
+      "Buoyant force: Cause of upthrust and Displaced fluid weight",
+      "Archimedes' principle: Statement and Experimental verification",
+      "Law of flotation: Conditions for sinking, floating and neutral buoyancy",
+      "Relative density: Definition and Hydrometer applications"
     ]
   },
   {
@@ -40,12 +82,23 @@
     "subject": "physics",
     "chapter": "Work and Energy",
     "subtopics": [
-      "Work done by a force",
-      "Kinetic energy",
-      "Potential energy",
-      "Law of conservation of energy",
-      "Power and commercial unit of energy",
-      "Simple machines (levers, pulleys, inclined planes)"
+      "Work done by a force: Definition, Formula (W = F s cos theta) and Units (Joule)",
+      "Work done by a force: Positive, Negative and Zero work done",
+      "Work done by a force: Work done against gravity and friction",
+      "Kinetic energy: Concept, Formula (KE = 1/2 m v^2) and Units",
+      "Kinetic energy: Work-energy theorem for a constant force",
+      "Kinetic energy: Relation between Kinetic energy and Linear momentum",
+      "Potential energy: Concept and Gravitational potential energy (PE = mgh)",
+      "Potential energy: Elastic potential energy in a stretched or compressed spring",
+      "Law of conservation of energy: Principle and Energy transformations",
+      "Conservation of mechanical energy: Freely falling body",
+      "Conservation of mechanical energy: Simple pendulum oscillation",
+      "Power: Definition, Formula (P = W/t) and Units (Watt, Horsepower)",
+      "Commercial unit of electrical energy: Kilowatt-hour (kWh) and Calculations",
+      "Simple machines: Mechanical advantage, Velocity ratio and Efficiency",
+      "Levers: Three classes of levers and Principle of moments",
+      "Pulleys: Single fixed pulley, Movable pulley and Block & tackle system",
+      "Inclined plane: Mechanical advantage and Work efficiency"
     ]
   },
   {
@@ -53,10 +106,19 @@
     "subject": "physics",
     "chapter": "Sound",
     "subtopics": [
-      "Nature and propagation of sound waves",
-      "Speed of sound in different media",
-      "Reflection of sound and echo",
-      "Range of hearing and ultrasound"
+      "Nature of sound: Production by vibration and Need for a material medium",
+      "Longitudinal waves: Compressions, Rarefactions and Pressure variations",
+      "Wave characteristics: Wavelength, Frequency, Time period, Amplitude and Wave speed",
+      "Wave speed formula: Relation between speed, frequency and wavelength (v = nu lambda)",
+      "Speed of sound: Dependence on medium elasticity, density and temperature",
+      "Speed of sound comparison: Solids, Liquids and Gases",
+      "Supersonic speed and Sonic boom",
+      "Reflection of sound: Laws of reflection and Applications (Megaphone, Stethoscope)",
+      "Echo: Criteria for hearing echo and Distance calculations",
+      "Reverberation: Persistence of sound and Acoustic control in auditoriums",
+      "Range of hearing: Infrasonic (<20 Hz), Audible (20 Hz - 20 kHz) and Ultrasonic (>20 kHz)",
+      "Ultrasound: Applications in medicine (Echocardiography, Ultrasonography)",
+      "Ultrasound: Industrial flaw detection, Cleaning and SONAR distance ranging"
     ]
   },
   {
@@ -64,9 +126,14 @@
     "subject": "math",
     "chapter": "Number Systems",
     "subtopics": [
-      "Rational and irrational numbers",
-      "Representing real numbers on a number line",
-      "Laws of exponents for real numbers"
+      "Rational numbers: Definition, Fractional forms and Decimal representations",
+      "Irrational numbers: Non-terminating non-recurring decimals (sqrt(2), pi)",
+      "Operations on real numbers: Properties and Rationalisation of denominators",
+      "Number line: Locating rational numbers and Visualising decimals",
+      "Number line: Constructing square roots (sqrt(2), sqrt(3), sqrt(5)) geometrically",
+      "Laws of exponents: Product, Quotient and Power rules for positive integers",
+      "Laws of exponents: Negative and Fractional exponents (a^(p/q))",
+      "Simplifying radical and exponential algebraic expressions"
     ]
   },
   {
@@ -74,9 +141,14 @@
     "subject": "math",
     "chapter": "Polynomials",
     "subtopics": [
-      "Zeroes of a polynomial",
-      "Remainder and factor theorem",
-      "Algebraic identities"
+      "Polynomials: Terms, Coefficients, Degree and Types (Linear, Quadratic, Cubic)",
+      "Zeroes of a polynomial: Finding zeroes and Geometric meaning",
+      "Polynomial division: Long division algorithm",
+      "Remainder theorem: Statement, Proof and Application",
+      "Factor theorem: Determining factors and Factorising quadratics by splitting middle term",
+      "Standard identities: (x+y)^2, (x-y)^2 and x^2 - y^2",
+      "Expanded identities: (x+a)(x+b) and (x+y+z)^2",
+      "Cubic identities: (x+y)^3, (x-y)^3 and x^3 + y^3 + z^3 - 3xyz"
     ]
   },
   {
@@ -84,8 +156,11 @@
     "subject": "math",
     "chapter": "Coordinate Geometry",
     "subtopics": [
-      "Cartesian plane and plotting points",
-      "Distance between two points"
+      "Cartesian coordinate system: Origin, Axes, Quadrants and Sign conventions",
+      "Plotting ordered pairs (x, y) on the Cartesian coordinate plane",
+      "Distance between points on coordinate axes and Parallel lines",
+      "Distance formula derivation in 2D Cartesian plane",
+      "Applications of distance formula: Collinearity and Triangle/Quadrilateral classification"
     ]
   },
   {
@@ -93,8 +168,10 @@
     "subject": "math",
     "chapter": "Linear Equations in Two Variables",
     "subtopics": [
-      "Graph of a linear equation",
-      "Equations of lines parallel to axes"
+      "Linear equations in two variables: Standard form (ax + by + c = 0) and Solutions",
+      "Plotting the straight-line graph of a linear equation in two variables",
+      "Equations of lines parallel to x-axis (y = k) and y-axis (x = k)",
+      "Geometric interpretation of one variable vs two variable linear equations"
     ]
   },
   {
@@ -102,9 +179,13 @@
     "subject": "math",
     "chapter": "Triangles",
     "subtopics": [
-      "Congruence criteria (SAS, ASA, SSS, RHS)",
-      "Properties of isosceles triangles",
-      "Inequalities in a triangle"
+      "Congruence of triangles: Definition and Corresponding parts (CPCTC)",
+      "Congruence criteria: Side-Angle-Side (SAS) and Angle-Side-Angle (ASA)",
+      "Congruence criteria: Side-Side-Side (SSS) and Right angle-Hypotenuse-Side (RHS)",
+      "Isosceles triangle theorem: Angles opposite to equal sides are equal",
+      "Converse of isosceles triangle theorem: Sides opposite to equal angles are equal",
+      "Triangle inequalities: Side opposite to larger angle is longer",
+      "Triangle inequalities: Sum of any two sides is greater than the third side"
     ]
   },
   {
@@ -112,9 +193,14 @@
     "subject": "math",
     "chapter": "Quadrilaterals and Areas",
     "subtopics": [
-      "Properties of parallelograms",
-      "Mid-point theorem",
-      "Area of parallelograms and triangles on the same base"
+      "Properties of parallelograms: Opposite sides and opposite angles are equal",
+      "Properties of parallelograms: Diagonals bisect each other",
+      "Special quadrilaterals: Properties of Rhombus, Rectangle and Square",
+      "Mid-point theorem: Segment joining midpoints of two sides is parallel and half of third side",
+      "Converse of mid-point theorem and Applications in geometry proofs",
+      "Area theorem: Parallelograms on the same base and between same parallels have equal area",
+      "Area theorem: Triangles on the same base and between same parallels have equal area",
+      "Median of a triangle divides it into two triangles of equal area"
     ]
   },
   {
@@ -122,9 +208,14 @@
     "subject": "math",
     "chapter": "Circles",
     "subtopics": [
-      "Angle subtended by a chord",
-      "Equal chords and distances from centre",
-      "Cyclic quadrilaterals"
+      "Circle terminology: Radius, Diameter, Chord, Arc, Sector and Segment",
+      "Angle subtended by a chord: Equal chords subtend equal angles at the centre",
+      "Angle subtended by an arc at the centre is double the angle at circumference",
+      "Angles in the same segment of a circle are equal and Angle in a semicircle is 90 degrees",
+      "Perpendicular from centre to a chord bisects the chord",
+      "Equal chords are equidistant from the centre and Converse theorem",
+      "Cyclic quadrilateral: Sum of opposite angles is 180 degrees",
+      "Converse of cyclic quadrilateral theorem and Exterior angle property"
     ]
   },
   {
@@ -132,9 +223,12 @@
     "subject": "math",
     "chapter": "Heron's Formula and Mensuration",
     "subtopics": [
-      "Heron's formula for triangle area",
-      "Surface area of cubes, cuboids, cylinders",
-      "Volume of cones, spheres, hemispheres"
+      "Heron's formula: Statement, Semi-perimeter (s) and Area calculation",
+      "Applications of Heron's formula: Area of quadrilaterals and Parallelograms",
+      "Cuboid and cube: Total surface area, Lateral surface area and Diagonal",
+      "Right circular cylinder: Curved surface area, Total surface area and Volume",
+      "Right circular cone: Slant height, Curved surface area, Total surface area and Volume",
+      "Sphere and hemisphere: Surface area, Curved surface area and Volume"
     ]
   },
   {
@@ -142,9 +236,14 @@
     "subject": "math",
     "chapter": "Statistics and Probability",
     "subtopics": [
-      "Mean, median, mode of grouped data",
-      "Graphical representation of data",
-      "Empirical probability"
+      "Measures of central tendency: Arithmetic mean of ungrouped and frequency data",
+      "Median: Finding median for odd and even number of observations",
+      "Mode: Definition and Finding mode of a dataset",
+      "Bar graphs and Double bar graphs",
+      "Histograms of varying and uniform class intervals",
+      "Frequency polygons",
+      "Probability: Experimental/Empirical probability definition (P(E) = n(E)/n(S))",
+      "Coin toss, Dice roll and Card deck probability calculations"
     ]
   },
   {
@@ -152,9 +251,14 @@
     "subject": "math",
     "chapter": "Algebraic Identities",
     "subtopics": [
-      "Standard identities: (a+b)^2, (a-b)^2, a^2-b^2",
-      "Identities for (a+b)^3 and (a-b)^3",
-      "Applications in simplifying expressions"
+      "Identity (a+b)^2: Geometric visualization and Algebraic expansion",
+      "Identity (a-b)^2: Geometric visualization and Algebraic expansion",
+      "Difference of squares: a^2 - b^2 = (a+b)(a-b) and Factorisation",
+      "Identity (a+b)^3: Expansion, Proof and Binomial coefficients",
+      "Identity (a-b)^3: Expansion and Simplification",
+      "Sum and difference of cubes: a^3 + b^3 and a^3 - b^3",
+      "Evaluating large numerical powers using algebraic identities",
+      "Conditional identity: If a + b + c = 0, then a^3 + b^3 + c^3 = 3abc"
     ]
   },
   {
@@ -162,9 +266,13 @@
     "subject": "math",
     "chapter": "Sequences and Progressions",
     "subtopics": [
-      "Arithmetic sequences and common difference",
-      "Geometric sequences and common ratio",
-      "Finding the nth term and predicting patterns"
+      "Arithmetic sequence: Definition, First term (a) and Common difference (d)",
+      "Finite vs Infinite arithmetic progressions and Identifying APs",
+      "Geometric sequence: Definition, First term (a) and Common ratio (r)",
+      "Identifying geometric progressions and Geometric pattern generation",
+      "Formula for nth term of an AP: a_n = a + (n-1)d",
+      "Formula for nth term of a GP: a_n = a * r^(n-1)",
+      "Solving real-world pattern and progression word problems"
     ]
   },
   {
@@ -172,10 +280,21 @@
     "subject": "physics",
     "chapter": "Light - Reflection and Refraction",
     "subtopics": [
-      "Laws of reflection and spherical mirrors",
-      "Mirror formula and magnification",
-      "Refraction and Snell's law",
-      "Lens formula and power of a lens"
+      "Reflection of light: Laws of reflection and Plane mirror image characteristics",
+      "Spherical mirrors: Concave and Convex mirror terms (Pole, Focus, Radius of curvature)",
+      "Ray diagrams for concave mirror (Object at infinity, C, F, between F and P)",
+      "Ray diagrams for convex mirror and Practical applications (Rearview mirrors, Solar cookers)",
+      "Cartesian sign convention for spherical mirrors",
+      "Mirror formula: 1/f = 1/v + 1/u and Derivation intuition",
+      "Linear magnification: m = -v/u = h'/h and Image size/nature determination",
+      "Refraction of light: Cause, Bending towards/away from normal and Optical density",
+      "Laws of refraction and Snell's law (sin i / sin r = constant)",
+      "Refractive index: Absolute refractive index (n = c/v) and Relative refractive index",
+      "Refraction through a rectangular glass slab and Lateral displacement",
+      "Spherical lenses: Convex and Concave lenses, Optical centre, Focus and Ray diagrams",
+      "Lens formula: 1/f = 1/v - 1/u and Sign convention",
+      "Magnification for lenses: m = v/u = h'/h",
+      "Power of a lens: Definition, Formula (P = 1/f in metres) and Unit Dioptre"
     ]
   },
   {
@@ -183,9 +302,16 @@
     "subject": "physics",
     "chapter": "Human Eye and Colourful World",
     "subtopics": [
-      "Defects of vision and correction",
-      "Refraction through a prism",
-      "Dispersion and scattering of light"
+      "Human eye structure and Power of accommodation (Near point and Far point)",
+      "Myopia (Near-sightedness): Cause, Ray diagram and Concave lens correction",
+      "Hypermetropia (Far-sightedness): Cause, Ray diagram and Convex lens correction",
+      "Presbyopia and Astigmatism: Causes and Bifocal lens correction",
+      "Refraction through a triangular glass prism: Ray diagram, Angle of incidence and Angle of deviation",
+      "Relation between angle of incidence, emergence and deviation",
+      "Dispersion of white light by glass prism and Spectrum (VIBGYOR)",
+      "Recombination of spectrum and Formation of Rainbow in the atmosphere",
+      "Atmospheric refraction: Twinkling of stars and Advanced sunrise/delayed sunset",
+      "Scattering of light and Tyndall effect: Blue sky and Reddish sun at sunrise/sunset"
     ]
   },
   {
@@ -193,10 +319,18 @@
     "subject": "physics",
     "chapter": "Electricity",
     "subtopics": [
-      "Electric current and potential difference",
-      "Ohm's law and resistance",
-      "Series and parallel combination of resistors",
-      "Heating effect of current and electric power"
+      "Electric current: Definition, Charge flow (I = Q/t) and Unit Ampere",
+      "Electric circuit: Closed path, Direction of current and Schematic symbols",
+      "Electric potential and Potential difference: Definition (V = W/Q) and Unit Volt",
+      "Ohm's law: Statement, Formula (V = I R) and V-I characteristic graph",
+      "Electrical resistance: Definition, Unit Ohm and Ohmic vs Non-ohmic conductors",
+      "Factors affecting resistance: Length, Cross-sectional area and Resistivity (rho = R A / l)",
+      "Resistors in series: Equivalent resistance (R = R1 + R2 + R3) and Current conservation",
+      "Resistors in parallel: Equivalent resistance (1/R = 1/R1 + 1/R2) and Voltage division",
+      "Comparison of series and parallel circuits in household wiring",
+      "Joule's law of heating: Formula (H = I^2 R t) and Heating applications",
+      "Electric fuse: Principle, Rating and Circuit protection",
+      "Electric power: Formulas (P = VI = I^2 R = V^2/R), Watt and Commercial billing in kWh"
     ]
   },
   {
@@ -204,10 +338,16 @@
     "subject": "physics",
     "chapter": "Magnetic Effects of Electric Current",
     "subtopics": [
-      "Magnetic field due to a current-carrying conductor",
-      "Force on a current-carrying conductor",
-      "Electric motor principle",
-      "Electromagnetic induction and generators"
+      "Magnetic field and Field lines: Properties and Field around a bar magnet",
+      "Magnetic field around a straight current conductor: Right-hand thumb rule",
+      "Magnetic field due to a circular loop and Solenoid (Electromagnet)",
+      "Force on a current conductor in a magnetic field: Oersted-Ampere discovery",
+      "Fleming's left-hand rule: Forefinger, Central finger and Thumb directions",
+      "Electric motor: Principle, Construction, Armature, Split-ring commutator and Working",
+      "Electromagnetic induction: Faraday's experiments and Induced current",
+      "Fleming's right-hand rule for induced current direction",
+      "Electric generator: AC generator vs DC generator principle and Working",
+      "Domestic electric circuits: Live, Neutral and Earth wires, Short circuits and Overloading"
     ]
   },
   {
@@ -215,8 +355,12 @@
     "subject": "physics",
     "chapter": "Sources of Energy",
     "subtopics": [
-      "Conventional vs non-conventional energy sources",
-      "Solar energy and nuclear energy basics"
+      "Fossil fuels (Coal, Petroleum): Formation, Environmental impact and Acid rain",
+      "Thermal power plants and Hydroelectric power generation: Working and Ecological impact",
+      "Biomass and Wind energy: Biogas plant working and Windmill energy extraction",
+      "Solar energy: Solar cooker, Solar water heater and Solar cell technology",
+      "Energy from the sea: Tidal energy, Wave energy and Ocean thermal energy conversion (OTEC)",
+      "Geothermal energy and Nuclear energy: Nuclear fission, Energy release (E = mc^2) and Hazards"
     ]
   },
   {
@@ -224,9 +368,12 @@
     "subject": "math",
     "chapter": "Real Numbers",
     "subtopics": [
-      "Euclid's division lemma",
-      "Fundamental theorem of arithmetic",
-      "Irrationality proofs"
+      "Euclid's division lemma: Statement (a = bq + r, 0 <= r < b)",
+      "Euclid's division algorithm: Finding Highest Common Factor (HCF) of two numbers",
+      "Fundamental theorem of arithmetic: Prime factorisation uniqueness",
+      "Finding HCF and LCM using prime factorisation and Relationship HCF * LCM = a * b",
+      "Proof of irrationality for sqrt(2), sqrt(3) and sqrt(5) by contradiction",
+      "Irrationality of composite expressions: a + b*sqrt(c) and a - b*sqrt(c)"
     ]
   },
   {
@@ -234,8 +381,11 @@
     "subject": "math",
     "chapter": "Polynomials",
     "subtopics": [
-      "Relationship between zeroes and coefficients",
-      "Division algorithm for polynomials"
+      "Geometrical meaning of zeroes of linear and quadratic polynomials",
+      "Relationship between zeroes and coefficients for quadratic polynomials (alpha + beta = -b/a, alpha * beta = c/a)",
+      "Relationship between zeroes and coefficients for cubic polynomials",
+      "Division algorithm for polynomials: p(x) = g(x) * q(x) + r(x)",
+      "Finding remaining zeroes of a polynomial given some of its zeroes"
     ]
   },
   {
@@ -243,9 +393,13 @@
     "subject": "math",
     "chapter": "Pair of Linear Equations in Two Variables",
     "subtopics": [
-      "Graphical method of solution",
-      "Substitution and elimination methods",
-      "Cross-multiplication method"
+      "Consistent and Inconsistent systems: Intersecting, Parallel and Coincident lines",
+      "Conditions for unique solution, infinite solutions and no solution (a1/a2 ratios)",
+      "Solving pairs of linear equations graphically and Finding vertices of formed triangles",
+      "Substitution method: Step-by-step solving and Value substitution",
+      "Elimination method: Equating coefficients and Variable elimination",
+      "Cross-multiplication method formula and Diagrammatic solving technique",
+      "Equations reducible to linear form (1/x, 1/y transformations) and Word problems (Speed, Age, Fractions)"
     ]
   },
   {
@@ -253,9 +407,12 @@
     "subject": "math",
     "chapter": "Quadratic Equations",
     "subtopics": [
-      "Solving by factorisation",
-      "Quadratic formula",
-      "Nature of roots (discriminant)"
+      "Standard form of quadratic equation: ax^2 + bx + c = 0",
+      "Solving quadratic equations by splitting the middle term (Factorisation)",
+      "Solving quadratic equations by completing the square method",
+      "Quadratic formula: x = (-b +- sqrt(b^2 - 4ac)) / (2a)",
+      "Discriminant D = b^2 - 4ac and Three cases (D > 0, D = 0, D < 0)",
+      "Word problems leading to quadratic equations (Distance-Speed-Time, Geometry, Numbers)"
     ]
   },
   {
@@ -263,9 +420,12 @@
     "subject": "math",
     "chapter": "Arithmetic Progressions",
     "subtopics": [
-      "nth term of an AP",
-      "Sum of first n terms",
-      "Applications of AP"
+      "General form of an AP: a, a+d, a+2d, ... and Finding nth term a_n = a + (n-1)d",
+      "Finding terms from the end of an AP and Identifying if a number is a term of an AP",
+      "Sum of first n terms formula: S_n = n/2 * (2a + (n-1)d) and S_n = n/2 * (a + l)",
+      "Relationship between S_n and a_n (a_n = S_n - S_{n-1})",
+      "Real-life word problems involving Arithmetic Progressions (Savings, Rows of objects, Ladders)",
+      "Arithmetic mean between two numbers"
     ]
   },
   {
@@ -273,9 +433,13 @@
     "subject": "math",
     "chapter": "Triangles (Similarity)",
     "subtopics": [
-      "Criteria for similarity of triangles",
-      "Pythagoras theorem and its converse",
-      "Areas of similar triangles"
+      "Concept of similar polygons and Similar triangles",
+      "Basic proportionality theorem (Thales theorem) and its converse",
+      "Similarity criteria: AAA, SSS and SAS similarity theorems",
+      "Pythagoras theorem: Statement, Geometric proof and Applications",
+      "Converse of Pythagoras theorem: Identifying right-angled triangles",
+      "Ratio of areas of two similar triangles equals ratio of squares of corresponding sides",
+      "Applications to medians, altitudes and perimeter ratios of similar triangles"
     ]
   },
   {
@@ -283,9 +447,12 @@
     "subject": "math",
     "chapter": "Coordinate Geometry",
     "subtopics": [
-      "Distance formula",
-      "Section formula",
-      "Area of a triangle using coordinates"
+      "Distance formula: d = sqrt((x2 - x1)^2 + (y2 - y1)^2)",
+      "Collinear points check and Determining types of triangles and quadrilaterals",
+      "Internal division section formula: P = ((m1 x2 + m2 x1)/(m1+m2), (m1 y2 + m2 y1)/(m1+m2))",
+      "Midpoint formula and Points of trisection of a line segment",
+      "Area of a triangle formula: 1/2 |x1(y2 - y3) + x2(y3 - y1) + x3(y1 - y2)|",
+      "Condition for collinearity of three points using triangle area"
     ]
   },
   {
@@ -293,9 +460,13 @@
     "subject": "math",
     "chapter": "Introduction to Trigonometry",
     "subtopics": [
-      "Trigonometric ratios",
-      "Trigonometric identities",
-      "Values at standard angles"
+      "Trigonometric ratios in a right triangle: Sine, Cosine, Tangent, Cosecant, Secant, Cotangent",
+      "Reciprocal and quotient relations of trigonometric ratios",
+      "Fundamental identity: sin^2 theta + cos^2 theta = 1",
+      "Identities: 1 + tan^2 theta = sec^2 theta and 1 + cot^2 theta = cosec^2 theta",
+      "Proving complex trigonometric identities step by step",
+      "Trigonometric values at standard angles (0, 30, 45, 60, 90 degrees)",
+      "Trigonometric ratios of complementary angles (sin(90 - theta) = cos theta)"
     ]
   },
   {
@@ -303,7 +474,9 @@
     "subject": "math",
     "chapter": "Applications of Trigonometry",
     "subtopics": [
-      "Heights and distances problems"
+      "Line of sight, Angle of elevation and Angle of depression",
+      "Single right-triangle height and distance problems (Tower, Tree, Pole)",
+      "Two right-triangle problems (Observation from two points, Ships, Balloons)"
     ]
   },
   {
@@ -311,8 +484,11 @@
     "subject": "math",
     "chapter": "Circles",
     "subtopics": [
-      "Tangent to a circle",
-      "Number of tangents from a point"
+      "Tangent to a circle: Definition and Secant vs Tangent",
+      "Theorem: Tangent at any point is perpendicular to radius through point of contact",
+      "Tangents from points inside, on and outside a circle",
+      "Theorem: Lengths of tangents drawn from an external point to a circle are equal",
+      "Circles inscribed in and circumscribing quadrilaterals"
     ]
   },
   {
@@ -320,10 +496,17 @@
     "subject": "math",
     "chapter": "Mensuration and Statistics",
     "subtopics": [
-      "Areas related to circles (sectors, segments)",
-      "Surface areas and volumes of combined solids",
-      "Mean, median, mode of grouped data",
-      "Probability basics"
+      "Perimeter and area of a circle and Semicircle review",
+      "Area of sector of a circle: A = (theta / 360) * pi * r^2 and Arc length",
+      "Area of segment of a circle (Minor and Major segments)",
+      "Surface area of combinations of solids (Cylinder + Hemispheres, Cone + Cylinder)",
+      "Volume of combinations of solids",
+      "Conversion of solid from one shape to another (Melting, Recasting, Earth digging)",
+      "Mean of grouped data: Direct method, Assumed mean method and Step-deviation method",
+      "Mode of grouped data: Modal class and Formula (l + (f1-f0)/(2f1-f0-f2) * h)",
+      "Median of grouped data: Median class, Cumulative frequency curve (Ogive) and Formula",
+      "Theoretical probability: P(E) = Number of favorable outcomes / Total outcomes",
+      "Elementary events, Complementary events (P(not E) = 1 - P(E)) and Impossible/Sure events"
     ]
   },
   {
@@ -331,10 +514,18 @@
     "subject": "physics",
     "chapter": "Units, Dimensions and Vectors",
     "subtopics": [
-      "Dimensional analysis",
-      "Error analysis in measurements",
-      "Vector addition and resolution",
-      "Dot and cross product"
+      "Fundamental and derived physical quantities and SI base units",
+      "Dimensional formulas of mechanics and electromagnetism quantities",
+      "Applications of dimensional analysis: Checking formula correctness and Deriving equations",
+      "Significant figures and Rounding-off rules",
+      "Absolute error, Relative error and Percentage error",
+      "Propagation and combination of errors (Addition, Multiplication, Powers)",
+      "Scalar and vector quantities, Unit vectors (i, j, k) and Null vector",
+      "Triangle law and Parallelogram law of vector addition (Resultant magnitude and direction)",
+      "Resolution of a vector in 2D and 3D rectangular components",
+      "Scalar product (Dot product): Definition (A . B = AB cos theta), Properties and Projections",
+      "Vector product (Cross product): Definition (A x B = AB sin theta n_hat), Right-hand rule and Properties",
+      "Applications of cross product: Area of triangle/parallelogram and Torque vector"
     ]
   },
   {
@@ -342,9 +533,14 @@
     "subject": "physics",
     "chapter": "Motion in a Straight Line",
     "subtopics": [
-      "Position-time and velocity-time graphs",
-      "Equations of motion",
-      "Relative velocity in one dimension"
+      "Frame of reference, Position vector and Instantaneous vs Average velocity",
+      "Derivatives in kinematics: v = dx/dt and a = dv/dt = v dv/dx",
+      "Position-time, velocity-time and acceleration-time graph analysis and Area/Slope relationships",
+      "Calculus derivation of kinematic equations: v = u + at, s = ut + 1/2 at^2, v^2 = u^2 + 2as",
+      "Distance traveled in nth second formula: s_n = u + a/2 * (2n - 1)",
+      "Motion under gravity with variable acceleration problems",
+      "Relative velocity in 1D: Concept and Formula (v_AB = v_A - v_B)",
+      "Overtaking, Head-on collision and Trains passing problems in 1D"
     ]
   },
   {
@@ -352,9 +548,16 @@
     "subject": "physics",
     "chapter": "Motion in a Plane",
     "subtopics": [
-      "Projectile motion",
-      "Uniform circular motion",
-      "Relative velocity in two dimensions"
+      "Horizontal projectile motion: Trajectory equation, Time of flight and Horizontal range",
+      "Oblique projectile motion: Trajectory derivation (Parabolic path: y = x tan theta - gx^2/(2u^2 cos^2 theta))",
+      "Key projectile formulas: Maximum height, Time of flight and Range (Maximum range at 45 degrees)",
+      "Projectile motion on an inclined plane",
+      "Angular displacement, Angular velocity (omega) and Relation v = r * omega",
+      "Centripetal acceleration derivation: a_c = v^2/r = omega^2 r",
+      "Non-uniform circular motion: Tangential acceleration and Net acceleration",
+      "Relative velocity in 2D vector form (v_AB = v_A - v_B)",
+      "Rain-man problem: Umbrella holding angle calculation",
+      "River-swimmer / River-boat problem: Shortest path and Shortest time crossing"
     ]
   },
   {
@@ -362,10 +565,20 @@
     "subject": "physics",
     "chapter": "Laws of Motion",
     "subtopics": [
-      "Free body diagrams",
-      "Friction (static and kinetic)",
-      "Circular motion dynamics and banking of roads",
-      "Pseudo force and non-inertial frames"
+      "Free body diagrams (FBD): Drawing isolation, Normal reaction, Tension and Weight",
+      "Equilibrium of concurrent forces and Lami's theorem",
+      "Connected bodies: Wedge-block, Incline planes and Pulleys using FBD",
+      "Origin of friction, Static friction (f_s <= mu_s N) and Limiting friction",
+      "Kinetic friction (f_k = mu_k N) and Rolling friction",
+      "Angle of friction, Angle of repose and Motion of body on rough inclined plane",
+      "Two-block friction problems (Block on top of another block)",
+      "Centripetal force: Concept and Real forces providing centripetal acceleration",
+      "Level circular road: Maximum safe turning speed (v = sqrt(mu r g))",
+      "Banked road: Optimum speed and Safe speed range with friction",
+      "Bending of a cyclist and Conical pendulum",
+      "Inertial vs Non-inertial frames of reference",
+      "Pseudo force (F_pseudo = -m a_frame) and Frame transformations",
+      "Apparent weight in accelerating elevators and Accelerating wedge problems"
     ]
   },
   {
@@ -373,9 +586,16 @@
     "subject": "physics",
     "chapter": "Work, Energy and Power",
     "subtopics": [
-      "Work-energy theorem",
-      "Conservative and non-conservative forces",
-      "Collisions (elastic and inelastic)"
+      "Work done by variable force: W = integral F dx and Area under F-x graph",
+      "Work-energy theorem for a variable force: W_net = Delta KE",
+      "Kinetic energy and Work-energy theorem in 2D/3D vector notation",
+      "Conservative forces: Path independence, Closed loop work = 0 and Potential energy (F = -dU/dx)",
+      "Potential energy curves: Stable, Unstable and Neutral equilibrium",
+      "Conservation of mechanical energy: Spring-mass system oscillation and Vertical circle motion",
+      "Coefficient of restitution (e): Definition and Range (0 <= e <= 1)",
+      "1D Elastic collision: Conservation of momentum, Kinetic energy and Final velocities formula",
+      "1D Perfectly inelastic collision: Loss of kinetic energy formula",
+      "2D Oblique collisions (Glancing collisions of spheres)"
     ]
   },
   {
@@ -383,10 +603,18 @@
     "subject": "physics",
     "chapter": "System of Particles and Rotational Motion",
     "subtopics": [
-      "Centre of mass",
-      "Torque and angular momentum",
-      "Moment of inertia of rigid bodies",
-      "Rolling motion"
+      "Centre of mass: Two-particle system and N-particle system formula",
+      "Centre of mass of continuous bodies (Rod, Ring, Disc, Semicircle)",
+      "Motion of centre of mass, Total momentum and Internal vs External forces",
+      "Torque (Moment of force): Definition (tau = r x F) and Couple",
+      "Angular momentum: Definition (L = r x p = I omega) and Torque relation (tau = dL/dt)",
+      "Conservation of angular momentum: Principle and Applications (Spinning skater, Planetary orbit)",
+      "Moment of inertia (I = sum m_i r_i^2) and Radius of gyration (k)",
+      "Parallel axes theorem (I = I_cm + M d^2) and Perpendicular axes theorem",
+      "Moment of inertia of standard shapes: Ring, Disc, Rod, Cylinder, Solid sphere and Hollow sphere",
+      "Pure rolling without slipping: Velocity relationship (v_cm = R omega) and Contact point at rest",
+      "Kinetic energy of rolling body: KE = 1/2 M v^2 + 1/2 I omega^2",
+      "Acceleration of a rolling body on an inclined plane: a = g sin theta / (1 + k^2/R^2)"
     ]
   },
   {
@@ -394,12 +622,24 @@
     "subject": "physics",
     "chapter": "Gravitation",
     "subtopics": [
-      "Universal law of gravitation",
-      "Acceleration due to gravity and its variation",
-      "Gravitational potential energy",
-      "Escape velocity",
-      "Orbital velocity and satellites",
-      "Kepler's laws"
+      "Newton's law of gravitation and Gravitational constant G",
+      "Gravitational field intensity: Definition, Field due to point mass, Ring and Solid sphere",
+      "Acceleration due to gravity on Earth's surface: g = GM/R^2",
+      "Variation of g with altitude (h << R and general formula)",
+      "Variation of g with depth (Linear decrease towards center)",
+      "Variation of g due to Earth's rotation and latitude: g' = g - omega^2 R cos^2 lambda",
+      "Gravitational potential (V = -GM/r) and Potential energy (U = -GMm/r)",
+      "Gravitational potential due to solid sphere and thin spherical shell",
+      "Work done in shifting a mass between two orbits or points",
+      "Escape velocity derivation: Conservation of mechanical energy from surface to infinity",
+      "Escape velocity formula: v_e = sqrt(2GM/R) = sqrt(2gR) (11.2 km/s on Earth)",
+      "Escape velocity from non-surface points and Other planets/moons",
+      "Orbital velocity of a satellite: v_o = sqrt(GM/r) and Relation with escape velocity (v_e = sqrt(2) v_o)",
+      "Time period of a satellite: T = 2 pi sqrt(r^3 / GM) and Satellite energy (Binding energy)",
+      "Geostationary vs Polar satellites and Parking orbits",
+      "Kepler's first law (Law of orbits): Elliptical orbits and Perihelion/Aphelion",
+      "Kepler's second law (Law of areas): Equal areas in equal times and Angular momentum conservation",
+      "Kepler's third law (Law of periods): T^2 proportional to r^3 and Orbital calculations"
     ]
   },
   {
@@ -407,11 +647,22 @@
     "subject": "physics",
     "chapter": "Mechanical Properties of Solids and Fluids",
     "subtopics": [
-      "Stress, strain and Young's modulus",
-      "Pascal's law and hydraulic systems",
-      "Bernoulli's theorem",
-      "Viscosity and Stokes' law",
-      "Surface tension and capillary rise"
+      "Elasticity: Restoring force, Stress (Tensile, Compressive, Shear) and Strain",
+      "Hooke's law, Stress-strain curve and Elastic limit / Yield point / Breaking point",
+      "Moduli of elasticity: Young's modulus (Y), Bulk modulus (B) and Shear modulus (G)",
+      "Elastic potential energy in a stretched wire: U = 1/2 * Stress * Strain * Volume",
+      "Fluid pressure: Atmospheric pressure, Hydrostatic paradox and Pressure variation with depth",
+      "Pascal's law: Statement, Proof and Hydraulic lift / Hydraulic brakes",
+      "Archimedes' principle in fluids: Buoyant force and Upthrust calculations",
+      "Streamline flow, Turbulent flow, Reynolds number and Equation of continuity (A1 v1 = A2 v2)",
+      "Bernoulli's equation derivation: P + 1/2 rho v^2 + rho g h = constant",
+      "Applications of Bernoulli's principle: Torricelli's law (Efflux velocity), Venturimeter and Aerodynamic lift",
+      "Viscosity: Newton's law of viscous force (F = -eta A dv/dx) and Poiseuille's formula",
+      "Stokes' law: Drag force on a sphere (F = 6 pi eta r v)",
+      "Terminal velocity derivation: Balance of gravity, buoyancy and viscous drag",
+      "Surface tension: Molecular theory, Surface energy and Surface tension relation",
+      "Angle of contact, Shape of liquid meniscus and Excess pressure inside drop and soap bubble",
+      "Capillarity: Ascent formula for capillary rise (h = 2 T cos theta / (r rho g))"
     ]
   },
   {
@@ -419,11 +670,24 @@
     "subject": "physics",
     "chapter": "Thermal Properties and Thermodynamics",
     "subtopics": [
-      "Thermal expansion and calorimetry",
-      "First law of thermodynamics",
-      "Thermodynamic processes (isothermal, adiabatic)",
-      "Second law and heat engines",
-      "Kinetic theory of gases"
+      "Thermal expansion: Linear (alpha), Areal (beta) and Volume (gamma) expansion relationships",
+      "Calorimetry: Specific heat capacity, Molar heat capacity and Water equivalent",
+      "Latent heat of fusion and vaporization, Phase changes and Heat exchange equation",
+      "Thermodynamic system, Surroundings, State variables and Thermal equilibrium (Zeroth law)",
+      "Work done in thermodynamic processes: W = integral P dV",
+      "First law of thermodynamics: Delta Q = Delta U + Delta W and Internal energy as state function",
+      "Quasi-static processes: Isobaric (P=const) and Isochoric (V=const) processes",
+      "Isothermal process: PV = const, Work done W = nRT ln(V2/V1) and Slope on P-V diagram",
+      "Adiabatic process: PV^gamma = const, Work done W = (P1V1 - P2V2)/(gamma - 1) and TV^(gamma-1) relation",
+      "Cyclic processes: Net work done as area enclosed on P-V diagram",
+      "Second law of thermodynamics: Kelvin-Planck and Clausius statements",
+      "Heat engine: Working cycle and Efficiency (eta = 1 - Q2/Q1)",
+      "Carnot engine: Carnot cycle (Isothermal & Adiabatic stages), Efficiency (eta = 1 - T2/T1) and Carnot theorem",
+      "Refrigerators and Heat pumps: Coefficient of performance (COP)",
+      "Ideal gas equation: PV = nRT and Molecular assumptions of kinetic theory",
+      "Pressure of an ideal gas derivation: P = 1/3 rho v_rms^2 and Kinetic interpretation of temperature",
+      "RMS speed, Average speed and Most probable speed formulas",
+      "Law of equipartition of energy, Degrees of freedom and Specific heat ratio (gamma) of gases"
     ]
   },
   {
@@ -431,11 +695,23 @@
     "subject": "physics",
     "chapter": "Oscillations and Waves",
     "subtopics": [
-      "Simple harmonic motion",
-      "Energy in SHM",
-      "Wave motion and superposition",
-      "Standing waves on strings and in pipes",
-      "Beats and Doppler effect"
+      "Periodic vs Oscillatory motion, Frequency, Time period and Amplitude",
+      "Simple Harmonic Motion (SHM) equation: d^2x/dt^2 + omega^2 x = 0 and Displacement x = A sin(omega t + phi)",
+      "Velocity (v = omega sqrt(A^2 - x^2)) and Acceleration (a = -omega^2 x) in SHM",
+      "Time period of simple pendulum (T = 2 pi sqrt(l/g)) and Spring-mass system (T = 2 pi sqrt(m/k))",
+      "Kinetic energy (KE = 1/2 m omega^2 (A^2 - x^2)) and Potential energy (PE = 1/2 m omega^2 x^2) in SHM",
+      "Total mechanical energy conservation (TE = 1/2 m omega^2 A^2) and Energy vs displacement graph",
+      "Damped oscillations and Forced oscillations with Resonance",
+      "Transverse vs Longitudinal progressive waves and Wave equation: y = A sin(kx - omega t + phi)",
+      "Wave number (k = 2 pi / lambda), Angular frequency (omega = 2 pi nu) and Phase difference",
+      "Speed of transverse waves on stretched string (v = sqrt(T/mu)) and Longitudinal waves (Laplace correction)",
+      "Principle of superposition of waves",
+      "Formation of standing waves: Nodes and Antinodes",
+      "Normal modes of vibration of stretched strings (Harmonics and Overtones)",
+      "Vibrations of air columns in organ pipes: Closed pipe (Odd harmonics) and Open pipe (All harmonics)",
+      "Beats: Interference of waves with slightly different frequencies and Beat frequency (f_b = |f1 - f2|)",
+      "Doppler effect in sound: Apparent frequency when source moves",
+      "Doppler effect in sound: Apparent frequency when observer moves and General formula"
     ]
   },
   {
@@ -443,9 +719,15 @@
     "subject": "math",
     "chapter": "Sets, Relations and Functions",
     "subtopics": [
-      "Set operations",
-      "Types of relations",
-      "Domain and range of functions"
+      "Sets representation: Roster form, Set-builder form and Types of sets (Empty, Finite, Infinite, Subsets)",
+      "Set operations: Union, Intersection, Difference and Complement of sets",
+      "Venn diagrams and Practical problems on union and intersection of two/three sets",
+      "Cartesian product of sets (A x B) and Number of relations",
+      "Relations: Domain, Co-domain and Range",
+      "Types of relations: Reflexive, Symmetric, Transitive and Equivalence relations",
+      "Function as a special relation: Vertical line test and Notation f(x)",
+      "Domain, Co-domain and Range of real functions",
+      "Standard functions and their graphs: Identity, Constant, Polynomial, Rational, Modulus, Signum and Greatest integer"
     ]
   },
   {
@@ -453,9 +735,14 @@
     "subject": "math",
     "chapter": "Trigonometric Functions",
     "subtopics": [
-      "Trigonometric identities",
-      "Graphs of trigonometric functions",
-      "Trigonometric equations"
+      "Angles in radians and degrees (pi radians = 180 degrees) and Arc length l = r theta",
+      "Trigonometric functions definition on unit circle and Signs in four quadrants (ASTC rule)",
+      "Compound angle formulas: sin(A +- B), cos(A +- B), tan(A +- B)",
+      "Multiple and submultiple angles: sin 2A, cos 2A, tan 2A and Product-to-sum / Sum-to-product formulas",
+      "Graphs, Domain, Range and Periodicity of sin x, cos x, tan x",
+      "Graphs, Domain, Range and Asymptotes of cosec x, sec x, cot x",
+      "Principal solutions of trigonometric equations",
+      "General solutions of sin theta = sin alpha, cos theta = cos alpha, tan theta = tan alpha"
     ]
   },
   {
@@ -463,9 +750,13 @@
     "subject": "math",
     "chapter": "Complex Numbers and Quadratic Equations",
     "subtopics": [
-      "Algebra of complex numbers",
-      "Argand plane and polar form",
-      "Nature of roots of quadratics"
+      "Imaginary unit i (iota), Powers of i and Definition of complex number z = a + ib",
+      "Algebra of complex numbers: Addition, Subtraction, Multiplication and Division",
+      "Conjugate and Modulus of a complex number and Multiplicative inverse",
+      "Argand plane: Geometrical representation of complex numbers",
+      "Polar form of complex number: z = r (cos theta + i sin theta) and Principal argument",
+      "Solving quadratic equations with negative discriminant in complex number system",
+      "Square root of a complex number"
     ]
   },
   {
@@ -473,10 +764,17 @@
     "subject": "math",
     "chapter": "Permutations, Combinations and Binomial Theorem",
     "subtopics": [
-      "Fundamental counting principle",
-      "Permutations with/without repetition",
-      "Combinations",
-      "Binomial expansion and general term"
+      "Fundamental principle of multiplication and addition",
+      "Factorial notation (n!) and its algebraic properties",
+      "Permutation definition: Arrangement of n distinct objects taken r at a time (nPr = n! / (n-r)!)",
+      "Permutations when objects are repeated or Not all objects are distinct",
+      "Circular permutations and Conditional permutations (Vowels together, Alternate positions)",
+      "Combination definition: Selection of n distinct objects taken r at a time (nCr = n! / (r! (n-r)!))",
+      "Properties of combinations: nCr = nC(n-r) and Pascal's identity (nCr + nC(r-1) = (n+1)Cr)",
+      "Applications of combinations: Committee selection, Geometry points/triangles/diagonals",
+      "Binomial theorem for positive integral index: (a + b)^n expansion and Pascal's triangle",
+      "General term (T_{r+1} = nCr a^(n-r) b^r) and Middle term(s) of binomial expansion",
+      "Independent term (term free from x) and Coefficients properties"
     ]
   },
   {
@@ -484,8 +782,12 @@
     "subject": "math",
     "chapter": "Sequences and Series",
     "subtopics": [
-      "Arithmetic and geometric progressions",
-      "Sum to n terms of special series"
+      "Arithmetic progression: General term, Sum of first n terms and Arithmetic mean (AM)",
+      "Geometric progression: General term, Sum of first n terms, Sum of infinite GP (|r| < 1) and Geometric mean (GM)",
+      "Relationship between AM and GM (AM >= GM)",
+      "Sum of first n natural numbers: sum n = n(n+1)/2",
+      "Sum of squares of first n natural numbers: sum n^2 = n(n+1)(2n+1)/6",
+      "Sum of cubes of first n natural numbers: sum n^3 = (n(n+1)/2)^2"
     ]
   },
   {
@@ -493,11 +795,21 @@
     "subject": "math",
     "chapter": "Straight Lines and Conic Sections",
     "subtopics": [
-      "Slope and equations of a line",
-      "Circle equations",
-      "Parabola",
-      "Ellipse",
-      "Hyperbola"
+      "Slope (gradient) of a line: m = tan theta = (y2 - y1)/(x2 - x1), Parallel and Perpendicular slopes",
+      "Angle between two straight lines: tan theta = |(m2 - m1)/(1 + m1 m2)|",
+      "Forms of line equations: Point-slope form, Two-point form, Slope-intercept form, Intercept form and Normal form",
+      "Distance of a point from a line: d = |ax1 + by1 + c| / sqrt(a^2 + b^2) and Distance between parallel lines",
+      "Circle: Standard equation (x - h)^2 + (y - k)^2 = r^2 and General equation x^2 + y^2 + 2gx + 2fy + c = 0",
+      "Circle through three non-collinear points and Tangent condition",
+      "Parabola definition: Focus, Directrix, Eccentricity (e = 1) and Axis",
+      "Standard equations of parabola (y^2 = 4ax, y^2 = -4ax, x^2 = 4ay, x^2 = -4ay)",
+      "Latus rectum, Focus coordinates and Focal distance of parabola",
+      "Ellipse definition: Foci, Major axis, Minor axis and Eccentricity (e < 1)",
+      "Standard equation of ellipse: x^2/a^2 + y^2/b^2 = 1 and Relations (b^2 = a^2(1 - e^2))",
+      "Latus rectum, Vertices and Directrices of ellipse",
+      "Hyperbola definition: Foci, Transverse axis, Conjugate axis and Eccentricity (e > 1)",
+      "Standard equation of hyperbola: x^2/a^2 - y^2/b^2 = 1 and Relations (b^2 = a^2(e^2 - 1))",
+      "Rectangular hyperbola and Asymptotes overview"
     ]
   },
   {
@@ -505,10 +817,19 @@
     "subject": "math",
     "chapter": "Limits and Derivatives",
     "subtopics": [
-      "Algebra of limits",
-      "Standard limits",
-      "Derivative from first principles",
-      "Derivatives of standard functions"
+      "Concept of limit: Left-hand limit, Right-hand limit and Existence of limit",
+      "Algebra of limits: Sum, Difference, Product and Quotient theorems",
+      "Indeterminate forms (0/0) and Factorisation/Rationalisation techniques",
+      "Standard algebraic limit: lim_{x->a} (x^n - a^n)/(x - a) = n a^(n-1)",
+      "Standard trigonometric limits: lim_{x->0} (sin x)/x = 1 and lim_{x->0} (1 - cos x)/x = 0",
+      "Standard exponential and logarithmic limits",
+      "Derivative definition: Geometric meaning as tangent slope and Instantaneous rate of change",
+      "First principles of differentiation: f'(x) = lim_{h->0} (f(x+h) - f(x))/h",
+      "Derivative of x^n, sin x, cos x from first principles",
+      "Rules of differentiation: Constant multiple, Sum and Difference rules",
+      "Product rule: d/dx (u v) = u v' + v u'",
+      "Quotient rule: d/dx (u / v) = (v u' - u v') / v^2",
+      "Derivatives of algebraic, trigonometric, exponential and logarithmic functions"
     ]
   },
   {
@@ -516,9 +837,12 @@
     "subject": "math",
     "chapter": "Linear Inequalities",
     "subtopics": [
-      "Solving linear inequalities in one variable",
-      "Graphical solution of linear inequalities in two variables",
-      "Solving a system of linear inequalities"
+      "Linear inequalities in one variable: Algebraic solutions and Representation on number line",
+      "Interval notation: Open, Closed and Semi-open intervals",
+      "Linear inequality in two variables (ax + by < c, ax + by > c) and Half-plane concept",
+      "Graphing linear inequalities and Finding feasible half-plane",
+      "Graphical solution of a system of linear inequalities in two variables",
+      "Finding common bounded and unbounded feasible regions"
     ]
   },
   {
@@ -526,9 +850,12 @@
     "subject": "math",
     "chapter": "Introduction to Three Dimensional Geometry",
     "subtopics": [
-      "Coordinate axes and coordinate planes in 3D",
-      "Distance between two points in space",
-      "Section formula in 3D"
+      "Coordinate axes (X, Y, Z), Coordinate planes (XY, YZ, ZX) and Eight octants in 3D space",
+      "Coordinates of a point in 3D space and Distance from axes/planes",
+      "Distance formula in 3D: d = sqrt((x2 - x1)^2 + (y2 - y1)^2 + (z2 - z1)^2)",
+      "Collinear points check and Classifying 3D geometric shapes",
+      "Section formula in 3D: Internal and External division coordinates",
+      "Midpoint and Centroid of a triangle in 3D space"
     ]
   },
   {
@@ -536,9 +863,14 @@
     "subject": "math",
     "chapter": "Statistics",
     "subtopics": [
-      "Measures of dispersion: range and mean deviation",
-      "Variance and standard deviation",
-      "Analysis of frequency distributions"
+      "Measures of dispersion concept and Range of data",
+      "Mean deviation about mean for ungrouped and grouped frequency data",
+      "Mean deviation about median for grouped data",
+      "Variance (sigma^2) and Standard deviation (sigma) for ungrouped data",
+      "Variance and standard deviation for discrete and continuous frequency distributions",
+      "Short-cut and step-deviation methods for standard deviation calculation",
+      "Coefficient of variation (CV = (sigma / mean) * 100) and Comparison of consistency",
+      "Comparison of two frequency distributions with same mean or different means"
     ]
   },
   {
@@ -546,9 +878,13 @@
     "subject": "math",
     "chapter": "Probability",
     "subtopics": [
-      "Random experiments, sample space and events",
-      "Axiomatic approach to probability",
-      "Addition theorem of probability"
+      "Random experiments, Outcomes and Sample space (S)",
+      "Types of events: Impossible, Sure, Simple, Compound, Mutually exclusive and Exhaustive events",
+      "Axioms of probability: P(S) = 1, 0 <= P(E) <= 1",
+      "Equally likely outcomes and Probability of simple events",
+      "Addition theorem for two events: P(A or B) = P(A) + P(B) - P(A and B)",
+      "Addition theorem for mutually exclusive events: P(A or B) = P(A) + P(B)",
+      "Probability of event 'Not A' (P(A') = 1 - P(A))"
     ]
   },
   {
@@ -556,11 +892,27 @@
     "subject": "physics",
     "chapter": "Electrostatics",
     "subtopics": [
-      "Coulomb's law and electric field",
-      "Gauss's law and applications",
-      "Electric potential and potential energy",
-      "Capacitors and dielectrics",
-      "Combination of capacitors"
+      "Electric charges, Quantisation of charge and Conservation of charge",
+      "Coulomb's law: Scalar form, Vector form and Permittivity of medium (epsilon_0)",
+      "Principle of superposition of electrostatic forces",
+      "Electric field: Definition (E = F/q), Field due to point charge and Electric field lines",
+      "Electric dipole: Dipole moment (p = 2aq), Field on axial and equatorial lines, and Torque in uniform field",
+      "Electric flux: Definition (Phi = integral E . dA) and Sign convention",
+      "Gauss's law: Statement and Mathematical formulation",
+      "Gauss's law application: Electric field due to infinitely long straight wire (E = lambda / (2 pi eps_0 r))",
+      "Gauss's law application: Field due to uniformly charged infinite plane sheet",
+      "Gauss's law application: Field due to uniformly charged thin spherical shell (Inside and Outside)",
+      "Electric potential: Definition (V = W/q), Potential due to point charge and Electric dipole",
+      "Equipotential surfaces: Properties and Relation between field and potential (E = -dV/dr)",
+      "Electrostatic potential energy of system of two and three point charges in external field",
+      "Conductors in electrostatic field: Shielding, Cavity and Surface charge density",
+      "Capacitance: Definition (C = Q/V) and Capacitance of isolated spherical conductor",
+      "Parallel plate capacitor: Capacitance formula (C = eps_0 A / d)",
+      "Dielectrics and Polarisation: Dielectric constant (K) and Effect of dielectric slab on capacitance",
+      "Capacitors in series: Charge conservation and Formula (1/C = 1/C1 + 1/C2)",
+      "Capacitors in parallel: Voltage conservation and Formula (C = C1 + C2)",
+      "Energy stored in a capacitor: U = 1/2 CV^2 = 1/2 Q^2/C and Energy density",
+      "Common potential and Loss of energy on sharing charges between capacitors"
     ]
   },
   {
@@ -568,10 +920,18 @@
     "subject": "physics",
     "chapter": "Current Electricity",
     "subtopics": [
-      "Drift velocity and Ohm's law",
-      "Kirchhoff's laws",
-      "Wheatstone bridge and meter bridge",
-      "Potentiometer"
+      "Electric current, Current density (j = I/A) and Drift velocity of electrons derivation (v_d = -e E tau / m)",
+      "Microscopic Ohm's law (j = sigma E) and Deduction of Ohm's law (R = m l / (n e^2 tau A))",
+      "Temperature dependence of resistivity and Temperature coefficient (alpha)",
+      "Internal resistance of cell, Electromotive force (EMF) and Terminal voltage (V = E - Ir)",
+      "Kirchhoff's first law (Junction rule): Conservation of charge",
+      "Kirchhoff's second law (Loop rule): Conservation of energy and Sign conventions",
+      "Solving complex multi-loop circuits using Kirchhoff's laws",
+      "Wheatstone bridge: Balanced condition derivation (P/Q = R/S)",
+      "Meter bridge: Principle, Circuit diagram and Determining unknown resistance",
+      "Potentiometer: Principle and Potential gradient (k = V/l)",
+      "Potentiometer application: Comparing EMFs of two primary cells",
+      "Potentiometer application: Determining internal resistance of a primary cell"
     ]
   },
   {
@@ -579,10 +939,21 @@
     "subject": "physics",
     "chapter": "Magnetism and Matter",
     "subtopics": [
-      "Biot-Savart law and Ampere's law",
-      "Force on a moving charge and current-carrying conductor",
-      "Magnetic dipole and bar magnet",
-      "Moving coil galvanometer"
+      "Magnetic field: Oersted's experiment and Biot-Savart law derivation (dB = mu_0/4pi * I dl sin theta / r^2)",
+      "Magnetic field on the axis of a circular current loop (B = mu_0 I R^2 / 2(R^2+x^2)^(3/2))",
+      "Ampere's circuital law: Statement and Application to straight conductor and Solenoid",
+      "Lorentz force: Electric and magnetic force on moving charge (F = q(E + v x B))",
+      "Motion of charged particle in magnetic field: Circular, Helical paths and Pitch",
+      "Force on current-carrying conductor in magnetic field (F = I l x B)",
+      "Force between two parallel current-carrying conductors and Definition of Ampere",
+      "Torque on a current loop in magnetic field: tau = M x B",
+      "Bar magnet as an equivalent solenoid: Magnetic dipole moment (M = m * 2l)",
+      "Magnetic field of bar magnet: Axial and Equatorial field formulas",
+      "Earth's magnetism: Magnetic elements (Declination, Dip/Inclination and Horizontal component)",
+      "Magnetic materials classification: Diamagnetic, Paramagnetic and Ferromagnetic substances",
+      "Moving coil galvanometer: Principle, Construction and Deflection formula (I proportional to theta)",
+      "Current sensitivity and Voltage sensitivity of a galvanometer",
+      "Conversion of galvanometer to ammeter (Shunt resistance) and Voltmeter (Series resistance)"
     ]
   },
   {
@@ -590,11 +961,23 @@
     "subject": "physics",
     "chapter": "Electromagnetic Induction and AC",
     "subtopics": [
-      "Faraday's and Lenz's laws",
-      "Self and mutual inductance",
-      "AC circuits (LCR)",
-      "Resonance in AC circuits",
-      "Transformers"
+      "Magnetic flux: Definition (Phi = B . A) and Unit Weber",
+      "Faraday's laws of electromagnetic induction: Induced EMF (e = -dPhi/dt)",
+      "Lenz's law and Conservation of energy",
+      "Motional EMF: Rod moving in uniform magnetic field (e = B v l)",
+      "Eddy currents: Formation, Minimisation and Applications",
+      "Self-inductance: Coefficient of self-induction (L = Phi / I), Unit Henry and Long solenoid inductance",
+      "Mutual inductance: Coefficient of mutual induction (M = Phi2 / I1) and Two coaxial solenoids",
+      "Energy stored in an inductor: U = 1/2 L I^2",
+      "Alternating current: Peak value, RMS value (I_rms = I_0 / sqrt(2)) and Phase relations",
+      "AC circuit with pure resistor, pure inductor and pure capacitor (Reactance: X_L = omega L, X_C = 1/(omega C))",
+      "Series LCR circuit: Phasor diagram, Impedance formula (Z = sqrt(R^2 + (X_L - X_C)^2)) and Phase angle",
+      "Resonance in series LCR circuit: Resonance frequency (omega_0 = 1/sqrt(LC))",
+      "Quality factor (Q-factor), Bandwidth and Sharpness of resonance",
+      "Power in AC circuit: Average power (P = V_rms I_rms cos phi), Power factor and Wattless current",
+      "Transformer: Principle, Working, Mutual induction and Turns ratio (V_s / V_p = N_s / N_p)",
+      "Step-up vs Step-down transformers and Efficiency",
+      "Energy losses in transformers (Flux leakage, Copper loss, Iron core eddy currents, Hysteresis)"
     ]
   },
   {
@@ -602,10 +985,17 @@
     "subject": "physics",
     "chapter": "Ray Optics and Optical Instruments",
     "subtopics": [
-      "Refraction at spherical surfaces",
-      "Lens maker's formula",
-      "Combination of lenses and mirrors",
-      "Microscope and telescope"
+      "Refraction at spherical refracting surface formula: n2/v - n1/u = (n2 - n1)/R",
+      "Cartesian sign conventions and Real/Virtual image formations at spherical surfaces",
+      "Lens maker's formula derivation: 1/f = (n - 1)(1/R1 - 1/R2)",
+      "Thin lens formula (1/f = 1/v - 1/u) and Magnification",
+      "Effect of surrounding medium on focal length of a lens",
+      "Combination of thin lenses in contact: Equivalent focal length (1/f = 1/f1 + 1/f2) and Net power (P = P1 + P2)",
+      "Silvering of lenses and Equivalent focal length of mirrored lens system",
+      "Simple microscope (Magnifying glass): Magnifying power at D and infinity",
+      "Compound microscope: Ray diagram, Working and Magnifying power formula",
+      "Astronomical refracting telescope: Ray diagram, Normal adjustment and Magnifying power",
+      "Reflecting telescopes (Cassegrain telescope): Advantages over refracting telescopes"
     ]
   },
   {
@@ -613,9 +1003,16 @@
     "subject": "physics",
     "chapter": "Wave Optics",
     "subtopics": [
-      "Huygens' principle",
-      "Young's double slit experiment",
-      "Diffraction and polarization"
+      "Wavefront: Spherical, Cylindrical and Plane wavefronts",
+      "Huygens' principle of secondary wavelets",
+      "Proof of laws of reflection and refraction using Huygens' principle",
+      "Coherent sources and Conditions for sustained interference",
+      "Young's Double Slit Experiment (YDSE): Setup and Path difference (Delta x = y d / D)",
+      "Constructive and destructive interference conditions, Fringe width formula (beta = lambda D / d)",
+      "Intensity distribution curve in YDSE (I = 4 I_0 cos^2(phi/2))",
+      "Diffraction of light: Distinction between interference and diffraction",
+      "Single slit diffraction: Central maximum width, Minima conditions (a sin theta = n lambda)",
+      "Polarisation of light: Plane polarised light, Malus's law (I = I_0 cos^2 theta) and Brewster's law (tan i_p = n)"
     ]
   },
   {
@@ -623,10 +1020,23 @@
     "subject": "physics",
     "chapter": "Modern Physics",
     "subtopics": [
-      "Photoelectric effect",
-      "Bohr model of the atom",
-      "Nuclear binding energy and radioactivity",
-      "Semiconductor diodes and logic gates"
+      "Photoelectric effect: Hertz and Lenard observations, Work function and Threshold frequency",
+      "Experimental characteristics: Effect of intensity, potential and frequency on photocurrent",
+      "Einstein's photoelectric equation: h nu = Phi_0 + 1/2 m v_max^2 and Stopping potential",
+      "Matter waves: de Broglie hypothesis (lambda = h/p = h/sqrt(2mE)) and Electron wavelength",
+      "Rutherford's alpha scattering experiment and Nuclear atom model limitations",
+      "Bohr's postulates: Stationary orbits and Angular momentum quantisation (mvr = n h / 2pi)",
+      "Radii of electron orbits, Orbital velocity and Energy levels of hydrogen atom (E_n = -13.6 / n^2 eV)",
+      "Hydrogen spectral series: Lyman, Balmer, Paschen, Brackett and Pfund series",
+      "Nuclear composition, Size (R = R_0 A^(1/3)), Density and Mass defect",
+      "Nuclear binding energy and Binding energy per nucleon curve",
+      "Nuclear fission (Uranium-235 chain reaction) and Nuclear fusion in stars",
+      "Radioactivity: Alpha, Beta and Gamma decays, Decay law (N = N_0 e^(-lambda t)) and Half-life",
+      "Energy bands in solids: Conductors, Insulators and Semiconductors (Intrinsic and Extrinsic)",
+      "p-n junction diode: Depletion layer, Barrier potential, Forward and Reverse bias characteristics",
+      "p-n diode as rectifier: Half-wave rectifier and Full-wave rectifier",
+      "Special semiconductor devices: Zener diode, Photodiode, LED and Solar cell",
+      "Logic gates: Basic gates (OR, AND, NOT), Universal gates (NAND, NOR) and Truth tables"
     ]
   },
   {
@@ -634,8 +1044,14 @@
     "subject": "math",
     "chapter": "Relations, Functions and Inverse Trigonometry",
     "subtopics": [
-      "Types of functions",
-      "Inverse trigonometric functions and their properties"
+      "Functions classification: One-one (Injective) and Many-one functions",
+      "Functions classification: Onto (Surjective) and Into functions",
+      "Bijective functions (One-one and Onto) and Invertibility conditions",
+      "Composition of functions: (g o f)(x) and Inverse function f^(-1)(x)",
+      "Inverse trigonometric functions: Definition, Domain and Principal value branches",
+      "Graphs of sin^(-1) x, cos^(-1) x, tan^(-1) x",
+      "Properties of inverse trigonometric functions: sin^(-1)(1/x) = cosec^(-1) x and sin^(-1)(-x) = -sin^(-1) x",
+      "Sum identities: sin^(-1) x + cos^(-1) x = pi/2 and tan^(-1) x + tan^(-1) y formulas"
     ]
   },
   {
@@ -643,10 +1059,19 @@
     "subject": "math",
     "chapter": "Matrices and Determinants",
     "subtopics": [
-      "Matrix operations",
-      "Properties of determinants",
-      "Inverse of a matrix",
-      "Solving linear equations using matrices"
+      "Matrix definition: Order of matrix, Types (Row, Column, Square, Diagonal, Scalar, Identity, Zero)",
+      "Matrix operations: Addition, Subtraction and Scalar multiplication",
+      "Matrix multiplication: Row-by-column rule, Properties and Non-commutativity",
+      "Transpose of a matrix, Symmetric and Skew-symmetric matrices",
+      "Determinants of order 2 and order 3 evaluation",
+      "Minors and Cofactors of determinant elements",
+      "Properties of determinants: Invariance under row/column operations and Area of triangle",
+      "Adjoint of a square matrix: Definition, Properties (A * adj(A) = |A| I)",
+      "Singular and Non-singular matrices and Condition for invertibility (|A| != 0)",
+      "Inverse of a matrix formula: A^(-1) = (1/|A|) * adj(A)",
+      "System of linear equations in matrix form: A X = B",
+      "Matrix method for solving systems of 2 and 3 linear equations",
+      "Consistency and Inconsistency of systems of linear equations"
     ]
   },
   {
@@ -654,10 +1079,22 @@
     "subject": "math",
     "chapter": "Continuity, Differentiability and Applications of Derivatives",
     "subtopics": [
-      "Continuity and differentiability conditions",
-      "Chain rule and implicit differentiation",
-      "Maxima and minima",
-      "Rate of change and tangents/normals"
+      "Continuity of a function at a point: LHL = RHL = f(a) and Continuity in an interval",
+      "Algebra of continuous functions and Points of discontinuity",
+      "Differentiability of a function: Left-hand and Right-hand derivative existence",
+      "Relation between continuity and differentiability (Differentiability implies continuity)",
+      "Chain rule for differentiation of composite functions",
+      "Derivative of implicit functions and Derivative of inverse trigonometric functions",
+      "Logarithmic differentiation for variable powers (y = f(x)^g(x))",
+      "Parametric differentiation: dy/dx = (dy/dt) / (dx/dt) and Second order derivatives",
+      "Critical points and Stationary points of a function",
+      "First derivative test for local maxima and local minima",
+      "Second derivative test for local maxima and minima",
+      "Absolute maximum and absolute minimum values in a closed interval",
+      "Real-life optimization word problems (Max area, Min cost, Volume)",
+      "Derivative as rate of change: Real-world problems (Rate of volume, Area, Position)",
+      "Strictly increasing and decreasing functions: Derivative sign criteria",
+      "Equations of tangent and normal to a curve at a given point"
     ]
   },
   {
@@ -665,9 +1102,18 @@
     "subject": "math",
     "chapter": "Integrals and Applications",
     "subtopics": [
-      "Integration techniques (substitution, by parts, partial fractions)",
-      "Definite integrals and properties",
-      "Area under curves"
+      "Indefinite integration: Anti-derivative definition and Standard integral formulas",
+      "Integration by substitution method and Standard trigonometric integrals",
+      "Integration using trigonometric identities",
+      "Integration by partial fractions for rational algebraic functions",
+      "Integration by parts formula: integral u v dx = u integral v dx - integral (u' integral v dx) dx (ILATE rule)",
+      "Definite integral as limit of a sum and Fundamental theorem of calculus",
+      "Properties of definite integrals: integral_a^b f(x) dx = -integral_b^a f(x) dx",
+      "Properties of definite integrals: integral_0^a f(x) dx = integral_0^a f(a - x) dx",
+      "Properties of definite integrals: Even and odd function integrals (integral_{-a}^a f(x) dx)",
+      "Area bounded by curve y = f(x), x-axis and Ordinates x = a, x = b",
+      "Area bounded by curve x = g(y), y-axis and Abscissae y = c, y = d",
+      "Area between two curves (Parabola and Line, Circle and Line)"
     ]
   },
   {
@@ -675,9 +1121,14 @@
     "subject": "math",
     "chapter": "Differential Equations",
     "subtopics": [
-      "Formation of differential equations",
-      "Variable separable method",
-      "Linear differential equations"
+      "Differential equation definition: Order and Degree of differential equations",
+      "General solution vs Particular solution of a differential equation",
+      "Formation of differential equation representing a given family of curves",
+      "Solving differential equations by variable separable method",
+      "Homogeneous differential equations: Definition and Substitution y = v x",
+      "First-order linear differential equations: dy/dx + P y = Q",
+      "Integrating factor (IF = e^(integral P dx)) and General solution formula (y * IF = integral (Q * IF) dx + C)",
+      "Linear differential equations in x: dx/dy + P x = Q"
     ]
   },
   {
@@ -685,10 +1136,21 @@
     "subject": "math",
     "chapter": "Vectors and Three Dimensional Geometry",
     "subtopics": [
-      "Vector algebra and scalar/vector triple product",
-      "Direction cosines and lines in 3D",
-      "Equation of a plane",
-      "Shortest distance between lines"
+      "Vector basics: Magnitude, Direction cosines, Direction ratios and Collinear vectors",
+      "Scalar (dot) product and Vector (cross) product of two vectors in component form",
+      "Scalar triple product: [a b c] = a . (b x c), Geometrical meaning (Volume of parallelepiped) and Coplanarity",
+      "Direction cosines (l, m, n) and Direction ratios (a, b, c) of a line in 3D (l^2 + m^2 + n^2 = 1)",
+      "Vector and Cartesian equation of a line passing through a point and parallel to a vector",
+      "Equation of a line passing through two given points in 3D",
+      "Angle between two lines in vector and Cartesian forms",
+      "Vector and Cartesian equation of a plane: Normal form (r . n_hat = d)",
+      "Equation of a plane passing through a point and perpendicular to a vector",
+      "Equation of a plane passing through three non-collinear points and Intercept form",
+      "Angle between two planes and Angle between a line and a plane",
+      "Distance of a point from a plane formula",
+      "Skew lines concept in 3D space",
+      "Shortest distance between two skew lines: d = |(b1 x b2) . (a2 - a1)| / |b1 x b2|",
+      "Shortest distance between two parallel lines: d = |b x (a2 - a1)| / |b|"
     ]
   },
   {
@@ -696,10 +1158,18 @@
     "subject": "math",
     "chapter": "Probability",
     "subtopics": [
-      "Conditional probability",
-      "Bayes' theorem",
-      "Random variables and probability distributions",
-      "Binomial distribution"
+      "Conditional probability: Definition, Formula (P(A|B) = P(A and B) / P(B)) and Properties",
+      "Multiplication theorem on probability: P(A and B) = P(A) * P(B|A)",
+      "Independent events: P(A and B) = P(A) * P(B) and Independent vs Mutually exclusive events",
+      "Partition of sample space and Theorem of total probability",
+      "Bayes' theorem: Statement, Formula and Prior vs Posterior probability",
+      "Real-world applications of Bayes' theorem (Disease testing, Machine defect rates)",
+      "Random variable (Discrete) and Probability distribution of a random variable",
+      "Mean (Mathematical expectation E(X)) of a random variable",
+      "Variance and Standard deviation of a random variable",
+      "Bernoulli trials: Conditions for Bernoulli trials",
+      "Binomial distribution: Probability mass function P(X = r) = nCr p^r q^(n-r)",
+      "Mean and variance of binomial distribution (Mean = np, Var = npq)"
     ]
   },
   {
@@ -707,9 +1177,12 @@
     "subject": "math",
     "chapter": "Linear Programming",
     "subtopics": [
-      "Formulating a linear programming problem",
-      "Graphical method and the feasible region",
-      "Finding the optimal solution"
+      "Linear Programming Problem (LPP): Objective function, Decision variables, Constraints and Non-negativity",
+      "Formulating real-world LPP: Diet problem, Manufacturing problem, Transportation problem",
+      "Plotting linear constraints and Finding the feasible region",
+      "Bounded vs Unbounded feasible regions and Corner point / Extreme point method",
+      "Corner point method for finding maximum and minimum values of objective function",
+      "Solving bounded and unbounded LPP problems and Iso-profit / Iso-cost lines"
     ]
   }
 ]
