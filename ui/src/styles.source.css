@@ -70,6 +70,11 @@
 
   /* Wikipedia Content Renderer - Dark Theme Safe */
   .wiki-rendered-content {
+    --color-base: #f8fafc !important;
+    --color-base--emphasized: #ffffff !important;
+    --color-base--subtle: #cbd5e1 !important;
+    --color-emphasized: #ffffff !important;
+    --color-subtle: #cbd5e1 !important;
     color: #cbd5e1;
     font-size: 0.95rem;
     line-height: 1.8;
@@ -186,13 +191,81 @@
     border-radius: 0.25rem;
     font-size: 0.85em;
   }
+  .wiki-rendered-content .texhtml,
+  .wiki-rendered-content .texhtml * {
+    color: #f8fafc !important;
+  }
   .wiki-rendered-content .mwe-math-element,
-  .wiki-rendered-content math {
+  .wiki-rendered-content math,
+  .wiki-rendered-content math * {
     display: inline-block;
-    color: #f8fafc;
+    color: #f8fafc !important;
+    fill: #f8fafc !important;
     vertical-align: middle;
   }
-  .wiki-rendered-content .mwe-math-fallback-image-inline {
-    filter: invert(1) hue-rotate(180deg);
+  .wiki-rendered-content .mwe-math-fallback-image-inline,
+  .wiki-rendered-content .mwe-math-fallback-image-display,
+  .wiki-rendered-content img[src*="media/math/render"],
+  .wiki-rendered-content img[src*="math/render"],
+  .wiki-rendered-content img.mw-invert,
+  .wiki-rendered-content img.skin-invert {
+    filter: invert(1) brightness(1.2) hue-rotate(180deg) !important;
+  }
+  .wiki-rendered-content [style*="color: black"],
+  .wiki-rendered-content [style*="color:black"],
+  .wiki-rendered-content [style*="color: #000"],
+  .wiki-rendered-content [style*="color:#000"],
+  .wiki-rendered-content [style*="color: #202122"],
+  .wiki-rendered-content [style*="color:#202122"],
+  .wiki-rendered-content [style*="color: var(--color-base)"] {
+    color: #f8fafc !important;
+  }
+  .wiki-rendered-content [style*="background: #FFE3E3"],
+  .wiki-rendered-content [style*="background:#FFE3E3"],
+  .wiki-rendered-content [style*="background: #ffe3e3"],
+  .wiki-rendered-content [style*="background:#ffe3e3"],
+  .wiki-rendered-content [style*="background: #bfd"],
+  .wiki-rendered-content [style*="background:#bfd"] {
+    background: rgba(15, 23, 42, 0.7) !important;
+    color: #f8fafc !important;
+  }
+
+  /* Global KaTeX and Formula styling - ensure all math formulas are high-contrast white */
+  .katex,
+  .katex *,
+  .katex-html,
+  .katex-html *,
+  .katex-display,
+  .katex-display * {
+    color: #f8fafc !important;
+  }
+  .katex .frac-line {
+    border-color: #f8fafc !important;
+  }
+  .katex svg {
+    fill: #f8fafc !important;
+  }
+  .katex svg path {
+    fill: #f8fafc !important;
+    stroke: #f8fafc !important;
+  }
+
+  /* MathML elements */
+  math,
+  math * {
+    color: #f8fafc !important;
+    fill: #f8fafc !important;
+  }
+
+  /* Step-by-step formula and solution blocks */
+  .step-formula,
+  .step-formula *,
+  .final-answer-formula,
+  .final-answer-formula * {
+    color: #f8fafc !important;
+  }
+  .final-answer-formula .katex,
+  .final-answer-formula .katex * {
+    color: #a7f3d0 !important;
   }
 }

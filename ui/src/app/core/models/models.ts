@@ -26,6 +26,8 @@ export interface ChapterSummary {
   has_video?: boolean;
   video_count?: number;
   video_subtopics?: string[];
+  problem_count?: number;
+  has_problems?: boolean;
 }
 
 export interface SubtopicItem {
@@ -42,9 +44,19 @@ export interface TextProblem {
   solution: string;
 }
 
+export interface SubtopicProblemItem {
+  id?: number;
+  problem_index: number;
+  title: string;
+  problem_statement?: string;
+  status?: string;
+  run_id?: string | null;
+}
+
 export interface SubtopicGroup {
   subtopic: string;
   items: SubtopicItem[];
+  problems?: SubtopicProblemItem[];
   has_video?: boolean;
 }
 
@@ -111,6 +123,7 @@ export interface ResolveResult {
   subtopic?: string;
   content_type?: string;
   difficulty?: string;
+  problem_index?: number;
   language?: string;
 }
 

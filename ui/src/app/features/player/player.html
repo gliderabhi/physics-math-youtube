@@ -110,7 +110,7 @@
                     }
                     <p class="text-slate-200 text-sm leading-relaxed">{{ step.text }}</p>
                     @if (step.latex) {
-                      <div class="inline-block bg-slate-950 border border-slate-800 rounded-lg px-3.5 py-2 text-slate-100 shadow-inner" [innerHTML]="renderLatex(step.latex)"></div>
+                      <div class="inline-block bg-slate-950 border border-slate-800 rounded-lg px-3.5 py-2 text-white shadow-inner font-mono text-sm step-formula" [innerHTML]="renderLatex(step.latex)"></div>
                     }
                     @if (step.visual && hasVisual(step.visual)) {
                       <div class="mt-2.5 rounded-xl overflow-hidden border border-slate-800 bg-slate-900/80 p-3 max-w-lg shadow-md" [innerHTML]="renderVisualSvg(step.visual)"></div>
@@ -129,7 +129,7 @@
             </h2>
             <p class="text-slate-100 text-sm font-medium leading-relaxed">{{ exp.final_answer }}</p>
             @if (exp.final_answer_latex) {
-              <div class="inline-block bg-slate-950/80 border border-emerald-500/30 rounded-lg px-3.5 py-1.5 text-emerald-200 text-sm shadow-inner mt-1" [innerHTML]="renderLatex(exp.final_answer_latex)"></div>
+              <div class="inline-block bg-slate-950/80 border border-emerald-500/30 rounded-lg px-3.5 py-1.5 text-white text-sm shadow-inner mt-1 final-answer-formula" [innerHTML]="renderLatex(exp.final_answer_latex)"></div>
             }
           </section>
         } @else if (exp.summary) {
@@ -171,7 +171,7 @@
               <h2 class="text-sm font-bold text-sky-400 uppercase tracking-wide mb-2 flex items-center gap-2">
                 <i class="fa-solid fa-book-open-reader"></i> NCERT Explanation
               </h2>
-              <div [innerHTML]="formatNcertHtml(note)"></div>
+              <div class="text-slate-200 text-sm leading-relaxed" [innerHTML]="formatNcertHtml(note)"></div>
             </section>
           }
 
@@ -183,10 +183,10 @@
               <div class="space-y-4">
                 @for (p of result()!.ncert_problems; track $index) {
                   <div class="rounded-xl bg-slate-950/40 border border-slate-800 p-4">
-                    <div [innerHTML]="formatNcertHtml(p.question)"></div>
+                    <div class="text-slate-200 text-sm leading-relaxed" [innerHTML]="formatNcertHtml(p.question)"></div>
                     <div class="mt-3 pt-3 border-t border-slate-800/60">
-                      <span class="text-[10px] font-bold uppercase tracking-wider text-slate-500 block mb-1.5">Solution</span>
-                      <div [innerHTML]="formatNcertHtml(p.solution)"></div>
+                      <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400 block mb-1.5">Solution</span>
+                      <div class="text-slate-200 text-sm leading-relaxed" [innerHTML]="formatNcertHtml(p.solution)"></div>
                     </div>
                   </div>
                 }
@@ -252,7 +252,7 @@
             <h2 class="text-sm font-bold text-sky-400 uppercase tracking-wide mb-2 flex items-center gap-2">
               <i class="fa-solid fa-book-open-reader"></i> Explanation
             </h2>
-            <div [innerHTML]="formatNcertHtml(note, result()!.wiki_images)"></div>
+            <div class="text-slate-200 text-sm leading-relaxed" [innerHTML]="formatNcertHtml(note, result()!.wiki_images)"></div>
           </section>
 
           <footer class="pt-3 border-t border-slate-800/60 text-[11px] text-slate-500 space-y-1">

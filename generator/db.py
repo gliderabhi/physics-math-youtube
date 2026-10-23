@@ -132,6 +132,27 @@ CREATE TABLE IF NOT EXISTS subtopic_wiki_parts (
     updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     UNIQUE KEY uq_subtopic_part (subject, chapter, subtopic, language, part_index)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS subtopic_problems (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    subject VARCHAR(20) NOT NULL,
+    chapter VARCHAR(150) NOT NULL,
+    subtopic VARCHAR(200) NOT NULL,
+    problem_index INT NOT NULL,
+    title VARCHAR(255) NOT NULL,
+    problem_statement TEXT NOT NULL,
+    steps JSON NOT NULL,
+    final_answer TEXT NOT NULL,
+    final_answer_latex VARCHAR(255) DEFAULT '',
+    visual_type VARCHAR(50) DEFAULT '',
+    diagram_spec JSON DEFAULT NULL,
+    run_id VARCHAR(32) DEFAULT NULL,
+    status VARCHAR(20) NOT NULL DEFAULT 'available',
+    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    UNIQUE KEY uq_subtopic_prob (subject, chapter, subtopic, problem_index),
+    KEY idx_subtopic (subject, chapter, subtopic)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 """
 
 

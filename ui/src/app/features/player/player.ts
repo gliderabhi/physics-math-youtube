@@ -28,6 +28,7 @@ export class PlayerComponent {
   subtopic = input<string>('');
   contentType = input<string>('');
   difficulty = input<string>('');
+  problemIndex = input<string | number>('', { alias: 'problemIndex' });
   runId = input<string>('');
   language = input<string>('');
 
@@ -277,6 +278,7 @@ export class PlayerComponent {
           this.difficulty(),
           langToUse,
           this.runId(),
+          this.problemIndex(),
         )
         .subscribe({
           next: (r) => {

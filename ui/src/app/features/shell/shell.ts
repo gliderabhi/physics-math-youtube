@@ -29,12 +29,15 @@ export class ShellComponent {
   superWithVideoOpen = signal(true);
   superWithoutVideoOpen = signal(true);
   superReviewVideoOpen = signal(true);
+  superProblemsOpen = signal(true);
 
-  toggleSuper(section: 'with_video' | 'without_video' | 'review_video'): void {
+  toggleSuper(section: 'with_video' | 'without_video' | 'review_video' | 'problems'): void {
     if (section === 'with_video') {
       this.superWithVideoOpen.update((v) => !v);
     } else if (section === 'review_video') {
       this.superReviewVideoOpen.update((v) => !v);
+    } else if (section === 'problems') {
+      this.superProblemsOpen.update((v) => !v);
     } else {
       this.superWithoutVideoOpen.update((v) => !v);
     }
@@ -65,7 +68,7 @@ export class ShellComponent {
     [...this.chaptersSvc.chapters()].sort((a, b) => a.subject.localeCompare(b.subject) || a.chapter.localeCompare(b.chapter)),
   );
 
-  private readonly defaultSubjects = ['physics', 'math'];
+  private readonly defaultSubjects = ['physics', 'chemistry', 'biology', 'math'];
 
   // Chapters with video grouped by subject
   videoSubjectGroups = computed(() => {
@@ -165,6 +168,36 @@ export class ShellComponent {
     this.nonVideoSubjectGroups().reduce((acc, g) => acc + g.totalTopics, 0),
   );
 
+  // Chapters with practice problems grouped by subject
+  problemSubjectGroups = computed(() => {
+    const all = this.chapters();
+    const map = new Map<string, ChapterSummary[]>();
+    for (const s of this.defaultSubjects) {
+      map.set(s, []);
+    }
+    for (const ch of all) {
+      const probCnt = ch.problem_count ?? (ch.subtopic_count ? ch.subtopic_count * 3 : 0);
+      if (probCnt > 0) {
+        if (!map.has(ch.subject)) map.set(ch.subject, []);
+        map.get(ch.subject)!.push({
+          ...ch,
+          problem_count: probCnt,
+        });
+      }
+    }
+    return Array.from(map.entries())
+      .sort((a, b) => a[0].localeCompare(b[0]))
+      .map(([subject, chs]) => ({
+        subject,
+        chapters: chs,
+        totalProblems: chs.reduce((sum, c) => sum + (c.problem_count ?? 0), 0),
+      }));
+  });
+
+  totalProblemsCount = computed(() =>
+    this.problemSubjectGroups().reduce((acc, g) => acc + g.totalProblems, 0),
+  );
+
   subjectIcon(subject: string): string {
     return subjectIcon(subject);
   }
@@ -173,11 +206,11 @@ export class ShellComponent {
     return subjectName(subject);
   }
 
-  isSubjectOpen(section: 'with_video' | 'without_video' | 'review_video', subject: string): boolean {
+  isSubjectOpen(section: 'with_video' | 'without_video' | 'review_video' | 'problems', subject: string): boolean {
     return this.expandedSubjects().has(`${section}:${subject}`);
   }
 
-  toggleSubject(section: 'with_video' | 'without_video' | 'review_video', subject: string): void {
+  toggleSubject(section: 'with_video' | 'without_video' | 'review_video' | 'problems', subject: string): void {
     const key = `${section}:${subject}`;
     this.expandedSubjects.update((set) => {
       const next = new Set(set);
@@ -190,11 +223,11 @@ export class ShellComponent {
     return `${ch.subject}:${ch.chapter}`;
   }
 
-  isChapterOpen(section: 'with_video' | 'without_video' | 'review_video', ch: ChapterSummary | { subject: string; chapter: string }): boolean {
+  isChapterOpen(section: 'with_video' | 'without_video' | 'review_video' | 'problems', ch: ChapterSummary | { subject: string; chapter: string }): boolean {
     return this.expandedChapters().has(`${section}:${this.chapterKey(ch)}`);
   }
 
-  toggleChapter(section: 'with_video' | 'without_video' | 'review_video', ch: ChapterSummary | { subject: string; chapter: string }): void {
+  toggleChapter(section: 'with_video' | 'without_video' | 'review_video' | 'problems', ch: ChapterSummary | { subject: string; chapter: string }): void {
     const key = `${section}:${this.chapterKey(ch)}`;
     const baseKey = this.chapterKey(ch);
     const isOpen = this.expandedChapters().has(key);
@@ -214,7 +247,7 @@ export class ShellComponent {
     }
   }
 
-  subtopicsFor(section: 'with_video' | 'without_video', ch: ChapterSummary): string[] | 'loading' {
+  subtopicsFor(section: 'with_video' | 'without_video' | 'problems', ch: ChapterSummary): string[] | 'loading' {
     const baseKey = this.chapterKey(ch);
     const loaded = this.chapterSubtopics()[baseKey];
 
@@ -222,9 +255,11 @@ export class ShellComponent {
       if (section === 'with_video') {
         const videoList = loaded.filter((st) => st.has_video || ch.video_subtopics?.includes(st.subtopic));
         return videoList.map((st) => st.subtopic);
-      } else {
+      } else if (section === 'without_video') {
         const nonVideoList = loaded.filter((st) => !st.has_video && !ch.video_subtopics?.includes(st.subtopic));
         return nonVideoList.map((st) => st.subtopic);
+      } else {
+        return loaded.map((st) => st.subtopic);
       }
     }
 
@@ -234,9 +269,11 @@ export class ShellComponent {
 
     if (section === 'with_video') {
       return ch.video_subtopics ?? [];
-    } else {
+    } else if (section === 'without_video') {
       const vSet = new Set(ch.video_subtopics ?? []);
       return (ch.subtopics ?? []).filter((s: string) => !vSet.has(s));
+    } else {
+      return ch.subtopics ?? [];
     }
   }
 

@@ -15,7 +15,7 @@
           </div>
           <div class="hidden sm:block">
             <div class="font-extrabold text-lg tracking-tight text-white leading-none">Illustrated Equations</div>
-            <p class="text-[10px] font-medium tracking-wider text-sky-400 uppercase mt-0.5">Visual Physics &amp; Math</p>
+            <p class="text-[10px] font-medium tracking-wider text-sky-400 uppercase mt-0.5">Visual Science &amp; Math</p>
           </div>
         </a>
 
@@ -253,6 +253,78 @@
             }
           </div>
         }
+
+        <!-- Super Dropdown: Practice Problems -->
+        <div class="rounded-xl border border-purple-500/25 bg-slate-900/60 overflow-hidden shadow-sm">
+          <button (click)="toggleSuper('problems')"
+                  class="w-full flex items-center justify-between px-3 py-2.5 bg-gradient-to-r from-purple-500/10 via-slate-900/80 to-transparent hover:from-purple-500/15 transition-all text-left">
+            <div class="flex items-center gap-2 min-w-0">
+              <span class="w-6 h-6 rounded-lg bg-purple-500/20 border border-purple-500/30 text-purple-400 flex items-center justify-center shrink-0">
+                <i class="fa-solid fa-puzzle-piece text-xs"></i>
+              </span>
+              <span class="text-xs font-bold uppercase tracking-wider text-purple-300">Problems</span>
+              <span class="rounded-full bg-purple-500/20 text-purple-300 border border-purple-500/30 text-[10px] font-bold px-2 py-0.5">
+                {{ totalProblemsCount() }}
+              </span>
+            </div>
+            <i class="fa-solid fa-chevron-down text-[10px] text-purple-400/70 transition-transform shrink-0" [class.rotate-180]="superProblemsOpen()"></i>
+          </button>
+
+          @if (superProblemsOpen()) {
+            <div class="p-2 space-y-1 border-t border-purple-500/10">
+              @for (group of problemSubjectGroups(); track group.subject) {
+                <div class="min-w-0">
+                  <button (click)="toggleSubject('problems', group.subject)"
+                          class="w-full flex items-center gap-2 px-2.5 py-1.5 rounded-lg text-sm font-bold text-slate-200 hover:bg-slate-800/60 hover:text-white transition-colors">
+                    <i class="fa-solid {{ subjectIcon(group.subject) }} text-purple-400 w-3 shrink-0"></i>
+                    <span class="flex-1 min-w-0 text-left truncate">{{ subjectName(group.subject) }}</span>
+                    <span class="text-[10px] text-purple-400/80 font-normal">({{ group.totalProblems }} problems)</span>
+                    <i class="fa-solid fa-chevron-down text-[10px] text-slate-600 transition-transform shrink-0" [class.rotate-180]="isSubjectOpen('problems', group.subject)"></i>
+                  </button>
+
+                  @if (isSubjectOpen('problems', group.subject)) {
+                    <div class="ml-2 pl-2 border-l border-purple-500/20 space-y-0.5 mt-0.5 mb-1 min-w-0">
+                      @for (ch of group.chapters; track ch.class + ch.chapter) {
+                        <div class="min-w-0">
+                          <div class="flex items-center gap-0.5 min-w-0">
+                            <a [routerLink]="['/chapter']" [queryParams]="{ subject: ch.subject, class: ch.class, chapter: ch.chapter }"
+                               (click)="toggleChapter('problems', ch)"
+                               class="flex-1 min-w-0 flex items-center justify-between gap-2 px-2.5 py-1.5 rounded-lg text-xs font-semibold text-slate-200 hover:bg-slate-800/70 hover:text-white truncate transition-colors">
+                              <span class="truncate">{{ ch.chapter }}</span>
+                              <span class="text-[10px] text-purple-400/90 font-mono shrink-0">{{ ch.problem_count }}</span>
+                            </a>
+                            <button (click)="toggleChapter('problems', ch)"
+                                    class="w-6 h-6 shrink-0 flex items-center justify-center text-slate-500 hover:text-white transition-colors">
+                              <i class="fa-solid fa-chevron-down text-[10px] transition-transform" [class.rotate-180]="isChapterOpen('problems', ch)"></i>
+                            </button>
+                          </div>
+
+                          @if (isChapterOpen('problems', ch)) {
+                            @let subtopics = subtopicsFor('problems', ch);
+                            <div class="ml-2 pl-2 border-l border-purple-500/20 space-y-0.5 mb-1 min-w-0">
+                              @if (subtopics === 'loading') {
+                                <p class="px-2.5 py-1 text-xs text-slate-500 truncate">Loading&hellip;</p>
+                              } @else if (subtopics && subtopics.length) {
+                                @for (st of subtopics; track st) {
+                                  <a [routerLink]="['/player']"
+                                     [queryParams]="{ subject: ch.subject, class: ch.class, chapter: ch.chapter, subtopic: st, contentType: 'problem' }"
+                                     class="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs text-slate-300 hover:bg-slate-800/80 hover:text-purple-300 truncate transition-colors">
+                                    <i class="fa-solid fa-puzzle-piece text-[8px] text-purple-400 shrink-0"></i>
+                                    <span class="truncate">{{ st }}</span>
+                                  </a>
+                                }
+                              }
+                            </div>
+                          }
+                        </div>
+                      }
+                    </div>
+                  }
+                </div>
+              }
+            </div>
+          }
+        </div>
 
         <!-- Super Dropdown 2: Without Video -->
         <div class="rounded-xl border border-slate-800 bg-slate-900/60 overflow-hidden shadow-sm">

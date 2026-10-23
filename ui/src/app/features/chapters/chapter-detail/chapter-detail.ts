@@ -48,14 +48,24 @@ export class ChapterDetailComponent {
   visibleSubtopics = computed(() => {
     const d = this.detail();
     if (!d) return [];
-    const admin = this.isAdmin();
-    return d.subtopics.map((group) => ({
-      subtopic: group.subtopic,
-      explainer: group.items.find((i) => i.content_type === 'explainer') ?? null,
-      // A problem card not yet generated is only useful to an admin (who can generate it) --
-      // for everyone else it's just a dead-end placeholder, so it's dropped entirely.
-      problems: group.items.filter((i) => i.content_type === 'problem' && (admin || this.isAvailable(i))),
-    }));
+    return d.subtopics.map((group) => {
+      const explainer = group.items.find((i) => i.content_type === 'explainer') ?? null;
+      let problems = group.problems ?? [];
+      if (!problems.length) {
+        const legacyProblems = group.items.filter((i) => i.content_type === 'problem' && (this.isAdmin() || this.isAvailable(i)));
+        problems = legacyProblems.map((lp, idx) => ({
+          problem_index: idx + 1,
+          title: lp.title ?? `Problem ${idx + 1}`,
+          status: this.isAvailable(lp) ? 'available' : 'pending',
+          run_id: lp.run_ids[this.lang.current()] ?? null,
+        }));
+      }
+      return {
+        subtopic: group.subtopic,
+        explainer,
+        problems,
+      };
+    });
   });
 
   constructor() {

@@ -55,6 +55,7 @@ export class ApiService {
     difficulty: string,
     language: string,
     runId: string = '',
+    problemIndex: string | number = '',
   ): Observable<ResolveResult> {
     let params = new HttpParams()
       .set('subject', subject)
@@ -68,6 +69,9 @@ export class ApiService {
     }
     if (runId) {
       params = params.set('run_id', runId);
+    }
+    if (problemIndex) {
+      params = params.set('problem_index', String(problemIndex));
     }
     return this.http.get<ResolveResult>(`${BASE}/physics-service/api/resolve`, { params });
   }

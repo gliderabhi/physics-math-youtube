@@ -61,9 +61,18 @@ def chapters():
         )
         video_rows = cur.fetchall()
 
+        cur.execute(
+            "SELECT subject, chapter, COUNT(*) as prob_count FROM subtopic_problems GROUP BY subject, chapter"
+        )
+        problem_rows = cur.fetchall()
+
     video_map: dict[tuple[str, str], set[str]] = {}
     for r in video_rows:
         video_map.setdefault((r["subject"].lower(), r["chapter"].lower()), set()).add(r["subtopic"].lower())
+
+    problem_map: dict[tuple[str, str], int] = {}
+    for pr in problem_rows:
+        problem_map[(pr["subject"].lower(), pr["chapter"].lower())] = pr["prob_count"]
 
     merged: dict[tuple[str, str], dict] = {}
     for ch in _syllabus():
@@ -103,6 +112,8 @@ def chapters():
         item["video_subtopics"] = video_subs
         item["video_count"] = len(video_subs)
         item["has_video"] = len(video_subs) > 0
+        item["problem_count"] = problem_map.get(ch_key, 0)
+        item["has_problems"] = item["problem_count"] > 0
 
     return list(merged.values())
 
@@ -119,9 +130,29 @@ def subtopics(subject: str, chapter: str, class_: int | None = Query(None, alias
         )
         rows = cur.fetchall()
 
+        cur.execute(
+            "SELECT id, subtopic, problem_index, title, problem_statement, status, run_id "
+            "FROM subtopic_problems WHERE subject=%s AND chapter=%s ORDER BY problem_index ASC",
+            (subject, chapter),
+        )
+        problem_rows = cur.fetchall()
+
     by_key: dict[tuple, list[dict]] = {}
     for r in rows:
         by_key.setdefault((r["subtopic"], r["content_type"], r["difficulty"]), []).append(r)
+
+    problems_by_subtopic: dict[str, list[dict]] = {}
+    for pr in problem_rows:
+        problems_by_subtopic.setdefault(pr["subtopic"], []).append(
+            {
+                "id": pr["id"],
+                "problem_index": pr["problem_index"],
+                "title": pr["title"],
+                "problem_statement": pr["problem_statement"],
+                "status": pr["status"],
+                "run_id": pr["run_id"],
+            }
+        )
 
     parent_first: dict[str, str] = {}
     for st in subtopic_list:
@@ -151,8 +182,17 @@ def subtopics(subject: str, chapter: str, class_: int | None = Query(None, alias
                     "run_ids": {m["language"]: m["run_id"] for m in matches},
                 }
             )
-        has_video = any(it["exists"] for it in items)
-        result.append({"subtopic": subtopic, "items": items, "has_video": has_video})
+        sub_problems = problems_by_subtopic.get(subtopic, [])
+        if not sub_problems and is_overview:
+            sub_problems = problems_by_subtopic.get(parent_sub, [])
+
+        has_video = any(it["exists"] for it in items) or any(bool(p.get("run_id")) for p in sub_problems)
+        result.append({
+            "subtopic": subtopic,
+            "items": items,
+            "problems": sub_problems,
+            "has_video": has_video,
+        })
 
     return {"subject": subject, "class": class_ or 0, "chapter": chapter, "subtopics": result}
 
@@ -167,6 +207,7 @@ def resolve(
     class_: int | None = Query(None, alias="class"),
     difficulty: str = Query(""),
     run_id: str | None = Query(None),
+    problem_index: int | None = Query(None),
 ):
     row = None
     available = []
@@ -203,6 +244,74 @@ def resolve(
                 break
 
     parent_sub = subtopic.split(":")[0].strip() if ":" in subtopic else subtopic
+
+    if content_type == "problem" and not run_id:
+        idx = problem_index or 1
+        with get_conn() as conn, conn.cursor() as cur:
+            cur.execute(
+                "SELECT * FROM subtopic_problems WHERE subject=%s AND chapter=%s AND (subtopic=%s OR subtopic=%s) "
+                "AND problem_index=%s LIMIT 1",
+                (subject, chapter, subtopic, parent_sub, idx),
+            )
+            prob = cur.fetchone()
+            if not prob and problem_index is None:
+                cur.execute(
+                    "SELECT * FROM subtopic_problems WHERE subject=%s AND chapter=%s AND (subtopic=%s OR subtopic=%s) "
+                    "ORDER BY problem_index ASC LIMIT 1",
+                    (subject, chapter, subtopic, parent_sub),
+                )
+                prob = cur.fetchone()
+
+            if prob:
+                steps_data = prob["steps"]
+                if isinstance(steps_data, str):
+                    try:
+                        import json as _json
+                        steps_data = _json.loads(steps_data)
+                    except Exception:
+                        steps_data = []
+
+                explanation = {
+                    "intro": f"Problem {prob['problem_index']}: {prob['title']}",
+                    "summary": None,
+                    "problem_statement": prob["problem_statement"],
+                    "final_answer": prob["final_answer"],
+                    "final_answer_latex": prob.get("final_answer_latex", ""),
+                    "opening_visual": prob.get("diagram_spec"),
+                    "closing_visual": None,
+                    "steps": steps_data,
+                }
+
+                run_row = None
+                if prob.get("run_id"):
+                    cur.execute("SELECT run_id, status, youtube_video_id, title FROM runs WHERE run_id=%s", (prob["run_id"],))
+                    run_row = cur.fetchone()
+
+                return {
+                    "status": run_row["status"] if run_row else ("published" if prob.get("run_id") else "local"),
+                    "run_id": prob.get("run_id"),
+                    "youtube_video_id": run_row["youtube_video_id"] if run_row else None,
+                    "title": f"Problem {prob['problem_index']}: {prob['title']}",
+                    "subject": subject,
+                    "class": class_ or 0,
+                    "chapter": chapter,
+                    "subtopic": prob["subtopic"],
+                    "content_type": "problem",
+                    "difficulty": None,
+                    "problem_index": prob["problem_index"],
+                    "language": language or "en",
+                    "available_languages": ["en", "hi-en"],
+                    "explanation": explanation,
+                    "ncert_note": None,
+                    "ncert_problems": [],
+                    "wiki_title": None,
+                    "wiki_text": None,
+                    "wiki_html": None,
+                    "parts": [],
+                    "has_diagrams": False,
+                    "wiki_source_url": None,
+                    "wiki_images": [],
+                }
 
     if not row:
         try:
@@ -336,7 +445,8 @@ def resolve(
         "chapter": chapter,
         "subtopic": subtopic,
         "content_type": content_type,
-        "difficulty": difficulty,
+        "difficulty": difficulty or None,
+        "problem_index": problem_index,
         "language": language,
         "available_languages": available,
         "explanation": explanation,
