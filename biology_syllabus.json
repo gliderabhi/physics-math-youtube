@@ -1,0 +1,573 @@
+[
+  {
+    "class": 9,
+    "subject": "biology",
+    "chapter": "The Fundamental Unit of Life",
+    "subtopics": [
+      "Cell Theory and Discovery of Cells",
+      "Cell Membrane and Cell Wall",
+      "Cell Nucleus and Chromosomes",
+      "Cytoplasm and Cell Organelles",
+      "Prokaryotic and Eukaryotic Cells"
+    ]
+  },
+  {
+    "class": 9,
+    "subject": "biology",
+    "chapter": "Tissues",
+    "subtopics": [
+      "Plant Tissues Meristematic and Permanent",
+      "Epithelial Tissue",
+      "Connective Tissue",
+      "Muscular Tissue",
+      "Nervous Tissue"
+    ]
+  },
+  {
+    "class": 9,
+    "subject": "biology",
+    "chapter": "Diversity in Living Organisms",
+    "subtopics": [
+      "Biological Classification Principles",
+      "Kingdom Monera and Protista",
+      "Kingdom Fungi and Plantae",
+      "Kingdom Animalia Invertebrates and Vertebrates",
+      "Binomial Nomenclature"
+    ]
+  },
+  {
+    "class": 9,
+    "subject": "biology",
+    "chapter": "Why Do We Fall Ill",
+    "subtopics": [
+      "Health and Disease Concepts",
+      "Infectious Diseases and Pathogens",
+      "Transmission of Diseases",
+      "Treatment and Prevention of Diseases",
+      "Immunity and Immunization"
+    ]
+  },
+  {
+    "class": 9,
+    "subject": "biology",
+    "chapter": "Natural Resources",
+    "subtopics": [
+      "Biogeochemical Cycles Carbon and Nitrogen",
+      "Water Cycle and Oxygen Cycle",
+      "Air and Water Pollution",
+      "Greenhouse Effect and Ozone Layer"
+    ]
+  },
+  {
+    "class": 9,
+    "subject": "biology",
+    "chapter": "Improvement in Food Resources",
+    "subtopics": [
+      "Crop Variety Improvement",
+      "Crop Production Management",
+      "Crop Protection and Storage",
+      "Animal Husbandry and Poultry Farming"
+    ]
+  },
+  {
+    "class": 10,
+    "subject": "biology",
+    "chapter": "Life Processes",
+    "subtopics": [
+      "Autotrophic Nutrition and Photosynthesis",
+      "Heterotrophic Nutrition and Human Digestion",
+      "Respiration Aerobic and Anaerobic",
+      "Circulation and Transportation in Humans and Plants",
+      "Excretion in Humans and Plants"
+    ]
+  },
+  {
+    "class": 10,
+    "subject": "biology",
+    "chapter": "Control and Coordination",
+    "subtopics": [
+      "Nervous System and Neurons",
+      "Reflex Action and Reflex Arc",
+      "Human Brain and Central Nervous System",
+      "Coordination in Plants and Plant Hormones",
+      "Endocrine System and Animal Hormones"
+    ]
+  },
+  {
+    "class": 10,
+    "subject": "biology",
+    "chapter": "How do Organisms Reproduce",
+    "subtopics": [
+      "Asexual Reproduction Modes",
+      "Sexual Reproduction in Flowering Plants",
+      "Human Reproductive System",
+      "Fertilization and Pregnancy",
+      "Reproductive Health and Contraception"
+    ]
+  },
+  {
+    "class": 10,
+    "subject": "biology",
+    "chapter": "Heredity and Evolution",
+    "subtopics": [
+      "Mendel's Laws of Inheritance",
+      "Sex Determination in Humans",
+      "Evolution and Speciation",
+      "Evidence of Evolution Homologous and Analogous Organs",
+      "Human Evolution"
+    ]
+  },
+  {
+    "class": 10,
+    "subject": "biology",
+    "chapter": "Our Environment",
+    "subtopics": [
+      "Ecosystem Components and Function",
+      "Food Chains and Food Webs",
+      "Trophic Levels and Energy Flow",
+      "Biomagnification",
+      "Ozone Layer Depletion and Waste Management"
+    ]
+  },
+  {
+    "class": 10,
+    "subject": "biology",
+    "chapter": "Sustainable Management of Natural Resources",
+    "subtopics": [
+      "Forests and Wildlife Conservation",
+      "Water Harvesting and Dams",
+      "Coal and Petroleum Conservation",
+      "Five R Principles for Environment"
+    ]
+  },
+  {
+    "class": 11,
+    "subject": "biology",
+    "chapter": "The Living World",
+    "subtopics": [
+      "Characteristics of Living Organisms",
+      "Taxonomy and Systematics",
+      "Taxonomic Categories and Hierarchy",
+      "Taxonomical Aids Herbarium and Botanical Gardens"
+    ]
+  },
+  {
+    "class": 11,
+    "subject": "biology",
+    "chapter": "Biological Classification",
+    "subtopics": [
+      "Five Kingdom Classification",
+      "Kingdom Monera Bacteria",
+      "Kingdom Protista Protozoa and Algae",
+      "Kingdom Fungi Structure and Reproduction",
+      "Viruses Viroids and Lichens"
+    ]
+  },
+  {
+    "class": 11,
+    "subject": "biology",
+    "chapter": "Plant Kingdom",
+    "subtopics": [
+      "Algae Classification and Characteristics",
+      "Bryophytes Mosses and Liverworts",
+      "Pteridophytes Ferns",
+      "Gymnosperms Structure and Life Cycle",
+      "Angiosperms and Alternation of Generations"
+    ]
+  },
+  {
+    "class": 11,
+    "subject": "biology",
+    "chapter": "Animal Kingdom",
+    "subtopics": [
+      "Basis of Animal Classification",
+      "Non-chordates Porifera to Aschelminthes",
+      "Non-chordates Annelida Arthropoda Mollusca Echinodermata",
+      "Hemichordata and Chordata Characteristics",
+      "Vertebrata Classes Fishes Amphibians Reptiles Birds Mammals"
+    ]
+  },
+  {
+    "class": 11,
+    "subject": "biology",
+    "chapter": "Morphology of Flowering Plants",
+    "subtopics": [
+      "Root System Types and Modifications",
+      "Stem Morphology and Modifications",
+      "Leaf Structure Venation and Modifications",
+      "Inflorescence and Flower Structure",
+      "Fruit and Seed Structure"
+    ]
+  },
+  {
+    "class": 11,
+    "subject": "biology",
+    "chapter": "Anatomy of Flowering Plants",
+    "subtopics": [
+      "Meristematic and Permanent Tissues",
+      "Tissue Systems Epidermal Ground and Vascular",
+      "Anatomy of Dicot and Monocot Root and Stem",
+      "Anatomy of Dicot and Monocot Leaf",
+      "Secondary Growth in Dicot Stem and Root"
+    ]
+  },
+  {
+    "class": 11,
+    "subject": "biology",
+    "chapter": "Structural Organisation in Animals",
+    "subtopics": [
+      "Animal Tissues Epithelial Connective Muscular Nervous",
+      "Morphology and Anatomy of Earthworm",
+      "Morphology and Anatomy of Cockroach",
+      "Morphology and Anatomy of Frog"
+    ]
+  },
+  {
+    "class": 11,
+    "subject": "biology",
+    "chapter": "Cell The Unit of Life",
+    "subtopics": [
+      "Cell Theory and Overview of Cell",
+      "Prokaryotic Cell Structure",
+      "Cell Membrane and Cell Wall",
+      "Endomembrane System ER Golgi Lysosomes Vacuoles",
+      "Mitochondria Plastids and Ribosomes",
+      "Cytoskeleton Cilia Flagella and Nucleus"
+    ]
+  },
+  {
+    "class": 11,
+    "subject": "biology",
+    "chapter": "Biomolecules",
+    "subtopics": [
+      "Carbohydrates Monosaccharides and Polysaccharides",
+      "Proteins Amino Acids and Protein Structure",
+      "Lipids Fatty Acids and Phospholipids",
+      "Nucleic Acids DNA and RNA Structure",
+      "Enzymes Properties and Mechanism of Action"
+    ]
+  },
+  {
+    "class": 11,
+    "subject": "biology",
+    "chapter": "Cell Cycle and Cell Division",
+    "subtopics": [
+      "Cell Cycle Phases Interphase and M Phase",
+      "Mitosis Stages and Significance",
+      "Meiosis I Stages and Crossing Over",
+      "Meiosis II and Significance of Meiosis"
+    ]
+  },
+  {
+    "class": 11,
+    "subject": "biology",
+    "chapter": "Photosynthesis in Higher Plants",
+    "subtopics": [
+      "Chloroplast Structure and Photosynthetic Pigments",
+      "Light Reactions Photophosphorylation",
+      "Calvin Cycle C3 Pathway",
+      "C4 Pathway and Photorespiration",
+      "Factors Affecting Photosynthesis"
+    ]
+  },
+  {
+    "class": 11,
+    "subject": "biology",
+    "chapter": "Respiration in Plants",
+    "subtopics": [
+      "Glycolysis Pathway",
+      "Fermentation and Anaerobic Respiration",
+      "Krebs Cycle Citric Acid Cycle",
+      "Electron Transport System and Oxidative Phosphorylation",
+      "Respiratory Quotient"
+    ]
+  },
+  {
+    "class": 11,
+    "subject": "biology",
+    "chapter": "Plant Growth and Development",
+    "subtopics": [
+      "Plant Growth Phases and Kinetics",
+      "Differentiation Dedifferentiation and Redifferentiation",
+      "Auxins Gibberellins and Cytokinins",
+      "Ethylene and Abscisic Acid",
+      "Photoperiodism and Vernalization"
+    ]
+  },
+  {
+    "class": 11,
+    "subject": "biology",
+    "chapter": "Breathing and Exchange of Gases",
+    "subtopics": [
+      "Human Respiratory System Organs",
+      "Mechanism of Breathing and Pulmonary Volumes",
+      "Exchange of Gases Oxygen and Carbon Dioxide",
+      "Transport of Gases in Blood",
+      "Regulation of Respiration and Respiratory Disorders"
+    ]
+  },
+  {
+    "class": 11,
+    "subject": "biology",
+    "chapter": "Body Fluids and Circulation",
+    "subtopics": [
+      "Blood Composition Formed Elements and Plasma",
+      "Blood Groups ABO and Rh System",
+      "Blood Coagulation Mechanism",
+      "Human Circulatory System and Cardiac Cycle",
+      "Electrocardiogram ECG and Circulatory Disorders"
+    ]
+  },
+  {
+    "class": 11,
+    "subject": "biology",
+    "chapter": "Excretory Products and their Elimination",
+    "subtopics": [
+      "Human Excretory System Structure",
+      "Urine Formation Glomerular Filtration and Reabsorption",
+      "Countercurrent Mechanism in Nephron",
+      "Regulation of Kidney Function RAAS and ADH",
+      "Micturition and Renal Disorders"
+    ]
+  },
+  {
+    "class": 11,
+    "subject": "biology",
+    "chapter": "Locomotion and Movement",
+    "subtopics": [
+      "Types of Movement Amoeboid Ciliary and Muscular",
+      "Skeletal Muscle Structure and Sarcomere",
+      "Sliding Filament Theory of Muscle Contraction",
+      "Human Skeletal System Bones and Axial Skeleton",
+      "Joints and Disorders of Muscular and Skeletal System"
+    ]
+  },
+  {
+    "class": 11,
+    "subject": "biology",
+    "chapter": "Neural Control and Coordination",
+    "subtopics": [
+      "Neuron Structure and Types",
+      "Generation and Conduction of Nerve Impulse",
+      "Synaptic Transmission Electrical and Chemical",
+      "Central Nervous System Brain and Spinal Cord",
+      "Reflex Action and Sensory Reception Eye and Ear"
+    ]
+  },
+  {
+    "class": 11,
+    "subject": "biology",
+    "chapter": "Chemical Coordination and Integration",
+    "subtopics": [
+      "Endocrine Glands and Hormone Concept",
+      "Hypothalamus and Pituitary Gland",
+      "Thyroid Gland Parathyroid and Adrenal Glands",
+      "Pancreas and Gonads Hormones",
+      "Mechanism of Hormone Action Second Messengers"
+    ]
+  },
+  {
+    "class": 12,
+    "subject": "biology",
+    "chapter": "Reproduction in Organisms",
+    "subtopics": [
+      "Asexual Reproduction Modes in Plants and Animals",
+      "Vegetative Propagation in Plants",
+      "Sexual Reproduction Events Pre-fertilization",
+      "Fertilization External and Internal",
+      "Post-fertilization Events Zygote and Embryogenesis"
+    ]
+  },
+  {
+    "class": 12,
+    "subject": "biology",
+    "chapter": "Sexual Reproduction in Flowering Plants",
+    "subtopics": [
+      "Flower Structure and Stamen Microsporogenesis",
+      "Pistil Megasporogenesis and Embryo Sac",
+      "Pollination Types and Agents",
+      "Pollen Pistil Interaction and Double Fertilization",
+      "Endosperm Development and Embryogeny",
+      "Apomixis and Polyembryony"
+    ]
+  },
+  {
+    "class": 12,
+    "subject": "biology",
+    "chapter": "Human Reproduction",
+    "subtopics": [
+      "Male Reproductive System Anatomy and Spermatogenesis",
+      "Female Reproductive System Anatomy and Oogenesis",
+      "Menstrual Cycle Hormonal Regulation",
+      "Fertilization Implantation and Cleavage",
+      "Pregnancy Placenta and Embryonic Development",
+      "Parturition and Lactation"
+    ]
+  },
+  {
+    "class": 12,
+    "subject": "biology",
+    "chapter": "Reproductive Health",
+    "subtopics": [
+      "Reproductive Health Problems and Strategies",
+      "Population Explosion and Birth Control Contraception",
+      "Medical Termination of Pregnancy MTP",
+      "Sexually Transmitted Infections STIs",
+      "Infertility and Assisted Reproductive Technologies ART IVF"
+    ]
+  },
+  {
+    "class": 12,
+    "subject": "biology",
+    "chapter": "Principles of Inheritance and Variation",
+    "subtopics": [
+      "Mendel's Laws Monohybrid and Dihybrid Cross",
+      "Incomplete Dominance and Codominance Multiple Alleles",
+      "Chromosomal Theory of Inheritance and Linkage",
+      "Sex Determination in Humans Birds and Honeybee",
+      "Mutation and Genetic Disorders Mendelian and Chromosomal"
+    ]
+  },
+  {
+    "class": 12,
+    "subject": "biology",
+    "chapter": "Molecular Basis of Inheritance",
+    "subtopics": [
+      "DNA Structure Double Helix Model",
+      "Packaging of DNA Helix Nucleosome",
+      "DNA Replication Semi-conservative Mechanism",
+      "Transcription in Prokaryotes and Eukaryotes",
+      "Genetic Code and tRNA Adaptor Molecule",
+      "Translation Protein Synthesis",
+      "Regulation of Gene Expression Lac Operon",
+      "DNA Fingerprinting Technique"
+    ]
+  },
+  {
+    "class": 12,
+    "subject": "biology",
+    "chapter": "Evolution",
+    "subtopics": [
+      "Origin of Life Chemogeny and Biogeny",
+      "Evidences for Evolution Paleontological and Morphological",
+      "Theories of Evolution Lamarckism and Darwin's Theory",
+      "Modern Synthetic Theory of Evolution",
+      "Hardy-Weinberg Principle and Gene Flow",
+      "Adaptive Radiation and Human Evolution"
+    ]
+  },
+  {
+    "class": 12,
+    "subject": "biology",
+    "chapter": "Human Health and Disease",
+    "subtopics": [
+      "Common Infectious Diseases Typhoid Pneumonia Malaria",
+      "Innate Immunity and Acquired Immunity",
+      "Humoral and Cell-mediated Immunity Antibodies",
+      "AIDS Human Immunodeficiency Virus Pathology",
+      "Cancer Characteristics Causes and Treatment",
+      "Drugs and Alcohol Abuse"
+    ]
+  },
+  {
+    "class": 12,
+    "subject": "biology",
+    "chapter": "Strategies for Enhancement in Food Production",
+    "subtopics": [
+      "Animal Breeding and Artificial Insemination",
+      "Dairy Farm Management and Poultry Farming",
+      "Plant Breeding for Disease Resistance and Pest Resistance",
+      "Biofortification and Mutation Breeding",
+      "Single Cell Protein and Tissue Culture Micropropagation"
+    ]
+  },
+  {
+    "class": 12,
+    "subject": "biology",
+    "chapter": "Microbes in Human Welfare",
+    "subtopics": [
+      "Microbes in Household Food Production Curd Bread",
+      "Microbes in Industrial Products Antibiotics Enzymes",
+      "Microbes in Sewage Treatment Primary and Secondary",
+      "Microbes in Biogas Production Methanogens",
+      "Microbes as Biocontrol Agents and Biofertilizers"
+    ]
+  },
+  {
+    "class": 12,
+    "subject": "biology",
+    "chapter": "Biotechnology Principles and Processes",
+    "subtopics": [
+      "Principles of Recombinant DNA Technology",
+      "Restriction Enzymes Endonucleases and Ligases",
+      "Cloning Vectors Plasmids and Bacteriophages",
+      "Competent Host Transformation and Electroporation",
+      "Processes of Recombinant DNA Technology and PCR",
+      "Bioreactors and Downstream Processing"
+    ]
+  },
+  {
+    "class": 12,
+    "subject": "biology",
+    "chapter": "Biotechnology and its Applications",
+    "subtopics": [
+      "Genetically Modified Crops Bt Cotton and RNA Interference",
+      "Biotechnological Applications in Medicine Recombinant Insulin",
+      "Gene Therapy SCID Treatment",
+      "Molecular Diagnostics PCR and ELISA",
+      "Transgenic Animals Applications and Ethical Issues"
+    ]
+  },
+  {
+    "class": 12,
+    "subject": "biology",
+    "chapter": "Organisms and Populations",
+    "subtopics": [
+      "Organism and its Environment Abiotic Factors",
+      "Adaptations in Plants and Animals",
+      "Population Attributes Birth Rate Death Rate and Density",
+      "Population Growth Models Exponential and Logistic",
+      "Population Interactions Mutualism Competition Predation Parasitism"
+    ]
+  },
+  {
+    "class": 12,
+    "subject": "biology",
+    "chapter": "Ecosystem",
+    "subtopics": [
+      "Ecosystem Structure and Function",
+      "Primary Productivity and Secondary Productivity",
+      "Decomposition Process and Factors",
+      "Energy Flow and Ten Percent Law",
+      "Ecological Pyramids Biomass Numbers Energy",
+      "Ecological Succession Primary and Secondary",
+      "Nutrient Cycling Carbon and Phosphorus Cycles"
+    ]
+  },
+  {
+    "class": 12,
+    "subject": "biology",
+    "chapter": "Biodiversity and Conservation",
+    "subtopics": [
+      "Levels of Biodiversity Genetic Species Ecological",
+      "Patterns of Biodiversity Latitudinal Gradients",
+      "Importance of Biodiversity and Biodiversity Loss",
+      "Causes of Biodiversity Loss Evil Quartet",
+      "In-situ Conservation National Parks Sanctuaries Biosphere Reserves",
+      "Ex-situ Conservation Botanical Gardens Cryopreservation"
+    ]
+  },
+  {
+    "class": 12,
+    "subject": "biology",
+    "chapter": "Environmental Issues",
+    "subtopics": [
+      "Air Pollution and its Control Catalytic Converters",
+      "Water Pollution and Wastewater Treatment BOD Eutrophication",
+      "Solid Waste Management and Plastic Waste Disposal",
+      "Agrochemicals and Biomagnification",
+      "Greenhouse Effect and Global Warming",
+      "Ozone Layer Depletion and Deforestation Reforestation"
+    ]
+  }
+]

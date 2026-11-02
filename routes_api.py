@@ -1,0 +1,509 @@
+from functools import lru_cache
+from pathlib import Path
+
+from fastapi import APIRouter, Depends, HTTPException, Query
+from fastapi.responses import FileResponse
+
+from generator import config, content_store
+from generator.curriculum import CurriculumItem, load_syllabus
+from generator.db import get_conn
+from generator.topic_notes import note_for
+from generator.topic_problems import problems_for
+from generator.wiki_store import IMAGES_DIR, wiki_for, wiki_html_for, wiki_parts_for
+
+from .deps import require_user
+
+router = APIRouter(dependencies=[Depends(require_user)])
+
+
+@lru_cache(maxsize=1)
+def _syllabus() -> list[dict]:
+    return load_syllabus()
+
+
+def _find_topics(subject: str, chapter: str, class_: int | None = None) -> list[str]:
+    subtopics = []
+    found = False
+    for ch in _syllabus():
+        if ch["subject"].lower() == subject.lower() and ch["chapter"].lower() == chapter.lower():
+            if class_ is not None and ch["class"] != class_:
+                continue
+            subtopics.extend(ch["subtopics"])
+            found = True
+    if not found:
+        for ch in _syllabus():
+            if ch["subject"].lower() == subject.lower() and ch["chapter"].lower() == chapter.lower():
+                subtopics.extend(ch["subtopics"])
+                found = True
+    if not found:
+        raise HTTPException(status_code=404, detail="Topic not found")
+
+    seen = set()
+    ordered = []
+    for st in subtopics:
+        if st not in seen:
+            seen.add(st)
+            ordered.append(st)
+    return ordered
+
+
+@router.get("/api/languages")
+def languages():
+    return [{"code": code, "name": meta["name"]} for code, meta in config.CHANNELS.items()]
+
+
+@router.get("/api/chapters")
+def chapters():
+    with get_conn() as conn, conn.cursor() as cur:
+        cur.execute(
+            "SELECT DISTINCT subject, chapter, subtopic FROM runs "
+            "WHERE status IN ('published', 'local', 'approved')"
+        )
+        video_rows = cur.fetchall()
+
+        cur.execute(
+            "SELECT subject, chapter, COUNT(*) as prob_count FROM subtopic_problems GROUP BY subject, chapter"
+        )
+        problem_rows = cur.fetchall()
+
+    video_map: dict[tuple[str, str], set[str]] = {}
+    for r in video_rows:
+        video_map.setdefault((r["subject"].lower(), r["chapter"].lower()), set()).add(r["subtopic"].lower())
+
+    problem_map: dict[tuple[str, str], int] = {}
+    for pr in problem_rows:
+        problem_map[(pr["subject"].lower(), pr["chapter"].lower())] = pr["prob_count"]
+
+    merged: dict[tuple[str, str], dict] = {}
+    for ch in _syllabus():
+        key = (ch["subject"], ch["chapter"])
+        if key not in merged:
+            merged[key] = {
+                "subject": ch["subject"],
+                "class": ch["class"],
+                "chapter": ch["chapter"],
+                "subtopics": list(ch["subtopics"]),
+                "subtopic_count": len(ch["subtopics"]),
+            }
+        else:
+            merged[key]["subtopics"].extend(ch["subtopics"])
+            merged[key]["subtopic_count"] = len(merged[key]["subtopics"])
+
+    for item in merged.values():
+        ch_key = (item["subject"].lower(), item["chapter"].lower())
+        ch_video_subs = video_map.get(ch_key, set())
+
+        # Map parent to its first/overview subtopic
+        parent_first: dict[str, str] = {}
+        for st in item["subtopics"]:
+            p = st.split(":")[0].strip() if ":" in st else st
+            if p not in parent_first:
+                parent_first[p] = st
+
+        video_subs = []
+        for st in item["subtopics"]:
+            p = st.split(":")[0].strip() if ":" in st else st
+            if st.lower() in ch_video_subs:
+                video_subs.append(st)
+            elif p.lower() in ch_video_subs:
+                if ": overview" in st.lower() or parent_first.get(p) == st:
+                    video_subs.append(st)
+
+        item["video_subtopics"] = video_subs
+        item["video_count"] = len(video_subs)
+        item["has_video"] = len(video_subs) > 0
+        item["problem_count"] = problem_map.get(ch_key, 0)
+        item["has_problems"] = item["problem_count"] > 0
+
+    return list(merged.values())
+
+
+@router.get("/api/subtopics")
+def subtopics(subject: str, chapter: str, class_: int | None = Query(None, alias="class")):
+    subtopic_list = _find_topics(subject, chapter, class_)
+
+    with get_conn() as conn, conn.cursor() as cur:
+        cur.execute(
+            "SELECT run_id, subtopic, content_type, difficulty, language, status, title "
+            "FROM runs WHERE subject=%s AND chapter=%s",
+            (subject, chapter),
+        )
+        rows = cur.fetchall()
+
+        cur.execute(
+            "SELECT id, subtopic, problem_index, title, problem_statement, status, run_id "
+            "FROM subtopic_problems WHERE subject=%s AND chapter=%s ORDER BY problem_index ASC",
+            (subject, chapter),
+        )
+        problem_rows = cur.fetchall()
+
+    by_key: dict[tuple, list[dict]] = {}
+    for r in rows:
+        by_key.setdefault((r["subtopic"], r["content_type"], r["difficulty"]), []).append(r)
+
+    problems_by_subtopic: dict[str, list[dict]] = {}
+    for pr in problem_rows:
+        problems_by_subtopic.setdefault(pr["subtopic"], []).append(
+            {
+                "id": pr["id"],
+                "problem_index": pr["problem_index"],
+                "title": pr["title"],
+                "problem_statement": pr["problem_statement"],
+                "status": pr["status"],
+                "run_id": pr["run_id"],
+            }
+        )
+
+    parent_first: dict[str, str] = {}
+    for st in subtopic_list:
+        p = st.split(":")[0].strip() if ":" in st else st
+        if p not in parent_first:
+            parent_first[p] = st
+
+    slots = [("explainer", "")] + [("problem", d) for d in config.PROBLEM_DIFFICULTIES]
+    result = []
+    for subtopic in subtopic_list:
+        parent_sub = subtopic.split(":")[0].strip() if ":" in subtopic else subtopic
+        is_overview = (subtopic == parent_sub) or (": overview" in subtopic.lower()) or (parent_first.get(parent_sub) == subtopic)
+        items = []
+        for content_type, difficulty in slots:
+            matches = by_key.get((subtopic, content_type, difficulty), [])
+            if not matches and is_overview:
+                matches = by_key.get((parent_sub, content_type, difficulty), [])
+            items.append(
+                {
+                    "content_type": content_type,
+                    "difficulty": difficulty or None,
+                    "exists": bool(matches),
+                    "title": matches[0]["title"] if matches else None,
+                    "languages": sorted({m["language"] for m in matches}),
+                    # One run_id per language, so the UI can fetch /api/thumbnail/<run_id>
+                    # for whichever language is currently selected.
+                    "run_ids": {m["language"]: m["run_id"] for m in matches},
+                }
+            )
+        sub_problems = problems_by_subtopic.get(subtopic, [])
+        if not sub_problems and is_overview:
+            sub_problems = problems_by_subtopic.get(parent_sub, [])
+
+        has_video = any(it["exists"] for it in items) or any(bool(p.get("run_id")) for p in sub_problems)
+        result.append({
+            "subtopic": subtopic,
+            "items": items,
+            "problems": sub_problems,
+            "has_video": has_video,
+        })
+
+    return {"subject": subject, "class": class_ or 0, "chapter": chapter, "subtopics": result}
+
+
+@router.get("/api/resolve")
+def resolve(
+    subject: str = Query(""),
+    chapter: str = Query(""),
+    subtopic: str = Query(""),
+    content_type: str = Query(""),
+    language: str = Query(""),
+    class_: int | None = Query(None, alias="class"),
+    difficulty: str = Query(""),
+    run_id: str | None = Query(None),
+    problem_index: int | None = Query(None),
+):
+    row = None
+    available = []
+
+    if run_id:
+        with get_conn() as conn, conn.cursor() as cur:
+            cur.execute(
+                "SELECT run_id, status, youtube_video_id, title, subtopic, subject, chapter, content_type, difficulty, language "
+                "FROM runs WHERE run_id=%s",
+                (run_id,),
+            )
+            row = cur.fetchone()
+            if row:
+                subject = row["subject"]
+                chapter = row["chapter"]
+                subtopic = row["subtopic"]
+                content_type = row["content_type"]
+                difficulty = row["difficulty"]
+                if not language:
+                    language = row["language"] or "hi-en"
+
+                cur.execute(
+                    "SELECT DISTINCT language FROM runs "
+                    "WHERE subject=%s AND chapter=%s AND subtopic=%s "
+                    "AND content_type=%s AND difficulty=%s",
+                    (subject, chapter, subtopic, content_type, difficulty),
+                )
+                available = sorted(r["language"] for r in cur.fetchall())
+
+    if not class_ and subject and chapter:
+        for ch in _syllabus():
+            if ch["subject"].lower() == subject.lower() and ch["chapter"].lower() == chapter.lower():
+                class_ = ch["class"]
+                break
+
+    parent_sub = subtopic.split(":")[0].strip() if ":" in subtopic else subtopic
+
+    if content_type == "problem" and not run_id:
+        idx = problem_index or 1
+        with get_conn() as conn, conn.cursor() as cur:
+            cur.execute(
+                "SELECT * FROM subtopic_problems WHERE subject=%s AND chapter=%s AND (subtopic=%s OR subtopic=%s) "
+                "AND problem_index=%s LIMIT 1",
+                (subject, chapter, subtopic, parent_sub, idx),
+            )
+            prob = cur.fetchone()
+            if not prob and problem_index is None:
+                cur.execute(
+                    "SELECT * FROM subtopic_problems WHERE subject=%s AND chapter=%s AND (subtopic=%s OR subtopic=%s) "
+                    "ORDER BY problem_index ASC LIMIT 1",
+                    (subject, chapter, subtopic, parent_sub),
+                )
+                prob = cur.fetchone()
+
+            if prob:
+                steps_data = prob["steps"]
+                if isinstance(steps_data, str):
+                    try:
+                        import json as _json
+                        steps_data = _json.loads(steps_data)
+                    except Exception:
+                        steps_data = []
+
+                explanation = {
+                    "intro": f"Problem {prob['problem_index']}: {prob['title']}",
+                    "summary": None,
+                    "problem_statement": prob["problem_statement"],
+                    "final_answer": prob["final_answer"],
+                    "final_answer_latex": prob.get("final_answer_latex", ""),
+                    "opening_visual": prob.get("diagram_spec"),
+                    "closing_visual": None,
+                    "steps": steps_data,
+                }
+
+                run_row = None
+                if prob.get("run_id"):
+                    cur.execute("SELECT run_id, status, youtube_video_id, title FROM runs WHERE run_id=%s", (prob["run_id"],))
+                    run_row = cur.fetchone()
+
+                return {
+                    "status": run_row["status"] if run_row else ("published" if prob.get("run_id") else "local"),
+                    "run_id": prob.get("run_id"),
+                    "youtube_video_id": run_row["youtube_video_id"] if run_row else None,
+                    "title": f"Problem {prob['problem_index']}: {prob['title']}",
+                    "subject": subject,
+                    "class": class_ or 0,
+                    "chapter": chapter,
+                    "subtopic": prob["subtopic"],
+                    "content_type": "problem",
+                    "difficulty": None,
+                    "problem_index": prob["problem_index"],
+                    "language": language or "en",
+                    "available_languages": ["en", "hi-en"],
+                    "explanation": explanation,
+                    "ncert_note": None,
+                    "ncert_problems": [],
+                    "wiki_title": None,
+                    "wiki_text": None,
+                    "wiki_html": None,
+                    "parts": [],
+                    "has_diagrams": False,
+                    "wiki_source_url": None,
+                    "wiki_images": [],
+                }
+
+    if not row:
+        try:
+            subtopic_list = _find_topics(subject, chapter, class_)
+        except Exception:
+            subtopic_list = []
+
+        first_for_parent = None
+        for st in subtopic_list:
+            p = st.split(":")[0].strip() if ":" in st else st
+            if p == parent_sub:
+                first_for_parent = st
+                break
+
+        is_overview = (subtopic == parent_sub) or (": overview" in subtopic.lower()) or (subtopic == first_for_parent)
+
+        with get_conn() as conn, conn.cursor() as cur:
+            if is_overview:
+                cur.execute(
+                    "SELECT run_id, status, youtube_video_id, title, subtopic FROM runs "
+                    "WHERE subject=%s AND chapter=%s AND (subtopic=%s OR subtopic=%s) "
+                    "AND content_type=%s AND difficulty=%s AND language=%s "
+                    "ORDER BY (subtopic=%s) DESC, (status='published') DESC, created_at DESC LIMIT 1",
+                    (subject, chapter, subtopic, parent_sub, content_type, difficulty, language, subtopic),
+                )
+                row = cur.fetchone()
+
+                cur.execute(
+                    "SELECT DISTINCT language FROM runs "
+                    "WHERE subject=%s AND chapter=%s AND (subtopic=%s OR subtopic=%s) "
+                    "AND content_type=%s AND difficulty=%s",
+                    (subject, chapter, subtopic, parent_sub, content_type, difficulty),
+                )
+                available = sorted(r["language"] for r in cur.fetchall())
+            else:
+                cur.execute(
+                    "SELECT run_id, status, youtube_video_id, title, subtopic FROM runs "
+                    "WHERE subject=%s AND chapter=%s AND subtopic=%s "
+                    "AND content_type=%s AND difficulty=%s AND language=%s "
+                    "ORDER BY (status='published') DESC, created_at DESC LIMIT 1",
+                    (subject, chapter, subtopic, content_type, difficulty, language),
+                )
+                row = cur.fetchone()
+
+                cur.execute(
+                    "SELECT DISTINCT language FROM runs "
+                    "WHERE subject=%s AND chapter=%s AND subtopic=%s "
+                    "AND content_type=%s AND difficulty=%s",
+                    (subject, chapter, subtopic, content_type, difficulty),
+                )
+                available = sorted(r["language"] for r in cur.fetchall())
+
+    if row and row["status"] == "published" and row["youtube_video_id"]:
+        status = "published"
+    elif row and row["status"] in ("generated", "approved"):
+        status = row["status"]
+    elif row:
+        status = "local"
+    else:
+        status = "not_available"
+
+    explanation = None
+    if row:
+        candidates = []
+        for s in [subtopic, row.get("subtopic"), parent_sub]:
+            if s and s not in candidates:
+                candidates.append(s)
+
+        cls = class_ or 0
+        lang_candidates = [language]
+        for l in ["hi-en", "en"]:
+            if l not in lang_candidates:
+                lang_candidates.append(l)
+
+        for candidate_sub in candidates:
+            for candidate_lang in lang_candidates:
+                try:
+                    item = CurriculumItem(subject, cls or 0, chapter, candidate_sub, content_type, difficulty or None)
+                    content, _ = content_store.load_content(item, candidate_lang)
+                    explanation = {
+                        "intro": content.get("intro"),
+                        "summary": content.get("summary"),
+                        "problem_statement": content.get("problem_statement"),
+                        "final_answer": content.get("final_answer"),
+                        "final_answer_latex": content.get("final_answer_latex", ""),
+                        "opening_visual": content.get("opening_visual"),
+                        "closing_visual": content.get("closing_visual"),
+                        "steps": [
+                            {
+                                "text": s.get("narration", ""),
+                                "label": s.get("display_text", ""),
+                                "latex": s.get("latex", ""),
+                                "visual": s.get("visual"),
+                            }
+                            for s in content.get("steps", [])
+                        ],
+                    }
+                    break
+                except LookupError:
+                    continue
+            if explanation:
+                break
+
+    ncert_note = note_for(subject, chapter, subtopic, language)
+    if not ncert_note and parent_sub != subtopic:
+        ncert_note = note_for(subject, chapter, parent_sub, language)
+
+    ncert_problems = problems_for(subject, chapter, subtopic, language)
+    if not ncert_problems and parent_sub != subtopic:
+        ncert_problems = problems_for(subject, chapter, parent_sub, language)
+
+    wiki_html = wiki_html_for(subject, chapter, subtopic, class_, language)
+    if not wiki_html and parent_sub != subtopic:
+        wiki_html = wiki_html_for(subject, chapter, parent_sub, class_, language)
+
+    wiki = wiki_for(subject, chapter, subtopic, class_) if not wiki_html else None
+    if not wiki and not wiki_html and parent_sub != subtopic:
+        wiki = wiki_for(subject, chapter, parent_sub, class_)
+
+    parts = wiki_parts_for(subject, chapter, subtopic, class_, language)
+    if not parts and parent_sub != subtopic:
+        parts = wiki_parts_for(subject, chapter, parent_sub, class_, language)
+
+    return {
+        "status": status,
+        "run_id": row["run_id"] if row else None,
+        "youtube_video_id": row["youtube_video_id"] if row else None,
+        "title": row["title"] if row else None,
+        "subject": subject,
+        "class": class_ or 0,
+        "chapter": chapter,
+        "subtopic": subtopic,
+        "content_type": content_type,
+        "difficulty": difficulty or None,
+        "problem_index": problem_index,
+        "language": language,
+        "available_languages": available,
+        "explanation": explanation,
+        "ncert_note": ncert_note,
+        "ncert_problems": ncert_problems,
+        "wiki_title": wiki_html["title"] if wiki_html else (wiki["title"] if wiki else None),
+        "wiki_text": wiki["text"] if wiki else None,
+        "wiki_html": wiki_html["html"] if wiki_html else None,
+        "parts": parts,
+        "has_diagrams": wiki_html["has_diagrams"] if wiki_html else bool(parts and any(p.get("diagram_url") for p in parts)),
+        "wiki_source_url": wiki_html["url"] if wiki_html else (wiki["source_url"] if wiki else None),
+        "wiki_images": wiki["images"] if wiki else [],
+    }
+
+
+@router.get("/api/wiki-image/{filename}")
+def wiki_image(filename: str):
+    path = (IMAGES_DIR / filename).resolve()
+    if not path.is_relative_to(IMAGES_DIR.resolve()) or not path.is_file():
+        raise HTTPException(status_code=404, detail="Image not found")
+    return FileResponse(path)
+
+
+@router.get("/api/stream/{run_id}")
+def stream(run_id: str):
+    with get_conn() as conn, conn.cursor() as cur:
+        cur.execute("SELECT video_path FROM runs WHERE run_id=%s", (run_id,))
+        row = cur.fetchone()
+
+    if not row or not row["video_path"]:
+        raise HTTPException(status_code=404, detail="Video not found")
+
+    video_path = Path(row["video_path"]).resolve()
+    if not video_path.is_relative_to(config.VIDEOS_DIR.resolve()):
+        raise HTTPException(status_code=403, detail="Invalid video path")
+    if not video_path.is_file():
+        raise HTTPException(status_code=404, detail="Video file missing on disk")
+
+    return FileResponse(video_path, media_type="video/mp4")
+
+
+@router.get("/api/thumbnail/{run_id}")
+def thumbnail_file(run_id: str):
+    with get_conn() as conn, conn.cursor() as cur:
+        cur.execute("SELECT thumbnail_path FROM runs WHERE run_id=%s", (run_id,))
+        row = cur.fetchone()
+
+    if not row or not row["thumbnail_path"]:
+        raise HTTPException(status_code=404, detail="Thumbnail not found")
+
+    thumb_path = Path(row["thumbnail_path"]).resolve()
+    # Defense in depth: accept the new permanent location, and the legacy ephemeral
+    # output/<run_id>/ one for any row the backfill script hasn't touched.
+    valid_root = thumb_path.is_relative_to(config.THUMBNAILS_DIR.resolve()) or thumb_path.is_relative_to(config.OUTPUT_DIR.resolve())
+    if not valid_root:
+        raise HTTPException(status_code=403, detail="Invalid thumbnail path")
+    if not thumb_path.is_file():
+        raise HTTPException(status_code=404, detail="Thumbnail file missing on disk")
+
+    return FileResponse(thumb_path, media_type="image/png")

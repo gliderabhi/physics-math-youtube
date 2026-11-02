@@ -27,3 +27,5 @@ audit_readable.txt
 remaining_review.txt
 generate_review_list.py
 syllabus_original_backup.json
+*.db
+*.bak_*

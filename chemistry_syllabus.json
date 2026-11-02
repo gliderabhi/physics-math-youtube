@@ -1,0 +1,450 @@
+[
+  {
+    "class": 9,
+    "subject": "chemistry",
+    "chapter": "Matter in Our Surroundings",
+    "subtopics": [
+      "Physical Nature of Matter",
+      "States of Matter",
+      "Change of State of Matter",
+      "Evaporation"
+    ]
+  },
+  {
+    "class": 9,
+    "subject": "chemistry",
+    "chapter": "Is Matter Around Us Pure",
+    "subtopics": [
+      "Mixtures and Solutions",
+      "Suspension and Colloid",
+      "Separation Techniques in Chemistry",
+      "Elements Compounds and Mixtures"
+    ]
+  },
+  {
+    "class": 9,
+    "subject": "chemistry",
+    "chapter": "Atoms and Molecules",
+    "subtopics": [
+      "Laws of Chemical Combination",
+      "Dalton's Atomic Theory",
+      "Atomic Mass and Molecular Mass",
+      "Chemical Formula",
+      "Mole Concept"
+    ]
+  },
+  {
+    "class": 9,
+    "subject": "chemistry",
+    "chapter": "Structure of the Atom",
+    "subtopics": [
+      "Subatomic Particles",
+      "Thomson Model and Rutherford Model",
+      "Bohr Model of the Atom",
+      "Electron Configuration",
+      "Valency and Isotopes"
+    ]
+  },
+  {
+    "class": 10,
+    "subject": "chemistry",
+    "chapter": "Chemical Reactions and Equations",
+    "subtopics": [
+      "Chemical Equation Balancing",
+      "Combination and Decomposition Reactions",
+      "Displacement and Double Displacement Reactions",
+      "Redox Reaction",
+      "Corrosion and Rancidity"
+    ]
+  },
+  {
+    "class": 10,
+    "subject": "chemistry",
+    "chapter": "Acids Bases and Salts",
+    "subtopics": [
+      "Properties of Acids and Bases",
+      "pH Scale",
+      "Neutralization Reaction",
+      "Salts and Their Properties",
+      "Chemicals from Common Salt"
+    ]
+  },
+  {
+    "class": 10,
+    "subject": "chemistry",
+    "chapter": "Metals and Non-metals",
+    "subtopics": [
+      "Physical and Chemical Properties of Metals",
+      "Reactivity Series of Metals",
+      "Extraction of Metals",
+      "Corrosion of Metals"
+    ]
+  },
+  {
+    "class": 10,
+    "subject": "chemistry",
+    "chapter": "Carbon and its Compounds",
+    "subtopics": [
+      "Covalent Bonding in Carbon",
+      "Versatile Nature of Carbon",
+      "Homologous Series and IUPAC Nomenclature",
+      "Chemical Properties of Carbon Compounds",
+      "Soaps and Detergents"
+    ]
+  },
+  {
+    "class": 10,
+    "subject": "chemistry",
+    "chapter": "Periodic Classification of Elements",
+    "subtopics": [
+      "Early Classification of Elements",
+      "Mendeleev's Periodic Table",
+      "Modern Periodic Table",
+      "Periodic Trends in Element Properties"
+    ]
+  },
+  {
+    "class": 11,
+    "subject": "chemistry",
+    "chapter": "Some Basic Concepts of Chemistry",
+    "subtopics": [
+      "Laws of Chemical Combination",
+      "Atomic Mass and Molecular Mass",
+      "Mole Concept and Molar Mass",
+      "Stoichiometry",
+      "Percentage Composition and Empirical Formula"
+    ]
+  },
+  {
+    "class": 11,
+    "subject": "chemistry",
+    "chapter": "Structure of Atom",
+    "subtopics": [
+      "Subatomic Particles and Atomic Models",
+      "Quantum Mechanical Model of Atom",
+      "Quantum Numbers",
+      "Electronic Configuration and Aufbau Principle"
+    ]
+  },
+  {
+    "class": 11,
+    "subject": "chemistry",
+    "chapter": "Classification of Elements and Periodicity in Properties",
+    "subtopics": [
+      "Periodic Law",
+      "Modern Periodic Table and Electronic Configuration",
+      "Periodic Trends in Ionization Enthalpy and Electronegativity",
+      "Periodic Trends in Atomic and Ionic Radii"
+    ]
+  },
+  {
+    "class": 11,
+    "subject": "chemistry",
+    "chapter": "Chemical Bonding and Molecular Structure",
+    "subtopics": [
+      "Ionic Bond",
+      "Covalent Bond and Lewis Structure",
+      "VSEPR Theory",
+      "Valence Bond Theory and Hybridization",
+      "Molecular Orbital Theory"
+    ]
+  },
+  {
+    "class": 11,
+    "subject": "chemistry",
+    "chapter": "Thermodynamics",
+    "subtopics": [
+      "First Law of Thermodynamics and Internal Energy",
+      "Enthalpy and Enthalpy Change",
+      "Hess's Law of Constant Heat Summation",
+      "Entropy and Second Law of Thermodynamics",
+      "Gibbs Free Energy"
+    ]
+  },
+  {
+    "class": 11,
+    "subject": "chemistry",
+    "chapter": "Equilibrium",
+    "subtopics": [
+      "Chemical Equilibrium",
+      "Law of Chemical Equilibrium and Equilibrium Constant",
+      "Le Chatelier's Principle",
+      "Ionic Equilibrium and Buffer Solutions",
+      "Solubility Product"
+    ]
+  },
+  {
+    "class": 11,
+    "subject": "chemistry",
+    "chapter": "Redox Reactions",
+    "subtopics": [
+      "Oxidation and Reduction",
+      "Oxidation Number",
+      "Balancing Redox Reactions",
+      "Electrode Potential and Electrochemical Cell"
+    ]
+  },
+  {
+    "class": 11,
+    "subject": "chemistry",
+    "chapter": "Organic Chemistry: Some Basic Principles and Techniques",
+    "subtopics": [
+      "Classification of Organic Compounds",
+      "IUPAC Nomenclature of Organic Compounds",
+      "Isomerism in Organic Chemistry",
+      "Reaction Mechanisms in Organic Chemistry",
+      "Purification of Organic Compounds"
+    ]
+  },
+  {
+    "class": 11,
+    "subject": "chemistry",
+    "chapter": "Hydrocarbons",
+    "subtopics": [
+      "Alkanes",
+      "Alkenes",
+      "Alkynes",
+      "Aromatic Hydrocarbons and Benzene"
+    ]
+  },
+  {
+    "class": 11,
+    "subject": "chemistry",
+    "chapter": "States of Matter",
+    "subtopics": [
+      "Intermolecular Forces",
+      "Gas Laws",
+      "Ideal Gas Law",
+      "Kinetic Theory of Gases",
+      "Liquid State Properties"
+    ]
+  },
+  {
+    "class": 11,
+    "subject": "chemistry",
+    "chapter": "Hydrogen",
+    "subtopics": [
+      "Position of Hydrogen in the Periodic Table",
+      "Isotopes of Hydrogen",
+      "Dihydrogen Preparation and Properties",
+      "Water and Hydrogen Peroxide",
+      "Heavy Water"
+    ]
+  },
+  {
+    "class": 11,
+    "subject": "chemistry",
+    "chapter": "The s-Block Elements",
+    "subtopics": [
+      "Alkali Metals",
+      "Alkaline Earth Metals",
+      "Compounds of Sodium and Calcium",
+      "Biological Importance of Alkali and Alkaline Earth Metals"
+    ]
+  },
+  {
+    "class": 11,
+    "subject": "chemistry",
+    "chapter": "Some p-Block Elements",
+    "subtopics": [
+      "Group 13 Elements Boron Family",
+      "Group 14 Elements Carbon Family",
+      "Important Compounds of Boron and Silicon"
+    ]
+  },
+  {
+    "class": 11,
+    "subject": "chemistry",
+    "chapter": "Environmental Chemistry",
+    "subtopics": [
+      "Air Pollution and Smog",
+      "Water Pollution",
+      "Soil Pollution",
+      "Green Chemistry"
+    ]
+  },
+  {
+    "class": 12,
+    "subject": "chemistry",
+    "chapter": "The Solid State",
+    "subtopics": [
+      "Crystalline and Amorphous Solids",
+      "Crystal Lattice and Unit Cell",
+      "Close Packed Structures and Packing Efficiency",
+      "Crystal Defects and Imperfections",
+      "Electrical and Magnetic Properties of Solids"
+    ]
+  },
+  {
+    "class": 12,
+    "subject": "chemistry",
+    "chapter": "Solutions",
+    "subtopics": [
+      "Types of Solutions and Concentration Expressions",
+      "Raoult's Law",
+      "Colligative Properties",
+      "Abnormal Molar Mass and Van't Hoff Factor"
+    ]
+  },
+  {
+    "class": 12,
+    "subject": "chemistry",
+    "chapter": "Electrochemistry",
+    "subtopics": [
+      "Electrochemical Cell and Galvanic Cell",
+      "Nernst Equation",
+      "Electrolytic Conductance",
+      "Electrolysis",
+      "Batteries and Fuel Cells",
+      "Corrosion as Electrochemical Process"
+    ]
+  },
+  {
+    "class": 12,
+    "subject": "chemistry",
+    "chapter": "Chemical Kinetics",
+    "subtopics": [
+      "Rate of Chemical Reaction",
+      "Factors Affecting Rate of Reaction",
+      "Integrated Rate Equations and Order of Reaction",
+      "Arrhenius Equation and Activation Energy",
+      "Collision Theory of Chemical Kinetics"
+    ]
+  },
+  {
+    "class": 12,
+    "subject": "chemistry",
+    "chapter": "Surface Chemistry",
+    "subtopics": [
+      "Adsorption",
+      "Catalysis and Types of Catalysts",
+      "Colloids and Colloidal Solutions",
+      "Emulsion"
+    ]
+  },
+  {
+    "class": 12,
+    "subject": "chemistry",
+    "chapter": "General Principles and Processes of Isolation of Elements",
+    "subtopics": [
+      "Occurrence of Metals and Ores",
+      "Concentration of Ores",
+      "Thermodynamic Principles of Metallurgy",
+      "Electrochemical Principles of Metallurgy",
+      "Refining of Metals"
+    ]
+  },
+  {
+    "class": 12,
+    "subject": "chemistry",
+    "chapter": "The p-Block Elements",
+    "subtopics": [
+      "Group 15 Elements Nitrogen Family",
+      "Group 16 Elements Oxygen Family",
+      "Group 17 Elements Halogen Family",
+      "Group 18 Elements Noble Gases"
+    ]
+  },
+  {
+    "class": 12,
+    "subject": "chemistry",
+    "chapter": "The d- and f-Block Elements",
+    "subtopics": [
+      "Transition Elements and Their Properties",
+      "Important Compounds of Transition Elements",
+      "Lanthanoids",
+      "Actinoids"
+    ]
+  },
+  {
+    "class": 12,
+    "subject": "chemistry",
+    "chapter": "Coordination Compounds",
+    "subtopics": [
+      "Werner's Theory of Coordination Compounds",
+      "Nomenclature of Coordination Compounds",
+      "Isomerism in Coordination Compounds",
+      "Valence Bond Theory and Crystal Field Theory",
+      "Applications of Coordination Compounds"
+    ]
+  },
+  {
+    "class": 12,
+    "subject": "chemistry",
+    "chapter": "Haloalkanes and Haloarenes",
+    "subtopics": [
+      "Classification and Nomenclature of Haloalkanes",
+      "Preparation and Physical Properties of Haloalkanes",
+      "Nucleophilic Substitution Reactions SN1 and SN2",
+      "Elimination Reactions",
+      "Polyhalogen Compounds"
+    ]
+  },
+  {
+    "class": 12,
+    "subject": "chemistry",
+    "chapter": "Alcohols Phenols and Ethers",
+    "subtopics": [
+      "Classification and Preparation of Alcohols",
+      "Properties and Reactions of Alcohols",
+      "Phenol Preparation and Properties",
+      "Ethers Preparation and Properties"
+    ]
+  },
+  {
+    "class": 12,
+    "subject": "chemistry",
+    "chapter": "Aldehydes Ketones and Carboxylic Acids",
+    "subtopics": [
+      "Nomenclature and Structure of Aldehydes and Ketones",
+      "Preparation of Aldehydes and Ketones",
+      "Chemical Reactions of Aldehydes and Ketones",
+      "Carboxylic Acids Preparation and Properties"
+    ]
+  },
+  {
+    "class": 12,
+    "subject": "chemistry",
+    "chapter": "Amines",
+    "subtopics": [
+      "Classification and Nomenclature of Amines",
+      "Preparation of Amines",
+      "Properties and Reactions of Amines",
+      "Diazonium Salts"
+    ]
+  },
+  {
+    "class": 12,
+    "subject": "chemistry",
+    "chapter": "Biomolecules",
+    "subtopics": [
+      "Carbohydrates",
+      "Proteins and Amino Acids",
+      "Enzymes",
+      "Vitamins",
+      "Nucleic Acids DNA and RNA"
+    ]
+  },
+  {
+    "class": 12,
+    "subject": "chemistry",
+    "chapter": "Polymers",
+    "subtopics": [
+      "Classification of Polymers",
+      "Types of Polymerization",
+      "Important Synthetic Polymers",
+      "Biodegradable Polymers"
+    ]
+  },
+  {
+    "class": 12,
+    "subject": "chemistry",
+    "chapter": "Chemistry in Everyday Life",
+    "subtopics": [
+      "Drugs and Their Classification",
+      "Drug-Target Interaction and Therapeutic Action",
+      "Chemicals in Food Preservatives and Sweeteners",
+      "Cleansing Agents Soaps and Detergents"
+    ]
+  }
+]

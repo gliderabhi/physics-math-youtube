@@ -1,0 +1,948 @@
+"""
+Curate clean, cohesive NCERT subtopics for Chemistry and Biology.
+Each subtopic is a single, unified topic (e.g. 'Lewis Acids and Bases', 'Meristematic Tissue', 'Permanent Tissue').
+No automated splitting into fragmented section pieces.
+"""
+
+CHEMISTRY_SYLLABUS = [
+    # Class 9
+    {
+        "class": 9, "subject": "chemistry", "chapter": "Matter in Our Surroundings",
+        "subtopics": [
+            "Physical Nature and Characteristics of Matter",
+            "States of Matter",
+            "Change of State of Matter",
+            "Evaporation and Latent Heat"
+        ]
+    },
+    {
+        "class": 9, "subject": "chemistry", "chapter": "Is Matter Around Us Pure",
+        "subtopics": [
+            "Mixtures and Solutions",
+            "Suspensions and Colloids",
+            "Separation Techniques for Mixtures",
+            "Physical and Chemical Changes",
+            "Elements and Compounds"
+        ]
+    },
+    {
+        "class": 9, "subject": "chemistry", "chapter": "Atoms and Molecules",
+        "subtopics": [
+            "Laws of Chemical Combination",
+            "Dalton's Atomic Theory",
+            "Atomic and Molecular Mass",
+            "Writing Chemical Formulae and Valency",
+            "Mole Concept and Molar Mass"
+        ]
+    },
+    {
+        "class": 9, "subject": "chemistry", "chapter": "Structure of the Atom",
+        "subtopics": [
+            "Charged Particles in Matter and Discovery of Subatomic Particles",
+            "Thomson and Rutherford Atomic Models",
+            "Bohr Model of the Atom",
+            "Electron Distribution in Shells",
+            "Atomic Number, Mass Number, and Isotopes"
+        ]
+    },
+
+    # Class 10
+    {
+        "class": 10, "subject": "chemistry", "chapter": "Chemical Reactions and Equations",
+        "subtopics": [
+            "Chemical Equations and Balancing",
+            "Combination and Decomposition Reactions",
+            "Displacement and Double Displacement Reactions",
+            "Oxidation and Reduction (Redox Reactions)",
+            "Effects of Oxidation: Corrosion and Rancidity"
+        ]
+    },
+    {
+        "class": 10, "subject": "chemistry", "chapter": "Acids Bases and Salts",
+        "subtopics": [
+            "Properties of Acids and Bases",
+            "Lewis Acids and Bases",
+            "pH Scale and Importance in Everyday Life",
+            "Salts and Neutralization Reactions",
+            "Important Compounds from Common Salt (Baking Soda, Bleaching Powder, Plaster of Paris)"
+        ]
+    },
+    {
+        "class": 10, "subject": "chemistry", "chapter": "Metals and Non-metals",
+        "subtopics": [
+            "Physical Properties of Metals and Non-metals",
+            "Chemical Properties of Metals and Reactivity Series",
+            "Ionic Bonding and Properties of Ionic Compounds",
+            "Metallurgy and Extraction of Metals",
+            "Corrosion and Its Prevention"
+        ]
+    },
+    {
+        "class": 10, "subject": "chemistry", "chapter": "Carbon and its Compounds",
+        "subtopics": [
+            "Covalent Bonding in Carbon",
+            "Versatile Nature of Carbon and Catenation",
+            "Homologous Series and IUPAC Nomenclature",
+            "Chemical Properties of Carbon Compounds (Combustion, Oxidation, Addition, Substitution)",
+            "Ethanol and Ethanoic Acid",
+            "Soaps and Detergents"
+        ]
+    },
+    {
+        "class": 10, "subject": "chemistry", "chapter": "Periodic Classification of Elements",
+        "subtopics": [
+            "Early Classification: Dobereiner and Newlands",
+            "Mendeleev's Periodic Table",
+            "Modern Periodic Table and Electronic Configuration",
+            "Periodic Trends in Properties (Valency, Atomic Size, Metallic Character)"
+        ]
+    },
+
+    # Class 11
+    {
+        "class": 11, "subject": "chemistry", "chapter": "Some Basic Concepts of Chemistry",
+        "subtopics": [
+            "Laws of Chemical Combination",
+            "Atomic, Molecular, and Formula Mass",
+            "Mole Concept and Molar Mass",
+            "Percentage Composition and Empirical Formula",
+            "Stoichiometry and Stoichiometric Calculations",
+            "Limiting Reagent and Reactions in Solutions"
+        ]
+    },
+    {
+        "class": 11, "subject": "chemistry", "chapter": "Structure of Atom",
+        "subtopics": [
+            "Discovery of Subatomic Particles",
+            "Bohr's Model and Its Limitations",
+            "Dual Behavior of Matter and Heisenberg Uncertainty Principle",
+            "Quantum Mechanical Model and Quantum Numbers",
+            "Shapes of Atomic Orbitals",
+            "Aufbau Principle, Pauli Exclusion Principle, and Hund's Rule"
+        ]
+    },
+    {
+        "class": 11, "subject": "chemistry", "chapter": "Classification of Elements and Periodicity in Properties",
+        "subtopics": [
+            "Modern Periodic Law and Present Form of Periodic Table",
+            "Electronic Configuration and Types of Elements (s, p, d, f Blocks)",
+            "Periodic Trends in Atomic and Ionic Radii",
+            "Ionization Enthalpy and Electron Gain Enthalpy",
+            "Electronegativity and Valence Trends"
+        ]
+    },
+    {
+        "class": 11, "subject": "chemistry", "chapter": "Chemical Bonding and Molecular Structure",
+        "subtopics": [
+            "Ionic Bond and Lattice Enthalpy",
+            "Covalent Bond, Octet Rule, and Lewis Dot Structures",
+            "VSEPR Theory and Molecular Shapes",
+            "Valence Bond Theory and Hybridization (sp, sp2, sp3, dsp2, sp3d2)",
+            "Molecular Orbital Theory of Diatomic Molecules",
+            "Hydrogen Bonding"
+        ]
+    },
+    {
+        "class": 11, "subject": "chemistry", "chapter": "States of Matter",
+        "subtopics": [
+            "Intermolecular Forces",
+            "Gas Laws (Boyle's, Charles's, Gay-Lussac's, Avogadro's)",
+            "Ideal Gas Equation and Dalton's Law of Partial Pressures",
+            "Kinetic Molecular Theory of Gases",
+            "Deviation from Ideal Gas Behavior and Van der Waals Equation",
+            "Liquid State: Vapor Pressure, Surface Tension, and Viscosity"
+        ]
+    },
+    {
+        "class": 11, "subject": "chemistry", "chapter": "Thermodynamics",
+        "subtopics": [
+            "System, Surroundings, and State Functions",
+            "First Law of Thermodynamics and Internal Energy",
+            "Enthalpy and Enthalpy Changes of Reactions",
+            "Hess's Law of Constant Heat Summation",
+            "Second Law of Thermodynamics and Entropy",
+            "Gibbs Free Energy and Spontaneity"
+        ]
+    },
+    {
+        "class": 11, "subject": "chemistry", "chapter": "Equilibrium",
+        "subtopics": [
+            "Equilibrium in Physical and Chemical Processes",
+            "Law of Chemical Equilibrium and Equilibrium Constant (Kc, Kp)",
+            "Le Chatelier's Principle",
+            "Ionic Equilibrium and Acid-Base Theories (Arrhenius, Brønsted-Lowry)",
+            "Lewis Acids and Bases",
+            "Ionization of Acids and Bases, pH Scale",
+            "Buffer Solutions and Henderson-Hasselbalch Equation",
+            "Solubility Product and Common Ion Effect"
+        ]
+    },
+    {
+        "class": 11, "subject": "chemistry", "chapter": "Redox Reactions",
+        "subtopics": [
+            "Classical and Electronic Concepts of Redox Reactions",
+            "Oxidation Number and Rules for Calculation",
+            "Balancing Redox Reactions (Oxidation Number and Ion-Electron Methods)",
+            "Redox Reactions and Electrode Processes"
+        ]
+    },
+    {
+        "class": 11, "subject": "chemistry", "chapter": "Hydrogen",
+        "subtopics": [
+            "Position of Hydrogen in the Periodic Table and Isotopes",
+            "Preparation, Properties, and Uses of Dihydrogen",
+            "Hydrides: Ionic, Covalent, and Interstitial",
+            "Water: Structure, Physical and Chemical Properties, Hardness",
+            "Hydrogen Peroxide: Preparation, Properties, and Structure",
+            "Heavy Water and Hydrogen as Fuel"
+        ]
+    },
+    {
+        "class": 11, "subject": "chemistry", "chapter": "The s-Block Elements",
+        "subtopics": [
+            "Group 1 Elements (Alkali Metals): Physical and Chemical Properties",
+            "Important Compounds of Sodium (NaCl, NaOH, Na2CO3, NaHCO3)",
+            "Group 2 Elements (Alkaline Earth Metals): Physical and Chemical Properties",
+            "Important Compounds of Calcium (CaO, Ca(OH)2, CaCO3, Plaster of Paris)",
+            "Biological Importance of Sodium, Potassium, Magnesium, and Calcium"
+        ]
+    },
+    {
+        "class": 11, "subject": "chemistry", "chapter": "Some p-Block Elements",
+        "subtopics": [
+            "Group 13 Elements (Boron Family): Trends and Properties",
+            "Important Compounds of Boron: Borax, Boric Acid, Diborane",
+            "Group 14 Elements (Carbon Family): Trends, Properties, and Allotropes of Carbon",
+            "Important Compounds of Silicon: Silicon Dioxide, Silicones, Silicates, Zeolites"
+        ]
+    },
+    {
+        "class": 11, "subject": "chemistry", "chapter": "Organic Chemistry: Some Basic Principles and Techniques",
+        "subtopics": [
+            "Tetravalence of Carbon and Shapes of Organic Compounds",
+            "Classification and IUPAC Nomenclature of Organic Compounds",
+            "Isomerism: Structural and Stereoisomerism",
+            "Fundamental Concepts in Organic Reaction Mechanisms (Fission, Electrophiles, Nucleophiles)",
+            "Electronic Displacements: Inductive, Electromeric, Resonance, and Hyperconjugation",
+            "Methods of Purification and Qualitative Analysis of Organic Compounds"
+        ]
+    },
+    {
+        "class": 11, "subject": "chemistry", "chapter": "Hydrocarbons",
+        "subtopics": [
+            "Alkanes: Nomenclature, Isomerism, Preparation, and Conformations",
+            "Alkenes: Nomenclature, Geometrical Isomerism, Preparation, and Addition Reactions (Markovnikov's Rule)",
+            "Alkynes: Nomenclature, Structure, Preparation, and Acidic Character",
+            "Aromatic Hydrocarbons: Benzene Structure, Aromaticity, and Huckel's Rule",
+            "Electrophilic Aromatic Substitution in Benzene (Nitration, Halogenation, Friedel-Crafts)"
+        ]
+    },
+    {
+        "class": 11, "subject": "chemistry", "chapter": "Environmental Chemistry",
+        "subtopics": [
+            "Atmospheric Pollution: Tropospheric Pollution and Smog",
+            "Stratospheric Pollution: Ozone Layer Formation and Depletion",
+            "Water Pollution: Sources, Biochemical Oxygen Demand (BOD), and Pathogens",
+            "Soil Pollution and Industrial Waste",
+            "Green Chemistry and Strategies to Control Pollution"
+        ]
+    },
+
+    # Class 12
+    {
+        "class": 12, "subject": "chemistry", "chapter": "The Solid State",
+        "subtopics": [
+            "Classification of Solids: Crystalline and Amorphous",
+            "Crystal Lattices and Unit Cells",
+            "Close Packed Structures, Packing Efficiency, and Density Calculations",
+            "Imperfections and Point Defects in Solids (Schottky, Frenkel)",
+            "Electrical and Magnetic Properties of Solids (Semiconductors, Paramagnetism, Ferromagnetism)"
+        ]
+    },
+    {
+        "class": 12, "subject": "chemistry", "chapter": "Solutions",
+        "subtopics": [
+            "Types of Solutions and Methods of Expressing Concentration",
+            "Solubility of Gases and Solids (Henry's Law)",
+            "Vapour Pressure of Liquid Solutions and Raoult's Law (Ideal and Non-ideal Solutions)",
+            "Colligative Properties (Relative Lowering of Vapor Pressure, Elevation of Boiling Point, Depression of Freezing Point, Osmotic Pressure)",
+            "Abnormal Molar Mass and Van 't Hoff Factor"
+        ]
+    },
+    {
+        "class": 12, "subject": "chemistry", "chapter": "Electrochemistry",
+        "subtopics": [
+            "Electrochemical Cells and Galvanic Cells",
+            "Nernst Equation and Applications",
+            "Conductance of Electrolytic Solutions and Kohlrausch's Law",
+            "Electrolytic Cells and Faraday's Laws of Electrolysis",
+            "Batteries (Primary and Secondary Cells) and Fuel Cells",
+            "Corrosion as an Electrochemical Process and Prevention"
+        ]
+    },
+    {
+        "class": 12, "subject": "chemistry", "chapter": "Chemical Kinetics",
+        "subtopics": [
+            "Rate of a Chemical Reaction: Average and Instantaneous",
+            "Factors Affecting Rate of Reaction: Concentration, Temperature, Catalyst",
+            "Rate Law, Rate Constant, Order and Molecularity of a Reaction",
+            "Integrated Rate Equations for Zero and First Order Reactions",
+            "Pseudo First Order Reactions and Half-Life",
+            "Temperature Dependence: Arrhenius Equation and Activation Energy",
+            "Collision Theory of Chemical Reactions"
+        ]
+    },
+    {
+        "class": 12, "subject": "chemistry", "chapter": "Surface Chemistry",
+        "subtopics": [
+            "Adsorption: Physisorption and Chemisorption, Freundlich Isotherm",
+            "Catalysis: Homogeneous, Heterogeneous, Enzyme Catalysis",
+            "Colloidal State: Classification of Colloids (Lyophilic, Lyophobic, Micelles)",
+            "Properties of Colloids: Tyndall Effect, Brownian Movement, Electrophoresis, Coagulation",
+            "Emulsions and Applications of Colloids"
+        ]
+    },
+    {
+        "class": 12, "subject": "chemistry", "chapter": "General Principles and Processes of Isolation of Elements",
+        "subtopics": [
+            "Occurrence of Metals, Minerals, and Ores",
+            "Concentration of Ores (Gravity Separation, Froth Floatation, Leaching)",
+            "Thermodynamic Principles of Metallurgy (Ellingham Diagrams)",
+            "Electrochemical Principles and Extraction of Aluminium (Hall-Heroult Process)",
+            "Refining of Metals (Distillation, Liquation, Electrolytic Refining, Zone Refining)"
+        ]
+    },
+    {
+        "class": 12, "subject": "chemistry", "chapter": "The p-Block Elements",
+        "subtopics": [
+            "Group 15 Elements (Nitrogen Family): Trends, Dinitrogen, Ammonia, and Nitric Acid",
+            "Group 16 Elements (Oxygen Family): Trends, Dioxygen, Ozone, and Sulfuric Acid",
+            "Group 17 Elements (Halogens): Trends, Chlorine, Hydrochloric Acid, and Interhalogen Compounds",
+            "Group 18 Elements (Noble Gases): Occurrence, Properties, and Xenon Compounds"
+        ]
+    },
+    {
+        "class": 12, "subject": "chemistry", "chapter": "The d- and f-Block Elements",
+        "subtopics": [
+            "General Properties of Transition Elements (Electronic Configuration, Oxidation States, Color, Catalytic Property)",
+            "Important Compounds: Potassium Dichromate (K2Cr2O7) and Potassium Permanganate (KMnO4)",
+            "Lanthanoids: Electronic Configuration, Oxidation States, and Lanthanoid Contraction",
+            "Actinoids: General Characteristics and Comparison with Lanthanoids"
+        ]
+    },
+    {
+        "class": 12, "subject": "chemistry", "chapter": "Coordination Compounds",
+        "subtopics": [
+            "Werner's Theory, Ligands, and Coordination Number",
+            "Nomenclature of Coordination Compounds",
+            "Isomerism in Coordination Compounds (Geometrical, Optical, Structural)",
+            "Valence Bond Theory of Coordination Complexes",
+            "Crystal Field Theory (Octahedral and Tetrahedral Complexes)",
+            "Color, Magnetic Properties, and Applications of Coordination Compounds"
+        ]
+    },
+    {
+        "class": 12, "subject": "chemistry", "chapter": "Haloalkanes and Haloarenes",
+        "subtopics": [
+            "Classification and Nomenclature of Haloalkanes and Haloarenes",
+            "Methods of Preparation of Haloalkanes and Haloarenes",
+            "Physical Properties (Boiling Point, Density, Solubility)",
+            "Nucleophilic Substitution Reactions (SN1 and SN2 Mechanisms)",
+            "Elimination Reactions and Reactions with Metals",
+            "Electrophilic Substitution in Haloarenes",
+            "Polyhalogen Compounds (Dichloromethane, Chloroform, Iodoform, Freons, DDT)"
+        ]
+    },
+    {
+        "class": 12, "subject": "chemistry", "chapter": "Alcohols Phenols and Ethers",
+        "subtopics": [
+            "Classification, Nomenclature, and Structure of Alcohols, Phenols, and Ethers",
+            "Methods of Preparation of Alcohols and Phenols",
+            "Physical and Chemical Properties of Alcohols (Acidity, Esterification, Oxidation)",
+            "Reactions of Phenol (Electrophilic Aromatic Substitution, Kolbe's Reaction, Reimer-Tiemann Reaction)",
+            "Preparation and Reactions of Ethers (Williamson Synthesis, Cleavage by HX)"
+        ]
+    },
+    {
+        "class": 12, "subject": "chemistry", "chapter": "Aldehydes Ketones and Carboxylic Acids",
+        "subtopics": [
+            "Nomenclature and Structure of Carbonyl Group",
+            "Preparation of Aldehydes and Ketones",
+            "Nucleophilic Addition Reactions and Reactivity of Aldehydes and Ketones",
+            "Oxidation, Reduction, Aldol Condensation, and Cannizzaro Reaction",
+            "Carboxylic Acids: Nomenclature, Structure, and Preparation",
+            "Acidity of Carboxylic Acids and Chemical Reactions"
+        ]
+    },
+    {
+        "class": 12, "subject": "chemistry", "chapter": "Amines",
+        "subtopics": [
+            "Structure, Classification, and Nomenclature of Amines",
+            "Methods of Preparation of Amines (Reduction, Gabriel Phthalimide, Hoffmann Bromamide)",
+            "Physical Properties and Basicity of Amines (Gas Phase vs Aqueous Solution)",
+            "Chemical Reactions of Amines (Acylation, Carbylamine Reaction, Hinsberg Test)",
+            "Diazonium Salts: Preparation, Chemical Reactions, and Synthetic Importance"
+        ]
+    },
+    {
+        "class": 12, "subject": "chemistry", "chapter": "Biomolecules",
+        "subtopics": [
+            "Carbohydrates: Monosaccharides (Glucose, Fructose), Disaccharides, and Polysaccharides",
+            "Amino Acids: Classification, Zwitterion, and Peptide Bond",
+            "Proteins: Primary, Secondary, Tertiary, and Quaternary Structures, Denaturation",
+            "Enzymes and Mechanism of Enzyme Action",
+            "Vitamins: Classification and Deficiency Diseases",
+            "Nucleic Acids: DNA and RNA Chemical Composition, Double Helix Structure"
+        ]
+    },
+    {
+        "class": 12, "subject": "chemistry", "chapter": "Polymers",
+        "subtopics": [
+            "Classification of Polymers (Source, Structure, Mode of Polymerization, Molecular Forces)",
+            "Types of Polymerization: Addition and Condensation Polymerization",
+            "Important Addition Polymers (Polythene, Teflon, Polyacrylonitrile)",
+            "Important Condensation Polymers (Nylon 6,6, Nylon 6, Terylene, Bakelite)",
+            "Natural and Synthetic Rubbers, Vulcanization",
+            "Biodegradable Polymers (PHBV, Nylon 2-nylon 6)"
+        ]
+    },
+    {
+        "class": 12, "subject": "chemistry", "chapter": "Chemistry in Everyday Life",
+        "subtopics": [
+            "Drugs and Their Classification",
+            "Drug-Target Interaction and Mechanism of Drug Action",
+            "Therapeutic Action of Different Classes of Drugs (Antacids, Antihistamines, Analgesics, Antibiotics)",
+            "Chemicals in Food: Artificial Sweeteners and Preservatives",
+            "Cleansing Agents: Soaps, Synthetic Detergents, and Cleansing Action"
+        ]
+    }
+]
+
+BIOLOGY_SYLLABUS = [
+    # Class 9
+    {
+        "class": 9, "subject": "biology", "chapter": "The Fundamental Unit of Life",
+        "subtopics": [
+            "Cell Theory and Discovery of Cells",
+            "Plasma Membrane and Cell Wall",
+            "Nucleus and Chromosomes",
+            "Cytoplasm and Cell Organelles (ER, Golgi, Lysosomes, Mitochondria, Plastids, Vacuoles)",
+            "Prokaryotic vs Eukaryotic Cells"
+        ]
+    },
+    {
+        "class": 9, "subject": "biology", "chapter": "Tissues",
+        "subtopics": [
+            "Meristematic Tissue",
+            "Permanent Tissue",
+            "Epithelial Tissue",
+            "Connective Tissue",
+            "Muscular Tissue",
+            "Nervous Tissue"
+        ]
+    },
+    {
+        "class": 9, "subject": "biology", "chapter": "Diversity in Living Organisms",
+        "subtopics": [
+            "Basis of Classification and Five Kingdom System",
+            "Kingdom Monera, Protista, and Fungi",
+            "Kingdom Plantae (Thallophyta, Bryophyta, Pteridophyta, Gymnosperms, Angiosperms)",
+            "Kingdom Animalia: Invertebrates (Porifera to Echinodermata)",
+            "Kingdom Animalia: Chordates and Vertebrates",
+            "Binomial Nomenclature"
+        ]
+    },
+    {
+        "class": 9, "subject": "biology", "chapter": "Why Do We Fall Ill",
+        "subtopics": [
+            "Health and Disease: Acute and Chronic Diseases",
+            "Infectious Diseases: Pathogens and Means of Spread",
+            "Organ-Specific and Tissue-Specific Manifestations",
+            "Principles of Treatment and Prevention",
+            "Immunity and Immunization (Vaccines)"
+        ]
+    },
+    {
+        "class": 9, "subject": "biology", "chapter": "Natural Resources",
+        "subtopics": [
+            "Role of the Atmosphere in Climate Control",
+            "Water: A Wonder Liquid and Water Pollution",
+            "Mineral Riches in the Soil and Soil Erosion",
+            "Biogeochemical Cycles: Water Cycle and Nitrogen Cycle",
+            "Carbon Cycle, Oxygen Cycle, and Greenhouse Effect",
+            "Ozone Layer Depletion"
+        ]
+    },
+    {
+        "class": 9, "subject": "biology", "chapter": "Improvement in Food Resources",
+        "subtopics": [
+            "Crop Variety Improvement and Hybridization",
+            "Crop Production Management: Nutrients, Manure, and Fertilizers",
+            "Irrigation and Cropping Patterns",
+            "Crop Protection Management: Weeds, Pests, and Storage",
+            "Animal Husbandry: Cattle Farming, Poultry, Fisheries, and Apiculture"
+        ]
+    },
+
+    # Class 10
+    {
+        "class": 10, "subject": "biology", "chapter": "Life Processes",
+        "subtopics": [
+            "Autotrophic Nutrition and Photosynthesis",
+            "Heterotrophic Nutrition and Human Digestive System",
+            "Respiration: Aerobic and Anaerobic, Human Respiratory System",
+            "Transportation in Human Beings: Heart, Blood, and Lymph",
+            "Transportation in Plants: Xylem and Phloem",
+            "Excretion in Humans: Kidney and Nephron Function",
+            "Excretion in Plants"
+        ]
+    },
+    {
+        "class": 10, "subject": "biology", "chapter": "Control and Coordination",
+        "subtopics": [
+            "Nervous System: Neurons, Nerve Impulse, and Synapse",
+            "Reflex Actions and Reflex Arc",
+            "Human Brain and Central Nervous System",
+            "Coordination in Plants: Tropic and Nastic Movements",
+            "Plant Hormones (Auxin, Gibberellin, Cytokinin, Abscisic Acid)",
+            "Endocrine System and Hormones in Animals"
+        ]
+    },
+    {
+        "class": 10, "subject": "biology", "chapter": "How do Organisms Reproduce",
+        "subtopics": [
+            "Asexual Reproduction Modes (Fission, Fragmentation, Regeneration, Budding, Spores)",
+            "Vegetative Propagation in Plants",
+            "Sexual Reproduction in Flowering Plants (Pollination and Fertilization)",
+            "Human Male and Female Reproductive Systems",
+            "Fertilization, Pregnancy, and Menstrual Cycle",
+            "Reproductive Health and Contraceptive Methods"
+        ]
+    },
+    {
+        "class": 10, "subject": "biology", "chapter": "Heredity and Evolution",
+        "subtopics": [
+            "Mendel's Laws of Inheritance (Monohybrid and Dihybrid Crosses)",
+            "Mechanism of Heredity and Expression of Traits",
+            "Sex Determination in Humans",
+            "Acquired and Inherited Traits",
+            "Speciation and Mechanisms of Evolution",
+            "Evidences for Evolution (Homologous and Analogous Organs, Fossils)",
+            "Human Evolution"
+        ]
+    },
+    {
+        "class": 10, "subject": "biology", "chapter": "Our Environment",
+        "subtopics": [
+            "Ecosystem Components: Biotic and Abiotic Factors",
+            "Food Chains, Food Webs, and Trophic Levels",
+            "Energy Flow in Ecosystems and Ten Percent Law",
+            "Biological Magnification",
+            "Ozone Layer Depletion and Waste Management"
+        ]
+    },
+    {
+        "class": 10, "subject": "biology", "chapter": "Sustainable Management of Natural Resources",
+        "subtopics": [
+            "Conservation and Sustainable Management of Resources",
+            "Forests and Wildlife: Stakeholders and Sustainable Forestry",
+            "Water for All: Dams, Canals, and Rainwater Harvesting",
+            "Coal and Petroleum: Conservation of Fossil Fuels",
+            "Five R's: Refuse, Reduce, Reuse, Repurpose, Recycle"
+        ]
+    },
+
+    # Class 11
+    {
+        "class": 11, "subject": "biology", "chapter": "The Living World",
+        "subtopics": [
+            "Characteristics of Living Organisms",
+            "Biodiversity and Need for Classification",
+            "Taxonomy, Systematics, and Binomial Nomenclature",
+            "Taxonomic Categories and Hierarchy",
+            "Taxonomical Aids: Herbarium, Botanical Gardens, Museums, Zoological Parks, Keys"
+        ]
+    },
+    {
+        "class": 11, "subject": "biology", "chapter": "Biological Classification",
+        "subtopics": [
+            "Five Kingdom Classification System",
+            "Kingdom Monera: Bacteria Structure, Nutrition, and Archaebacteria",
+            "Kingdom Protista: Chrysophytes, Dinoflagellates, Euglenoids, Slime Moulds, Protozoans",
+            "Kingdom Fungi: Structure, Nutrition, and Classes (Phycomycetes, Ascomycetes, Basidiomycetes, Deuteromycetes)",
+            "Kingdom Plantae and Kingdom Animalia Overview",
+            "Viruses, Viroids, Prions, and Lichens"
+        ]
+    },
+    {
+        "class": 11, "subject": "biology", "chapter": "Plant Kingdom",
+        "subtopics": [
+            "Systems of Classification: Artificial, Natural, and Phylogenetic",
+            "Algae: Characteristics, Chlorophyceae, Phaeophyceae, Rhodophyceae",
+            "Bryophytes: Characteristics, Liverworts, and Mosses",
+            "Pteridophytes: Characteristics and Life Cycle",
+            "Gymnosperms: Morphology, Anatomy, and Reproduction",
+            "Angiosperms and Alternation of Generations in Plants"
+        ]
+    },
+    {
+        "class": 11, "subject": "biology", "chapter": "Animal Kingdom",
+        "subtopics": [
+            "Basis of Classification: Symmetry, Coelom, Segmentation, Notochord",
+            "Non-Chordates: Porifera, Coelenterata, Ctenophora, Platyhelminthes",
+            "Non-Chordates: Aschelminthes, Annelida, Arthropoda, Mollusca, Echinodermata, Hemichordata",
+            "Phylum Chordata: Characteristics and Subphyla",
+            "Vertebrata: Cyclostomata, Chondrichthyes, Osteichthyes",
+            "Tetrapoda: Amphibia, Reptilia, Aves, Mammalia"
+        ]
+    },
+    {
+        "class": 11, "subject": "biology", "chapter": "Morphology of Flowering Plants",
+        "subtopics": [
+            "Root: Types, Regions, and Modifications",
+            "Stem: Characteristics and Modifications",
+            "Leaf: Structure, Venation, Types, and Modifications",
+            "Inflorescence: Racemose and Cymose",
+            "Flower: Structure, Parts (Calyx, Corolla, Androecium, Gynoecium), and Aestivation",
+            "Fruit and Seed Structure, Semi-Technical Description of Families"
+        ]
+    },
+    {
+        "class": 11, "subject": "biology", "chapter": "Anatomy of Flowering Plants",
+        "subtopics": [
+            "Meristematic Tissue",
+            "Permanent Tissue",
+            "Tissue Systems: Epidermal, Ground, and Vascular",
+            "Anatomy of Dicotyledonous and Monocotyledonous Roots",
+            "Anatomy of Dicotyledonous and Monocotyledonous Stems",
+            "Anatomy of Dicotyledonous and Monocotyledonous Leaves",
+            "Secondary Growth in Dicot Stem and Root"
+        ]
+    },
+    {
+        "class": 11, "subject": "biology", "chapter": "Structural Organisation in Animals",
+        "subtopics": [
+            "Epithelial Tissues: Simple and Compound",
+            "Connective Tissues: Loose, Dense, and Specialized",
+            "Muscular and Nervous Tissues",
+            "Morphology and Anatomy of Earthworm",
+            "Morphology and Anatomy of Cockroach",
+            "Morphology and Anatomy of Frog"
+        ]
+    },
+    {
+        "class": 11, "subject": "biology", "chapter": "Cell The Unit of Life",
+        "subtopics": [
+            "Cell Theory and Cell Size and Shape",
+            "Prokaryotic Cell Structure: Cell Envelope, Ribosomes, Inclusion Bodies",
+            "Eukaryotic Cell: Plasma Membrane (Fluid Mosaic Model) and Cell Wall",
+            "Endomembrane System: Endoplasmic Reticulum, Golgi Apparatus, Lysosomes, Vacuoles",
+            "Mitochondria and Plastids (Chloroplast Structure)",
+            "Ribosomes, Cytoskeleton, Cilia and Flagella, Centrosome",
+            "Nucleus: Nuclear Envelope, Chromatin, and Chromosomes"
+        ]
+    },
+    {
+        "class": 11, "subject": "biology", "chapter": "Biomolecules",
+        "subtopics": [
+            "Primary and Secondary Metabolites",
+            "Biomacromolecules and Micromolecules",
+            "Carbohydrates: Monosaccharides, Disaccharides, Polysaccharides",
+            "Proteins: Amino Acids, Peptide Bonds, and Protein Structure",
+            "Lipids: Fatty Acids, Glycerides, and Phospholipids",
+            "Nucleic Acids: Nucleotides, DNA Structure, and RNA",
+            "Enzymes: Chemical Reactions, Mechanism of Action, and Factors Affecting Activity"
+        ]
+    },
+    {
+        "class": 11, "subject": "biology", "chapter": "Cell Cycle and Cell Division",
+        "subtopics": [
+            "Cell Cycle: Phases (G1, S, G2, M) and Interphase",
+            "Mitosis: Prophase, Metaphase, Anaphase, Telophase, Cytokinesis",
+            "Significance of Mitosis",
+            "Meiosis I: Prophase I (Leptotene, Zygotene, Pachytene, Diplotene, Diakinesis) and Divisions",
+            "Meiosis II and Significance of Meiosis"
+        ]
+    },
+    {
+        "class": 11, "subject": "biology", "chapter": "Photosynthesis in Higher Plants",
+        "subtopics": [
+            "Chloroplast Structure and Photosynthetic Pigments",
+            "Light Reaction: Electron Transport, Photolysis of Water, Photophosphorylation",
+            "Chemiosmotic Hypothesis",
+            "Dark Reaction (Calvin Cycle / C3 Pathway)",
+            "C4 Pathway (Hatch-Slack Pathway)",
+            "Photorespiration and Factors Affecting Photosynthesis (Blackman's Law)"
+        ]
+    },
+    {
+        "class": 11, "subject": "biology", "chapter": "Respiration in Plants",
+        "subtopics": [
+            "Cellular Respiration Overview and Respiratory Substrates",
+            "Glycolysis (EMP Pathway)",
+            "Fermentation: Alcoholic and Lactic Acid",
+            "Aerobic Respiration: Tricarboxylic Acid Cycle (Krebs Cycle)",
+            "Electron Transport System (ETS) and Oxidative Phosphorylation",
+            "Respiratory Balance Sheet, Amphibolic Pathway, and Respiratory Quotient"
+        ]
+    },
+    {
+        "class": 11, "subject": "biology", "chapter": "Plant Growth and Development",
+        "subtopics": [
+            "Growth: Characteristics, Phases, and Growth Rates",
+            "Differentiation, Dedifferentiation, and Redifferentiation",
+            "Development and Plasticity in Plants",
+            "Plant Growth Regulators: Auxins, Gibberellins, Cytokinins",
+            "Plant Growth Regulators: Ethylene and Abscisic Acid",
+            "Photoperiodism and Vernalization"
+        ]
+    },
+    {
+        "class": 11, "subject": "biology", "chapter": "Breathing and Exchange of Gases",
+        "subtopics": [
+            "Respiratory Organs in Animals and Human Respiratory System",
+            "Mechanism of Breathing: Inspiration, Expiration, and Pulmonary Volumes",
+            "Exchange of Gases: Alveoli and Tissues",
+            "Transport of Gases: Oxygen Transport and Oxygen Dissociation Curve",
+            "Transport of Carbon Dioxide",
+            "Regulation of Respiration and Respiratory Disorders (Asthma, Emphysema, Occupational)"
+        ]
+    },
+    {
+        "class": 11, "subject": "biology", "chapter": "Body Fluids and Circulation",
+        "subtopics": [
+            "Blood Composition: Plasma and Formed Elements (RBC, WBC, Platelets)",
+            "Blood Groups (ABO and Rh System) and Coagulation of Blood",
+            "Lymph (Tissue Fluid) and Circulatory Pathways",
+            "Human Circulatory System: Heart Anatomy and Cardiac Cycle",
+            "Electrocardiogram (ECG) and Double Circulation",
+            "Regulation of Cardiac Activity and Disorders of Circulatory System"
+        ]
+    },
+    {
+        "class": 11, "subject": "biology", "chapter": "Excretory Products and their Elimination",
+        "subtopics": [
+            "Modes of Excretion: Ammonotelism, Ureotelism, Uricotelism",
+            "Human Excretory System: Kidney and Nephron Structure",
+            "Urine Formation: Glomerular Filtration, Tubular Reabsorption, and Secretion",
+            "Function of Tubules and Countercurrent Mechanism",
+            "Regulation of Kidney Function (RAAS, ADH, ANF)",
+            "Micturition and Disorders of Excretory System (Uremia, Renal Failure, Dialysis)"
+        ]
+    },
+    {
+        "class": 11, "subject": "biology", "chapter": "Locomotion and Movement",
+        "subtopics": [
+            "Types of Movement: Amoeboid, Ciliary, and Muscular",
+            "Skeletal Muscle Structure: Muscle Fiber, Myofibril, and Sarcomere",
+            "Mechanism of Muscle Contraction: Sliding Filament Theory",
+            "Human Skeletal System: Axial Skeleton and Appendicular Skeleton",
+            "Joints: Fibrous, Cartilaginous, and Synovial",
+            "Disorders of Muscular and Skeletal System (Myasthenia Gravis, Tetany, Arthritis, Osteoporosis)"
+        ]
+    },
+    {
+        "class": 11, "subject": "biology", "chapter": "Neural Control and Coordination",
+        "subtopics": [
+            "Neural System and Neuron as Structural and Functional Unit",
+            "Generation and Conduction of Nerve Impulse",
+            "Transmission of Impulses: Synapse and Neurotransmitters",
+            "Central Nervous System: Brain Anatomy (Forebrain, Midbrain, Hindbrain) and Spinal Cord",
+            "Reflex Action and Reflex Arc",
+            "Sensory Reception and Processing: Eye (Vision) and Ear (Hearing and Balance)"
+        ]
+    },
+    {
+        "class": 11, "subject": "biology", "chapter": "Chemical Coordination and Integration",
+        "subtopics": [
+            "Endocrine Glands and Hormones: Definition and Properties",
+            "Hypothalamus and Pituitary Gland Hormones",
+            "Thyroid Gland and Parathyroid Gland Hormones",
+            "Adrenal Glands and Pancreas Hormones",
+            "Gonads (Testis and Ovary) and Other Endocrine Tissues",
+            "Mechanism of Hormone Action: Peptide and Steroid Hormones"
+        ]
+    },
+
+    # Class 12
+    {
+        "class": 12, "subject": "biology", "chapter": "Reproduction in Organisms",
+        "subtopics": [
+            "Asexual Reproduction: Modes and Characteristics",
+            "Vegetative Propagation in Angiosperms",
+            "Sexual Reproduction: Pre-fertilization Events (Gametogenesis, Gamete Transfer)",
+            "Fertilization: External and Internal",
+            "Post-fertilization Events: Zygote and Embryogenesis"
+        ]
+    },
+    {
+        "class": 12, "subject": "biology", "chapter": "Sexual Reproduction in Flowering Plants",
+        "subtopics": [
+            "Flower: A Fascinating Organ of Angiosperms",
+            "Microsporogenesis and Pollen Grain Development",
+            "Megasporogenesis and Embryo Sac Development",
+            "Pollination: Types, Agents, and Outbreeding Devices",
+            "Pollen-Pistil Interaction and Double Fertilization",
+            "Post-fertilization: Endosperm, Embryo Development, Seed, and Fruit",
+            "Apomixis and Polyembryony"
+        ]
+    },
+    {
+        "class": 12, "subject": "biology", "chapter": "Human Reproduction",
+        "subtopics": [
+            "Male Reproductive System: Testes, Duct System, Accessory Glands, Spermatogenesis",
+            "Female Reproductive System: Ovaries, Fallopian Tubes, Uterus, Oogenesis",
+            "Menstrual Cycle and Hormonal Regulation",
+            "Fertilization, Cleavage, and Blastocyst Implantation",
+            "Pregnancy, Placenta Formation, and Embryonic Development",
+            "Parturition and Lactation"
+        ]
+    },
+    {
+        "class": 12, "subject": "biology", "chapter": "Reproductive Health",
+        "subtopics": [
+            "Reproductive Health: Problems and Strategies",
+            "Population Stabilization and Birth Control (Contraceptive Methods)",
+            "Medical Termination of Pregnancy (MTP)",
+            "Sexually Transmitted Infections (STIs)",
+            "Infertility and Assisted Reproductive Technologies (ART: IVF, ZIFT, GIFT, ICSI)"
+        ]
+    },
+    {
+        "class": 12, "subject": "biology", "chapter": "Principles of Inheritance and Variation",
+        "subtopics": [
+            "Mendel's Laws of Inheritance: Law of Dominance and Law of Segregation",
+            "Inheritance of One Gene: Incomplete Dominance, Codominance, Multiple Alleles",
+            "Inheritance of Two Genes: Law of Independent Assortment",
+            "Chromosomal Theory of Inheritance, Linkage, and Recombination",
+            "Sex Determination in Humans, Birds, and Honeybee",
+            "Mutation and Pedigree Analysis",
+            "Genetic Disorders: Mendelian Disorders (Hemophilia, Sickle-Cell, Phenylketonuria) and Chromosomal Disorders (Down's, Turner's, Klinefelter's)"
+        ]
+    },
+    {
+        "class": 12, "subject": "biology", "chapter": "Molecular Basis of Inheritance",
+        "subtopics": [
+            "DNA as Genetic Material and Structure of Polynucleotide Chain",
+            "Packaging of DNA Helix: Nucleosome and Chromatin",
+            "Central Dogma and Semi-Conservative DNA Replication",
+            "Transcription: Unit, Process in Prokaryotes and Eukaryotes",
+            "Genetic Code and Characteristics",
+            "Translation: Process of Protein Synthesis",
+            "Regulation of Gene Expression: Operon Concept (Lac Operon)",
+            "Human Genome Project and DNA Fingerprinting"
+        ]
+    },
+    {
+        "class": 12, "subject": "biology", "chapter": "Evolution",
+        "subtopics": [
+            "Origin of Life: Theories and Chemical Evolution (Miller-Urey Experiment)",
+            "Evidences for Evolution: Paleontological, Morphological, Biochemical",
+            "Adaptive Radiation and Divergent vs Convergent Evolution",
+            "Biological Evolution: Lamarckism, Darwin's Theory of Natural Selection",
+            "Mechanism of Evolution: Mutation Theory (Hugo de Vries)",
+            "Hardy-Weinberg Principle and Factors Affecting Genetic Equilibrium",
+            "Origin and Evolution of Man"
+        ]
+    },
+    {
+        "class": 12, "subject": "biology", "chapter": "Human Health and Disease",
+        "subtopics": [
+            "Common Infectious Diseases in Humans (Typhoid, Pneumonia, Common Cold, Malaria, Amoebiasis, Ringworm)",
+            "Immunity: Innate Immunity and Acquired Immunity",
+            "Immune System: Antibodies, Active and Passive Immunity, Vaccination",
+            "Allergies, Autoimmunity, and Immune System Organs",
+            "AIDS: Causative Agent, Transmission, Pathogenesis, Prevention",
+            "Cancer: Types, Causes, Detection, Treatment",
+            "Drugs and Alcohol Abuse: Opioids, Cannabinoids, Cocaine, Addiction"
+        ]
+    },
+    {
+        "class": 12, "subject": "biology", "chapter": "Strategies for Enhancement in Food Production",
+        "subtopics": [
+            "Animal Breeding: Inbreeding, Outbreeding, Out-Crossing, Cross-Breeding, MOET",
+            "Dairy Farm Management and Poultry Farm Management",
+            "Plant Breeding for Disease Resistance, Pest Resistance, and Improved Quality (Biofortification)",
+            "Single Cell Protein (SCP)",
+            "Tissue Culture and Micropropagation"
+        ]
+    },
+    {
+        "class": 12, "subject": "biology", "chapter": "Microbes in Human Welfare",
+        "subtopics": [
+            "Microbes in Household Food Processing (Curd, Bread, Fermentation)",
+            "Microbes in Industrial Products: Fermented Beverages, Antibiotics, Chemicals, Enzymes",
+            "Microbes in Sewage Treatment: Primary and Secondary Treatment",
+            "Microbes in Production of Biogas (Methanogens)",
+            "Microbes as Biocontrol Agents (Bt, Baculoviruses)",
+            "Microbes as Biofertilizers (Rhizobium, Mycorrhiza, Cyanobacteria)"
+        ]
+    },
+    {
+        "class": 12, "subject": "biology", "chapter": "Biotechnology: Principles and Processes",
+        "subtopics": [
+            "Principles of Biotechnology and Genetic Engineering",
+            "Tools of Recombinant DNA Technology: Restriction Enzymes and Ligases",
+            "Cloning Vectors: Plasmids, Bacteriophages, pBR322",
+            "Competent Host and Transformation Methods",
+            "Processes of Recombinant DNA Technology: Isolation, Cutting, PCR",
+            "Bioreactors and Downstream Processing"
+        ]
+    },
+    {
+        "class": 12, "subject": "biology", "chapter": "Biotechnology and its Applications",
+        "subtopics": [
+            "Biotechnological Applications in Agriculture: Bt Crops, Pest Resistance (RNAi)",
+            "Biotechnological Applications in Medicine: Genetically Engineered Insulin",
+            "Gene Therapy (ADA Deficiency Treatment)",
+            "Molecular Diagnosis: ELISA and PCR",
+            "Transgenic Animals and Ethical Issues (GEAC, Biopiracy)"
+        ]
+    },
+    {
+        "class": 12, "subject": "biology", "chapter": "Organisms and Populations",
+        "subtopics": [
+            "Organism and Environment: Abiotic Factors (Temperature, Water, Light, Soil)",
+            "Responses to Abiotic Factors: Regulate, Conform, Migrate, Suspend",
+            "Adaptations: Morphological, Physiological, and Behavioral",
+            "Population Attributes: Birth Rate, Death Rate, Sex Ratio, Age Pyramids",
+            "Population Growth Models: Exponential and Logistic Growth",
+            "Population Interactions: Mutualism, Competition, Predation, Parasitism, Commensalism"
+        ]
+    },
+    {
+        "class": 12, "subject": "biology", "chapter": "Ecosystem",
+        "subtopics": [
+            "Ecosystem Structure and Function",
+            "Productivity: Primary and Secondary Productivity",
+            "Decomposition: Process and Factors Affecting It",
+            "Energy Flow in Ecosystems and Trophic Levels",
+            "Ecological Pyramids: Number, Biomass, Energy",
+            "Ecological Succession: Primary, Secondary, Hydrarch, Xerarch",
+            "Nutrient Cycling: Carbon Cycle, Phosphorus Cycle, Ecosystem Services"
+        ]
+    },
+    {
+        "class": 12, "subject": "biology", "chapter": "Biodiversity and Conservation",
+        "subtopics": [
+            "Biodiversity: Genetic, Species, and Ecological Diversity",
+            "Patterns of Biodiversity: Latitudinal Gradients and Species-Area Relationship",
+            "Importance of Biodiversity to the Ecosystem",
+            "Loss of Biodiversity: Causes (The Evil Quartet)",
+            "Biodiversity Conservation: In-situ Conservation (National Parks, Sanctuaries, Biosphere Reserves)",
+            "Biodiversity Conservation: Ex-situ Conservation (Botanical Gardens, Zoological Parks, Cryopreservation)"
+        ]
+    },
+    {
+        "class": 12, "subject": "biology", "chapter": "Environmental Issues",
+        "subtopics": [
+            "Air Pollution and Its Control (Electrostatic Precipitator, Catalytic Converter)",
+            "Water Pollution: Domestic Sewage, BOD, Biomagnification, Eutrophication",
+            "Solid Waste Management and Electronic Waste",
+            "Agrochemicals and Organic Farming",
+            "Greenhouse Effect and Global Warming",
+            "Ozone Depletion in the Stratosphere",
+            "Deforestation, Reforestation, and Joint Forest Management"
+        ]
+    }
+]
