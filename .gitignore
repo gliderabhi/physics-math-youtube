@@ -29,3 +29,4 @@ generate_review_list.py
 syllabus_original_backup.json
 *.db
 *.bak_*
+*.whl
